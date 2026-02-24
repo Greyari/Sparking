@@ -18,10 +18,22 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'jenis_pengguna' => 'karyawan',
             'nama' => 'Admin',
-            'password' => Hash::make('12345678'),
+            'password' => Hash::make('123'),
             'jenis_kendaraan' => 'motor',
             'no_plat' => 'BP1234AA',
             'role' => 'admin',
+            'status' => 'aktif',
+        ]);
+
+        User::create([
+            'identitas' => '1234567',
+            'email' => 'dosen@gmail.com',
+            'jenis_pengguna' => 'karyawan',
+            'nama' => 'Admin',
+            'password' => Hash::make('123'),
+            'jenis_kendaraan' => 'motor',
+            'no_plat' => 'BP1234AA',
+            'role' => 'pengguna',
             'status' => 'aktif',
         ]);
     }
