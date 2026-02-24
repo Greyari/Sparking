@@ -29,10 +29,10 @@ class DatabaseSeeder extends Seeder
             'identitas' => '1234567',
             'email' => 'dosen@gmail.com',
             'jenis_pengguna' => 'karyawan',
-            'nama' => 'Admin',
+            'nama' => 'Dosen',
             'password' => Hash::make('123'),
             'jenis_kendaraan' => 'motor',
-            'no_plat' => 'BP1234AA',
+            'no_plat' => 'BP12341A',
             'role' => 'pengguna',
             'status' => 'aktif',
         ]);
