@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
+        User::updateOrCreate([
             'identitas' => '12345678',
             'email' => 'admin@gmail.com',
             'jenis_pengguna' => 'karyawan',
@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             'status' => 'aktif',
         ]);
 
-        User::create([
+        User::updateOrCreate([
             'identitas' => '1234567',
             'email' => 'dosen@gmail.com',
             'jenis_pengguna' => 'karyawan',
