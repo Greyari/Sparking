@@ -9,7 +9,7 @@
         <!-- Hero Section (hanya satu) -->
         <div class="absolute inset-0 z-10 flex flex-col items-center justify-center px-4 text-center text-white bg-black/40">
             <h5 class="mb-2 text-3xl font-bold md:text-5xl font-poppins">
-                SELAMAT DATANG DI HALAMAN WEB
+                SELAMAT DATANG DI ZUAAAAAAAAAA
             </h5>
             <h1 class="text-6xl text-blue-800 font-londrina drop-shadow-lg">SPARKING</h1>
             <p class="mt-2 text-base md:text-lg font-poppins">

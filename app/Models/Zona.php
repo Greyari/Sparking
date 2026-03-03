@@ -10,7 +10,10 @@ class Zona extends Model
     use HasFactory;
     protected $table = 'zona';
 
-    protected $fillable = ['nama_zona', 'keterangan', 'fotozona'];
+    protected $fillable = [
+        'nama_zona',
+        'keterangan',
+        'fotozona'];
 
     public function subzonas()
     {
