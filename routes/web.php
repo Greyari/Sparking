@@ -16,35 +16,12 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\AdminSlotController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\OnboardingController;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Artisan;
 
 Route::get('/run-migrate', function () {
     Artisan::call('migrate', ['--force' => true]);
     return '✅ Migrasi berhasil dijalankan!';
 });
-
-
-
-//untuk deploy
-Route::get('/test-env', function () {
-    return [
-        'app_url' => env('APP_URL'),
-        'db_host' => env('DB_HOST'),
-        'mail_user' => env('MAIL_USERNAME'),
-    ];
-});
-
-Route::get('/debug', function () {
-    try {
-        DB::connection()->getPdo();
-        return 'Database OK!';
-    } catch (\Exception $e) {
-        return $e->getMessage();
-    }
-});
-
-
 
 // landing Page
 Route::get('/', [LandingPageController::class, 'index'])->name('login');
@@ -59,6 +36,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
 
+    // Route untuk pengguna
     Route::middleware('role:pengguna')->group(function () {
         //Dashboard
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -90,9 +68,11 @@ Route::middleware(['auth'])->group(function () {
 
     });
 
+    // Route untuk admin
     Route::middleware('role:admin')->group(function () {
         //admin
         Route::prefix('admin')->group(function () {
+            // dashboard
             Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin-dashboard');
             // user
             Route::get('/users', [AdminUserController::class, 'index'])->name('admin-users');
