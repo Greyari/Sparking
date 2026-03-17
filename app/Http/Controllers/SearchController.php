@@ -4,7 +4,7 @@ use App\Models\Datakendaraan;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class SearchController extends Controller
+class v extends Controller
 {
     public function search(Request $request)
     {

@@ -15,7 +15,7 @@
             <div class="text-center">
                 <h4 class="text-sm font-medium text-gray-500 mb-2">Foto Saat Ini</h4>
                 <div class="relative mx-auto w-48 h-32 bg-gray-100 rounded-lg overflow-hidden">
-                    <img id="currentVehiclePhoto" src="{{ asset('storage/'. $user->foto_kendaraan) }}"
+                    <img id="currentVehiclePhoto" src="{{$user->foto_kendaraan}}"
                          alt="Current Vehicle" class="w-full h-full object-contain">
                     <div class="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
                         <span class="text-white text-sm font-medium">Foto Kendaraan</span>

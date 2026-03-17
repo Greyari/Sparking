@@ -25,22 +25,32 @@ class SettingsController extends Controller
     public function updateFotoKendaraan(Request $request)
     {
         $request->validate([
-            'foto_kendaraan' => 'required|image|mimes:jpg,jpeg,png|max:5120', 
+            'foto_kendaraan' => 'required|image|mimes:jpg,jpeg,png|max:5120',
         ]);
 
         $user = auth()->user();
 
-        if ($user->foto_kendaraan && Storage::exists('public/' . $user->foto_kendaraan)) {
-            Storage::delete('public/' . $user->foto_kendaraan);
+        // Hapus foto lama di Cloudinary jika ada
+        if ($user->foto_kendaraan && str_starts_with($user->foto_kendaraan, 'http')) {
+            $urlPath = parse_url($user->foto_kendaraan, PHP_URL_PATH);
+            $publicId = preg_replace('/\.[^.]+$/', '',
+                implode('/', array_slice(explode('/', $urlPath), 5))
+            );
+            cloudinary()->uploadApi()->destroy($publicId);
         }
 
-        $path = $request->file('foto_kendaraan')->store('foto_kendaraan', 'public');
-        $user->foto_kendaraan = $path;
+        // Upload foto baru ke Cloudinary
+        $result = cloudinary()->uploadApi()->upload(
+            $request->file('foto_kendaraan')->getRealPath(),
+            ['folder' => 'foto_kendaraan']
+        );
+
+        $user->foto_kendaraan = $result['secure_url'];
         $user->save();
 
         return response()->json([
             'message' => 'Foto kendaraan berhasil diperbarui.',
-            'path' => asset('storage/' . $path)
+            'path' => $result['secure_url'] 
         ]);
     }
 
@@ -74,7 +84,7 @@ class SettingsController extends Controller
         return redirect()->back()->with('success', 'password berhasil di ganti');
     }
 
-        public function sendResetLink(Request $request)
+    public function sendResetLink(Request $request)
     {
         $request->validate([
             'email' => 'required|email|exists:user,email',

@@ -18,7 +18,7 @@
                     <img src="{{ asset('images/bg_pengaturan.jpg    ') }}" alt="Cover" class="w-full h-full object-cover rounded-xl object-center">
                     <div class="absolute left-1/2 transform -translate-x-1/2 -bottom-12 z-10">
                         <div class="relative group">
-                            <img src="{{ asset('storage/'. $user->foto_user) }}" alt="Profile" class="h-24 w-24 rounded-full border-4 border-white object-cover shadow-lg transition-all duration-300 group-hover:ring-4 group-hover:ring-blue-200">
+                            <img src="{{$user->foto_user}}" alt="Profile" class="h-24 w-24 rounded-full border-4 border-white object-cover shadow-lg transition-all duration-300 group-hover:ring-4 group-hover:ring-blue-200">
                             <div class="absolute inset-0 bg-blue-500 bg-opacity-30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
@@ -35,9 +35,9 @@
                 <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-6 shadow-inner">
                     <div class="flex flex-col lg:flex-row gap-8 items-center">
                         <div class="w-full lg:w-1/3 flex justify-center">
-                            <div class="group w-full max-w-xs cursor-pointer" onclick="openImageModal('{{ asset('storage/'. $user->foto_kendaraan) }}')">
+                            <div class="group w-full max-w-xs cursor-pointer" onclick="openImageModal('{{$user->foto_kendaraan}}')">
                                 <div class="relative w-full transition-transform duration-300 group-hover:scale-105">
-                                    <img src="{{ asset('storage/'. $user->foto_kendaraan) }}" alt="Car Photo"
+                                    <img src="{{$user->foto_kendaraan}}" alt="Car Photo"
                                         class="w-full h-auto max-h-48 object-contain rounded-lg shadow-md">
                                     <div class="absolute inset-0 bg-black bg-opacity-20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                         <span class="text-white font-medium bg-black bg-opacity-50 px-3 py-1 rounded-full">Lihat Ukuran Penuh</span>
