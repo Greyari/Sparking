@@ -69,6 +69,25 @@
                     </a>
                 </li>
                 <li
+                    class="{{ $title == 'ManageSubZona' ? 'active' : '' }} transition-all delay-75 hover:px-5 hover:bg-blue-200">
+                    <a href="{{ route('admin-subzona') }}">
+                        <div class="icon">
+                            <svg class="{{ $title == 'ManageSubZona' ? 'text-black' : 'text-gray-950' }} size-8"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 3 2.25 9 12 15 21.75 9 12 3Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M2.25 15 12 21l9.75-6" />
+                            </svg>
+                        </div>
+                        <div id="zona"
+                            class="text md:text-sm xl:text-lg font-bold {{ $title == 'ManageSubZona' ? 'text-black' : 'text-white' }}">
+                            Sub Zona Parkir
+                        </div>
+                    </a>
+                </li>
+                <li
                     class="{{ $title == 'ManageSlot' ? 'active' : '' }} transition-all delay-75 hover:px-5 hover:bg-blue-200">
                     <a href="{{ route('admin-slot') }}">
                         <div class="icon">

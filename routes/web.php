@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminSubZonaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
@@ -87,9 +88,10 @@ Route::middleware(['auth'])->group(function () {
             Route::delete('/deleteZona/{id_area}', [AdminZonaController::class, 'destroy'])->name('zona.destroy');
 
             // Subzona
-            Route::post('/addSubzona', [AdminZonaController::class, 'storeSubzona'])->name('subzona.store');
-            Route::put('/updateSubzona/{id}', [AdminZonaController::class, 'updateSubzona'])->name('subzona.update');
-            Route::delete('/deleteSubzona/{id}', [AdminZonaController::class, 'destroySubzona'])->name('subzona.destroy');
+            Route::get('/subzona', [AdminSubZonaController::class, 'index'])->name('admin-subzona');
+            Route::post('/addSubzona', [AdminZonaController::class, 'store'])->name('subzona.store');
+            Route::put('/updateSubzona/{id}', [AdminZonaController::class, 'update'])->name('subzona.update');
+            Route::delete('/deleteSubzona/{id}', [AdminZonaController::class, 'destroy'])->name('subzona.destroy');
 
             // Slot
             Route::get('/slot/{zona?}', [AdminSlotController::class, 'index'])->name('admin-slot');
