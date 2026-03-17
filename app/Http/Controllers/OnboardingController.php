@@ -13,8 +13,6 @@ class OnboardingController extends Controller
         $user = Auth::user();
         $user->refresh(); // Memastikan data user terbaru
 
-        Log::info('Menampilkan halaman onboarding', ['step' => $user->onboarding_step]);
-
         // Jika onboarding sudah selesai, redirect ke dashboard
         if ($user->onboarding_completed) {
             return redirect()->route('dashboard');
@@ -58,8 +56,6 @@ class OnboardingController extends Controller
     {
         $user = auth()->user();
 
-        Log::info('Memproses update onboarding');
-
         $step = $request->input('step');
 
         // Step 1 - Pilih Jenis User
@@ -68,15 +64,9 @@ class OnboardingController extends Controller
                 'jenis_user' => 'required|string|max:50',
             ]);
 
-            Log::info('Validasi step 1 berhasil');
-
             $user->update([
                 'jenis_user' => $request->input('jenis_user'),
                 'onboarding_step' => 2,
-            ]);
-
-            Log::info('Data user berhasil diupdate untuk step 1', [
-                'jenis_user' => $user->jenis_user,
             ]);
 
             return redirect()->route('onboarding.show');
@@ -88,17 +78,14 @@ class OnboardingController extends Controller
                 'foto_user' => 'required|image|max:2048',
             ]);
 
-            Log::info('Validasi step 2 berhasil');
-
-            $profilePath = $request->file('foto_user')->store('foto_user','public');
+            $result = cloudinary()->uploadApi()->upload(
+                $request->file('foto_user')->getRealPath(),
+                ['folder' => 'foto_user']
+            );
 
             $user->update([
-                'foto_user' => str_replace('public/', '', $profilePath),
+                'foto_user' => $result['secure_url'],
                 'onboarding_step' => 3,
-            ]);
-
-            Log::info('Data user berhasil diupdate untuk step 2', [
-                'foto_user' => $user->foto_user,
             ]);
 
             return redirect()->route('onboarding.show');
@@ -115,10 +102,6 @@ class OnboardingController extends Controller
                 'onboarding_step' => 4,
             ]);
 
-            Log::info('Data kendaraan berhasil diupdate untuk step 3', [
-                'jenis_kendaraan' => $user->jenis_kendaraan,
-            ]);
-
             return redirect()->route('onboarding.show');
         }
 
@@ -128,17 +111,14 @@ class OnboardingController extends Controller
                 'foto_kendaraan' => 'required|image|max:2048',
             ]);
 
-            Log::info('Validasi step 4 berhasil');
-
-            $vehiclePath = $request->file('foto_kendaraan')->store('foto_kendaraan','public');
+            $result = cloudinary()->uploadApi()->upload(
+                $request->file('foto_kendaraan')->getRealPath(),
+                ['folder' => 'foto_kendaraan']
+            );
 
             $user->update([
-                'foto_kendaraan' => str_replace('public/', '', $vehiclePath),
+                'foto_kendaraan' => $result['secure_url'],
                 'onboarding_step' => 5,
-            ]);
-
-            Log::info('Data kendaraan berhasil diupdate untuk step 4', [
-                'foto_kendaraan' => $user->foto_kendaraan,
             ]);
 
             return redirect()->route('onboarding.show');
@@ -155,10 +135,6 @@ class OnboardingController extends Controller
                 'onboarding_step' => 6,
             ]);
 
-            Log::info('Data plat kendaraan berhasil diupdate untuk step 5', [
-                'no_plat' => $user->no_plat,
-            ]);
-
             return redirect()->route('onboarding.show');
         }
 
@@ -168,8 +144,6 @@ class OnboardingController extends Controller
                 'onboarding_completed' => true,
                 'onboarding_step' => 0,
             ]);
-
-            Log::info('Onboarding selesai', ['user_id' => $user->id]);
 
             return redirect()->route('dashboard');
         }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Zona;
-use App\Models\SubZona;
 use App\Models\Slot;
 use Illuminate\Http\Request;
 

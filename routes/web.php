@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RealTimeController;
-use App\Http\Controllers\QrCodeController;
 use App\Http\Controllers\StatistikController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\AdminDashboardController;
@@ -42,7 +41,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
         //Update Foto Kendaran
-        Route::post('/simpan-kendaraan', [QrCodeController::class, 'storeVehicle'])->name('vehicle.store');
         Route::post('/profil/update-foto-kendaraan', [SettingsController::class, 'updateFotoKendaraan'])->name('profil.update.foto.kendaraan');
 
         //real rime

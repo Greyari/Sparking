@@ -140,7 +140,7 @@
                         <!-- Profile Image -->
                         <div class="flex flex-col mb-24 space-y-2">
                             <div class="flex justify-center">
-                                <img src="{{ asset('storage/' . $user->foto_user) }}" alt="User Profile"
+                                <img src="{{$user->foto_user}}" alt="User Profile"
                                     class="object-cover w-48 h-56 rounded-md shadow-md">
                             </div>
                             <div class="flex flex-col space-y-2">
@@ -255,7 +255,7 @@
 
                 <!-- container foto -->
                 <div class="overflow-hidden bg-white shadow-2xl rounded-xl">
-                    <img src="{{ asset('storage/' . $user->foto_kendaraan) }}" alt="Vehicle Image"
+                    <img src="{{$user->foto_kendaraan}}" alt="Vehicle Image"
                         class="object-cover w-full h-auto transition-transform duration-300 hover:scale-105">
                 </div>
             </div>

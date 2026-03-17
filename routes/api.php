@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\Api\ApiLogParkirController;
 use App\Http\Controllers\Api\ApiRealtimeController;
 use App\Http\Controllers\Api\ApiStatistikController;
@@ -11,7 +10,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::post('/transaksi', [TransaksiController::class, 'store']);
 Route::get('/zona-slot', [ApiRealtimeController::class, 'getZonaslot']);
 Route::get('/get-subzonas/{zonaId}', [ApiRealtimeController::class, 'getSubzonas']);
 Route::get('/subzona/{id}/detail', [ApiRealtimeController::class, 'getSubzonaDetails']);
