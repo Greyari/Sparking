@@ -18,9 +18,8 @@ return new class extends Migration
             $table->string('nomor_slot');
             $table->timestamp('waktu_mulai')->nullable();
             $table->timestamp('waktu_selesai')->nullable();
-            $table->integer('durasi'); 
+            $table->integer('durasi');
             $table->timestamps();
-
             $table->foreign('zona_id')->references('id')->on('zona')->onDelete('cascade');
             $table->foreign('subzona_id')->references('id')->on('subzona')->onDelete('cascade');
         });

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nama_subzona');
             $table->string('foto');
             $table->timestamps();
+            $table->integer('camera_id')->nullable();
 
             $table->foreign('zona_id')->references('id')->on('zona')->onDelete('cascade');
 

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id('id_pengguna');
             $table->string('identitas')->unique()->nullable();
             $table->string('email')->unique();
-            // $table->string('nomor_telepon', 16)->unique();
             $table->enum('jenis_pengguna', ['mahasiswa' , 'dosen' , 'karyawan' , 'tamu']);
             $table->string('nama');
             $table->string('password');
@@ -26,6 +25,10 @@ return new class extends Migration
             $table->string('qr_code')->nullable();
             $table->enum('role', ['admin', 'pengguna'])->default('pengguna');
             $table->enum('status', ['aktif', 'nonAktif', 'ditolak'])->default('nonAktif');
+            $table->integer('onboarding_step')->default(0);
+            $table->boolean('onboarding_completed')->default(false);
+            $table->timestamp('email_verified_at')->nullable();
+
         });
     }
 
