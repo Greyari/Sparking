@@ -40,7 +40,7 @@
                     </div>
                     <div>
                         <h2 class="text-xl font-bold text-gray-800">Statistik Kendaraan</h2>
-                        <p class="text-sm text-gray-500">Jumlah penggunaan slot parkir selama satu minggu terakhir</p>
+                        <p class="text-sm text-gray-500">Jumlah useran slot parkir selama satu minggu terakhir</p>
                     </div>
 
                 </div>

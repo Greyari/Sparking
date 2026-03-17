@@ -26,12 +26,12 @@ class UserFactory extends Factory
         return [
             'identitas' => fake()->numerify('########'),
             'email' => fake()->unique()->safeEmail(),
-            'jenis_pengguna' => fake()->randomElement(['mahasiswa', 'dosen', 'karyawan', 'tamu']),
+            'jenis_user' => fake()->randomElement(['mahasiswa', 'dosen', 'karyawan', 'tamu']),
             'nama' => fake()->name(),
             'password' => static::$password ??= Hash::make('password'),
             'jenis_kendaraan' => fake()->randomElement(['mobil', 'motor']),
             'no_plat' => fake()->bothify('BP #### ??'),
-            'role' => fake()->randomElement(['admin', 'pengguna']),
+            'role' => fake()->randomElement(['admin', 'user']),
             'status' => fake()->randomElement(['aktif', 'nonAktif', 'ditolak']),
         ];
     }

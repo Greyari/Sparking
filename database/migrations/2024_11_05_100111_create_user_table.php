@@ -11,19 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pengguna', function (Blueprint $table) {
-            $table->id('id_pengguna');
+        Schema::create('users', function (Blueprint $table) {
+            $table->id('id_user');
             $table->string('identitas')->unique()->nullable();
             $table->string('email')->unique();
-            $table->enum('jenis_pengguna', ['mahasiswa' , 'dosen' , 'karyawan' , 'tamu']);
+            $table->enum('jenis_user', ['mahasiswa' , 'dosen' , 'karyawan' , 'tamu']);
             $table->string('nama');
             $table->string('password');
             $table->enum('jenis_kendaraan', ['mobil' , 'motor'])->nullable();
             $table->string('no_plat')->unique()->nullable();
             $table->string('foto_kendaraan')->nullable();
-            $table->string('foto_pengguna')->nullable();
-            $table->string('qr_code')->nullable();
-            $table->enum('role', ['admin', 'pengguna'])->default('pengguna');
+            $table->string('foto_user')->nullable();
+            $table->enum('role', ['admin', 'user'])->default('user');
             $table->enum('status', ['aktif', 'nonAktif', 'ditolak'])->default('nonAktif');
             $table->integer('onboarding_step')->default(0);
             $table->boolean('onboarding_completed')->default(false);
@@ -37,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pengguna');
+        Schema::dropIfExists('user');
     }
 };

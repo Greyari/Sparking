@@ -9,7 +9,7 @@
 
 
         @guest
-        <!-- Menu untuk pengguna yang belum login (landing page) -->
+        <!-- Menu untuk user yang belum login (landing page) -->
             <div>
                 <a href="#tentang" class="px-4 text-white hover:text-blue-500">Tentang</a>
                 <a href="#keunggulan" class="px-4 text-white hover:text-blue-500">Keunggulan</a>

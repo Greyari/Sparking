@@ -9,7 +9,7 @@
                 <img src="{{ asset('images/step1.png') }}" alt="Select User Type" class="w-full h-full object-contain scale-125">
             </div>
 
-            <h1 class="text-3xl font-bold text-gray-800 mb-3 animate-fade-in-down">Jenis Pengguna</h1>
+            <h1 class="text-3xl font-bold text-gray-800 mb-3 animate-fade-in-down">Jenis User</h1>
             <p class="text-gray-600 mb-6 animate-fade-in-down delay-100">Silakan pilih peran Anda di Politeknik Negeri Batam</p>
 
             <form action="{{ route('onboarding.update') }}" method="POST" class="space-y-6">
@@ -18,7 +18,7 @@
 
                 <div class="space-y-4">
                     <label class="flex items-center p-4 border border-gray-200 rounded-xl hover:border-blue-400 hover:bg-blue-50 transition-all cursor-pointer">
-                        <input type="radio" name="jenis_pengguna" value="mahasiswa" class="h-5 w-5 text-blue-600 focus:ring-blue-500">
+                        <input type="radio" name="jenis_user" value="mahasiswa" class="h-5 w-5 text-blue-600 focus:ring-blue-500">
                         <div class="ml-4 flex flex-col text-left">
                             <span class="text-lg text-gray-700 font-medium">Mahasiswa</span>
                             <span class="mt-1 text-sm text-gray-500">Saya seorang mahasiswa</span>
@@ -26,7 +26,7 @@
                     </label>
 
                     <label class="flex items-center p-4 border border-gray-200 rounded-xl hover:border-blue-400 hover:bg-blue-50 transition-all cursor-pointer">
-                        <input type="radio" name="jenis_pengguna" value="dosen" class="h-5 w-5 text-blue-600 focus:ring-blue-500">
+                        <input type="radio" name="jenis_user" value="dosen" class="h-5 w-5 text-blue-600 focus:ring-blue-500">
                         <div class="ml-4 flex flex-col text-left">
                             <span class="text-lg text-gray-700 font-medium">Dosen</span>
                             <span class="mt-1 text-sm text-gray-500">Saya seorang dosen</span>
@@ -34,7 +34,7 @@
                     </label>
 
                     <label class="flex items-center p-4 border border-gray-200 rounded-xl hover:border-blue-400 hover:bg-blue-50 transition-all cursor-pointer">
-                        <input type="radio" name="jenis_pengguna" value="karyawan" class="h-5 w-5 text-blue-600 focus:ring-blue-500">
+                        <input type="radio" name="jenis_user" value="karyawan" class="h-5 w-5 text-blue-600 focus:ring-blue-500">
                         <div class="ml-4 flex flex-col text-left">
                             <span class="text-lg text-gray-700 font-medium">Karyawan</span>
                             <span class="mt-1 text-sm text-gray-500">Saya seorang karyawan</span>
@@ -42,7 +42,7 @@
                     </label>
 
                     <label class="flex items-center p-4 border border-gray-200 rounded-xl hover:border-blue-400 hover:bg-blue-50 transition-all cursor-pointer">
-                        <input type="radio" name="jenis_pengguna" value="tamu" class="h-5 w-5 text-blue-600 focus:ring-blue-500">
+                        <input type="radio" name="jenis_user" value="tamu" class="h-5 w-5 text-blue-600 focus:ring-blue-500">
                         <div class="ml-4 flex flex-col text-left">
                             <span class="text-lg text-gray-700 font-medium">Tamu</span>
                             <span class="mt-1 text-sm text-gray-500">Saya seorang tamu</span>

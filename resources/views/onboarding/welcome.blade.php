@@ -11,7 +11,7 @@
             </div>
 
             <h1 class="text-3xl font-bold text-gray-800 mb-3 animate-fade-in-down">Selamat Datang!</h1>
-            <p class="text-gray-600 mb-6 animate-fade-in-down delay-100">Kami senang Anda bergabung dengan SPARKING. Mari kita lengkapi data pengguna Anda terlebih dahulu.</p>
+            <p class="text-gray-600 mb-6 animate-fade-in-down delay-100">Kami senang Anda bergabung dengan SPARKING. Mari kita lengkapi data user Anda terlebih dahulu.</p>
 
             <form method="POST" action="{{ route('onboarding.next') }}">
                 @csrf

@@ -16,7 +16,7 @@
         <form action="{{ route('onboarding.update') }}" method="POST" enctype="multipart/form-data" class="px-8 pb-8 space-y-6">
             @csrf
             <input type="hidden" name="step" value="4">
-            <!-- Foto Pengguna -->
+            <!-- Foto User -->
             <div class="relative group animate-fade-in-down delay-300">
                 <input type="file" name="foto_kendaraan" id="foto_kendaraan" class="hidden" accept="image/*" required>
                 <label for="foto_kendaraan" class="block cursor-pointer">
@@ -30,9 +30,9 @@
                         <p class="text-xs text-gray-400 mt-1">Format JPG/PNG, maks. 5MB</p>
                     </div>
                 </label>
-                <div id="pengguna-preview" class="mt-4 hidden animate-fade-in">
+                <div id="user-preview" class="mt-4 hidden animate-fade-in">
                     <div class="relative">
-                        <img id="pengguna-preview-image" class="h-48 w-full object-cover rounded-xl border-2 border-gray-200 shadow-sm">
+                        <img id="user-preview-image" class="h-48 w-full object-cover rounded-xl border-2 border-gray-200 shadow-sm">
                         <button type="button" onclick="clearImage()"
                             class="absolute top-3 right-3 bg-white/30 backdrop-blur-md text-white rounded-full p-2 shadow-lg ring-1 ring-white/40 transition-all duration-300 hover:scale-110 hover:bg-white/50">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -58,8 +58,8 @@
 <script>
     // Image preview functionality
     document.getElementById('foto_kendaraan').addEventListener('change', function(e) {
-        const preview = document.getElementById('pengguna-preview');
-        const previewImage = document.getElementById('pengguna-preview-image');
+        const preview = document.getElementById('user-preview');
+        const previewImage = document.getElementById('user-preview-image');
 
         if (this.files && this.files[0]) {
             // Validate file size (5MB max)
@@ -82,7 +82,7 @@
     // Clear image function
     function clearImage() {
         const fileInput = document.getElementById('foto_kendaraan');
-        const preview = document.getElementById('pengguna-preview');
+        const preview = document.getElementById('user-preview');
 
         fileInput.value = '';
         preview.classList.add('hidden');

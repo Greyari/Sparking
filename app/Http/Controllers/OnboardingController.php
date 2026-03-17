@@ -11,7 +11,7 @@ class OnboardingController extends Controller
     public function show()
     {
         $user = Auth::user();
-        $user->refresh(); // Memastikan data pengguna terbaru
+        $user->refresh(); // Memastikan data user terbaru
 
         Log::info('Menampilkan halaman onboarding', ['step' => $user->onboarding_step]);
 
@@ -24,7 +24,7 @@ class OnboardingController extends Controller
         if ($user->onboarding_step === 0) {
             return view('onboarding.welcome', ['title' => 'Selamat Datang di SPARKING']);
         } elseif ($user->onboarding_step === 1) {
-            return view('onboarding.step1', ['title' => 'Pilih Jenis Pengguna']);
+            return view('onboarding.step1', ['title' => 'Pilih Jenis User']);
         } elseif ($user->onboarding_step === 2) {
             return view('onboarding.step2', ['title' => 'Upload Foto Profil']);
         } elseif ($user->onboarding_step === 3) {
@@ -62,21 +62,21 @@ class OnboardingController extends Controller
 
         $step = $request->input('step');
 
-        // Step 1 - Pilih Jenis Pengguna
+        // Step 1 - Pilih Jenis User
         if ($step == 1) {
             $request->validate([
-                'jenis_pengguna' => 'required|string|max:50',
+                'jenis_user' => 'required|string|max:50',
             ]);
 
             Log::info('Validasi step 1 berhasil');
 
             $user->update([
-                'jenis_pengguna' => $request->input('jenis_pengguna'),
+                'jenis_user' => $request->input('jenis_user'),
                 'onboarding_step' => 2,
             ]);
 
-            Log::info('Data pengguna berhasil diupdate untuk step 1', [
-                'jenis_pengguna' => $user->jenis_pengguna,
+            Log::info('Data user berhasil diupdate untuk step 1', [
+                'jenis_user' => $user->jenis_user,
             ]);
 
             return redirect()->route('onboarding.show');
@@ -85,20 +85,20 @@ class OnboardingController extends Controller
         // Step 2 - Upload Foto Profil
         elseif ($step == 2) {
             $request->validate([
-                'foto_pengguna' => 'required|image|max:2048',
+                'foto_user' => 'required|image|max:2048',
             ]);
 
             Log::info('Validasi step 2 berhasil');
 
-            $profilePath = $request->file('foto_pengguna')->store('foto_pengguna','public');
+            $profilePath = $request->file('foto_user')->store('foto_user','public');
 
             $user->update([
-                'foto_pengguna' => str_replace('public/', '', $profilePath),
+                'foto_user' => str_replace('public/', '', $profilePath),
                 'onboarding_step' => 3,
             ]);
 
-            Log::info('Data pengguna berhasil diupdate untuk step 2', [
-                'foto_pengguna' => $user->foto_pengguna,
+            Log::info('Data user berhasil diupdate untuk step 2', [
+                'foto_user' => $user->foto_user,
             ]);
 
             return redirect()->route('onboarding.show');

@@ -45,7 +45,7 @@
                         </div>
                         <div
                             class="text md:text-sm xl:text-lg font-bold {{ $title == 'ManageUsers' ? 'text-black' : 'text-white' }}">
-                            Pengguna
+                            User
                         </div>
                     </a>
                 </li>

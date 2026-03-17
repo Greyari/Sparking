@@ -12,12 +12,12 @@ class Datakendaraan extends Model
     protected $table = 'datakendaraan';
     protected $primaryKey = 'id_kendaraan';
     protected $fillable = [
-        'id_pengguna', 'jenis_kendaraan1', 'no_plat1', 'foto_kendaraan1', 'qr_code1', 'status1'
+        'id_user', 'jenis_kendaraan1', 'no_plat1', 'foto_kendaraan1', 'qr_code1', 'status1'
     ];
     
-    public function pengguna()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'id_pengguna');
+        return $this->belongsTo(User::class, 'id_user');
     }
     
     

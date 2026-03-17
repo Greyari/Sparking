@@ -6,29 +6,36 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Notifications\UbahpasswordEmail;
-
 
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
 
-    protected $table = 'pengguna';
-    protected $primaryKey = 'id_pengguna';
+    protected $table = 'users';
+    protected $primaryKey = 'id_user';
     public $timestamps = false;
-
-    public function kendaraan()
-    {
-        return $this->hasOne(Datakendaraan::class, 'id_pengguna');
-    }
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
-    protected $guarded = [];
+    protected $fillable = [
+        'nama',
+        'identitas',
+        'email',
+        'password',
+        'jenis_user',
+        'jenis_kendaraan',
+        'no_plat',
+        'status',
+        'foto_kendaraan',
+        'foto_user',
+        'role',
+        'onboarding_step',
+        'onboarding_completed'
+    ];
 
     /**
      * The attributes that should be hidden for serialization.

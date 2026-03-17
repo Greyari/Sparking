@@ -10,7 +10,7 @@ class TransaksiController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'id_pengguna' => 'required|exists:pengguna,id_pengguna',
+            'id_user' => 'required|exists:user,id_user',
             'zona_id' => 'required|exists:zona,id',
             'status_transaksi' => 'required|in:aktif,selesai,gagal',
         ]);

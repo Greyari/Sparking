@@ -23,7 +23,7 @@
                         <div>
                             <p class="text-2xl font-bold text-gray-800">{{ implode(' & ', $hariTersibuk) }}</p>
                             <p class="text-sm text-gray-500">
-                                Jumlah penggunaan lahan parkir pada hari {{ implode(' & ', $hariTersibuk) }} adalah sebanyak {{ $totalParkirHariTersibuk }} kendaraan.
+                                Jumlah useran lahan parkir pada hari {{ implode(' & ', $hariTersibuk) }} adalah sebanyak {{ $totalParkirHariTersibuk }} kendaraan.
                             </p>
                         </div>
                     </div>

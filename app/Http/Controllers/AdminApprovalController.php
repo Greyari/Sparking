@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Datakendaraan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -14,7 +15,7 @@ class AdminApprovalController extends Controller
     {
         $approvals = User::where('status', 'nonAktif')->paginate(5);
 
-        $vehicles = Datakendaraan::with('pengguna')
+        $vehicles = Datakendaraan::with('user')
             ->where('status1', 'nonAktif')
             ->get();
 
@@ -25,11 +26,11 @@ class AdminApprovalController extends Controller
         ]);
     }
 
-    public function updateUserStatus(Request $request, $id_pengguna)
+    public function updateUserStatus(Request $request, $id_user)
     {
-        $approval = User::find($id_pengguna);
+        $approval = User::find($id_user);
         if (!$approval) {
-            return redirect()->back()->with('error', 'Pengguna tidak ditemukan.');
+            return redirect()->back()->with('error', 'User tidak ditemukan.');
         }
 
         $status = $request->input('status');
@@ -43,7 +44,7 @@ class AdminApprovalController extends Controller
                 'plat_kendaraan' => $approval->no_plat
             ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
-            $qrCodeFilename = "qrcodes/user_qr_{$approval->id_pengguna}.png";
+            $qrCodeFilename = "qrcodes/user_qr_{$approval->id_user}.png";
             $fullPath = storage_path('app/public/' . $qrCodeFilename);
 
             if (!file_exists(dirname($fullPath))) {
@@ -59,7 +60,7 @@ class AdminApprovalController extends Controller
 
                 $approval->qr_code = $qrCodeFilename;
             } catch (\Exception $e) {
-                \Log::error('QR Code Generation Error: ' . $e->getMessage());
+                Log::error('QR Code Generation Error: ' . $e->getMessage());
                 return redirect()->back()->with('error', 'Gagal membuat QR Code: ' . $e->getMessage());
             }
         } else {
@@ -73,8 +74,8 @@ class AdminApprovalController extends Controller
         $approval->save();
 
         $message = $status === 'aktif'
-            ? 'Pengguna berhasil disetujui dan QR Code dibuat.'
-            : 'Pengguna berhasil ditolak.';
+            ? 'User berhasil disetujui dan QR Code dibuat.'
+            : 'User berhasil ditolak.';
 
         return redirect()->back()->with('success', $message);
     }
@@ -91,7 +92,7 @@ class AdminApprovalController extends Controller
 
             // Generate QR Code with vehicle details in JSON format
             $qrCodeContent = json_encode([
-                'nama_pengguna' => $vehicle->pengguna->nama ?? 'Tidak diketahui',
+                'nama_user' => $vehicle->user->nama ?? 'Tidak diketahui',
                 'jenis_kendaraan' => $vehicle->jenis_kendaraan1,
                 'plat_kendaraan' => $vehicle->no_plat1,
             ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);

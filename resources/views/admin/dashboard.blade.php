@@ -32,7 +32,7 @@
                                 class="text-4xl font-semibold text-center text-gray-800">
                                 {{ $data['total_user'] }}
                             </p>
-                            <h4 class="text-xl text-center text-black">Pengguna</h4>
+                            <h4 class="text-xl text-center text-black">User</h4>
                         </div>
                     </div>
                 </div>

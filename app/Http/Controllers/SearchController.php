@@ -14,8 +14,8 @@ class SearchController extends Controller
                 ->orWhere('no_plat', 'LIKE', "%{$search}%");
         })->get();
 
-        $vehicles = Datakendaraan::with('pengguna')
-        ->whereHas('pengguna', function ($query) use ($search) {
+        $vehicles = Datakendaraan::with('user')
+        ->whereHas('user', function ($query) use ($search) {
             $query->where('nama', 'like', '%' . $search . '%');
         })
         ->orWhere('no_plat1', 'like', '%' . $search . '%')

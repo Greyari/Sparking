@@ -14,7 +14,7 @@
                 </div>
                 <input type="search" id="searchInput" value="{{ request('search') }}" name="search"
                     class="block w-full p-4 text-sm text-gray-900 border border-gray-400 rounded-lg ps-10 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Search Nama pengguna, Nomor Plat Kendaraan" required />
+                    placeholder="Search Nama user, Nomor Plat Kendaraan" required />
             </div>
         </form>
     </div>
@@ -27,7 +27,7 @@
             </div>
         @endif
         <div class="mb-4 text-xl font-bold ">
-            <span>Persetujuan Akun Baru Pengguna</span>
+            <span>Persetujuan Akun Baru User</span>
         </div>
 
         <table class="font-medium table-fixed ">
@@ -48,8 +48,8 @@
                         <td class="px-1 py-2 text-sm">{{ $approval->nama }}</td>
                         <td class="px-1 py-2 text-sm">{{ $approval->no_plat }}</td>
                         <td class="px-1 py-2 text-sm">
-                            <button data-modal-target="detail-akunbaru{{ $approval->id_pengguna }}"
-                                data-modal-toggle="detail-akunbaru{{ $approval->id_pengguna }}"
+                            <button data-modal-target="detail-akunbaru{{ $approval->id_user }}"
+                                data-modal-toggle="detail-akunbaru{{ $approval->id_user }}"
                                 class="inline-flex items-center justify-center px-2 py-1 text-sm text-blue-500 hover:underline">
                                 <i class="w-3 h-3 text-blue-500 me-2 fas fa-eye"></i>
                                 Detail
@@ -64,9 +64,9 @@
         {{ $approvals->links('pagination::tailwind') }}
     </div>
 
-    <!-- modal lihat detail akun baru pengguna -->
+    <!-- modal lihat detail akun baru user -->
     @foreach ($approvals as $approval)
-        <div id="detail-akunbaru{{ $approval->id_pengguna }}" tabindex="-1"
+        <div id="detail-akunbaru{{ $approval->id_user }}" tabindex="-1"
             class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative w-full max-w-2xl max-h-full mx-4">
                 <!-- Modal content -->
@@ -75,11 +75,11 @@
                     <div
                         class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 bg-[#95AFE5]">
                         <h3 class="text-xl font-medium text-white dark:text-white">
-                            Persetujuan Akun Baru Pengguna
+                            Persetujuan Akun Baru User
                         </h3>
                         <button type="submit"
                             class="inline-flex items-center justify-center w-8 h-8 text-sm text-white bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto dark:hover:bg-gray-600 dark:hover:text-white"
-                            data-modal-hide="detail-akunbaru{{ $approval->id_pengguna }}">
+                            data-modal-hide="detail-akunbaru{{ $approval->id_user }}">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                                 viewBox="0 0 14 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -93,12 +93,12 @@
                         <!-- Profile Image -->
                         <div class="flex flex-col mb-24 space-y-2">
                             <div class="flex justify-center">
-                                <img src="{{ asset('storage/' . $approval->foto_pengguna) }}" alt="User Profile"
+                                <img src="{{ asset('storage/' . $approval->foto_user) }}" alt="User Profile"
                                     class="object-cover w-48 h-56 rounded-md shadow-md">
                             </div>
                             <div class="flex flex-col space-y-2">
-                                <button type="submit" data-modal-target="lihat-kendaraan1{{ $approval->id_pengguna }}"
-                                    data-modal-toggle="lihat-kendaraan1{{ $approval->id_pengguna }}"
+                                <button type="submit" data-modal-target="lihat-kendaraan1{{ $approval->id_user }}"
+                                    data-modal-toggle="lihat-kendaraan1{{ $approval->id_user }}"
                                     class="w-full bg-white hover:underline text-gray-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-center">
                                     <i class="w-4 h-4 mt-1 text-gray-700 me-2 fas fa-car "></i>
                                     Lihat Kendaraan
@@ -124,8 +124,8 @@
                                         <i class="w-4 h-4 text-gray-700 fas fa-list"></i>
                                     </div>
                                     <div>
-                                        <p class="text-sm text-gray-500">Jenis Pengguna</p>
-                                        <p class="font-medium text-gray-800">{{ $approval->jenis_pengguna }}</p>
+                                        <p class="text-sm text-gray-500">Jenis User</p>
+                                        <p class="font-medium text-gray-800">{{ $approval->jenis_user }}</p>
                                     </div>
                                 </div>
                                 <div class="flex items-center space-x-2">
@@ -181,7 +181,7 @@
                     </div>
                     <!-- Modal footer -->
                     <div class="flex items-center p-4 border-t border-gray-200 rounded-b md:p-5 dark:border-gray-600">
-                        <form action="{{ route('update.userStatus', $approval->id_pengguna) }}" method="POST"
+                        <form action="{{ route('update.userStatus', $approval->id_user) }}" method="POST"
                             class="inline">
                             @csrf
                             @method('PUT')
@@ -197,13 +197,13 @@
             </div>
         </div>
         <!-- modal foto kendaraan -->
-        <div id="lihat-kendaraan1{{ $approval->id_pengguna }}" tabindex="-1" aria-hidden="true"
+        <div id="lihat-kendaraan1{{ $approval->id_user }}" tabindex="-1" aria-hidden="true"
             class="fixed inset-0 z-50 items-center justify-center hidden w-full h-full overflow-x-hidden overflow-y-auto bg-black/70">
             <div class="relative w-full max-w-xl mx-4 md:mx-auto">
                 <!-- tombol tutup -->
                 <button type="button"
                     class="absolute right-0 z-50 text-white transition-colors duration-300 -top-10 hover:text-gray-300"
-                    data-modal-hide="lihat-kendaraan1{{ $approval->id_pengguna }}">
+                    data-modal-hide="lihat-kendaraan1{{ $approval->id_user }}">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
@@ -238,7 +238,7 @@
                 @foreach ($vehicles as $index => $vehicle)
                     <tr class="bg-slate-50 hover:bg-slate-100">
                         <td class="px-1 py-2 text-sm ">{{ $loop->iteration }}</td>
-                        <td class="px-1 py-2 text-sm ">{{ $vehicle->pengguna->nama }}</td>
+                        <td class="px-1 py-2 text-sm ">{{ $vehicle->user->nama }}</td>
                         <td class="px-1 py-2 text-sm ">{{ $vehicle->no_plat1 }}</td>
                         <td class="px-1 py-2 text-sm ">
                             <button data-modal-target="modal-{{ $vehicle->id_kendaraan }}"
@@ -283,7 +283,7 @@
                         <!-- Profile Image -->
                         <div class="flex flex-col mb-24 space-y-2">
                             <div class="flex justify-center">
-                                <img src="{{ asset('storage/' . $vehicle->pengguna->foto_pengguna) }}" alt="User Profile"
+                                <img src="{{ asset('storage/' . $vehicle->user->foto_user) }}" alt="User Profile"
                                     class="object-cover w-48 h-56 rounded-md shadow-md">
                             </div>
                             <div class="flex flex-col space-y-2">
@@ -307,7 +307,7 @@
                                     </div>
                                     <div>
                                         <p class="text-sm text-gray-500">NIM/NIK/NIDN/NIP</p>
-                                        <p class="font-medium text-gray-800">{{ $vehicle->pengguna->identitas }}</p>
+                                        <p class="font-medium text-gray-800">{{ $vehicle->user->identitas }}</p>
                                     </div>
                                 </div>
                                 <div class="flex items-center space-x-2">
@@ -315,8 +315,8 @@
                                         <i class="w-4 h-4 text-gray-700 fas fa-list"></i>
                                     </div>
                                     <div>
-                                        <p class="text-sm text-gray-500">Jenis Pengguna</p>
-                                        <p class="font-medium text-gray-800">{{ $vehicle->pengguna->jenis_pengguna }}
+                                        <p class="text-sm text-gray-500">Jenis User</p>
+                                        <p class="font-medium text-gray-800">{{ $vehicle->user->jenis_user }}
                                         </p>
                                     </div>
                                 </div>
@@ -326,7 +326,7 @@
                                     </div>
                                     <div>
                                         <p class="text-sm text-gray-500">Email</p>
-                                        <p class="font-medium text-gray-800">{{ $vehicle->pengguna->email }}</p>
+                                        <p class="font-medium text-gray-800">{{ $vehicle->user->email }}</p>
                                     </div>
                                 </div>
 
@@ -336,7 +336,7 @@
                                     </div>
                                     <div>
                                         <p class="text-sm text-gray-500">Nama Lengkap</p>
-                                        <p class="font-medium text-gray-800">{{ $vehicle->pengguna->nama }}</p>
+                                        <p class="font-medium text-gray-800">{{ $vehicle->user->nama }}</p>
                                     </div>
                                 </div>
                                 <div class="flex items-center space-x-2">
@@ -345,7 +345,7 @@
                                     </div>
                                     <div>
                                         <p class="text-sm text-gray-500">Nomor Telepon</p>
-                                        <p class="font-medium text-gray-800">{{ $vehicle->pengguna->nomor_telepon }}</p>
+                                        <p class="font-medium text-gray-800">{{ $vehicle->user->nomor_telepon }}</p>
                                     </div>
                                 </div>
 

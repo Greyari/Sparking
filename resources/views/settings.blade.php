@@ -18,7 +18,7 @@
                     <img src="{{ asset('images/bg_pengaturan.jpg    ') }}" alt="Cover" class="w-full h-full object-cover rounded-xl object-center">
                     <div class="absolute left-1/2 transform -translate-x-1/2 -bottom-12 z-10">
                         <div class="relative group">
-                            <img src="{{ asset('storage/'. $user->foto_pengguna) }}" alt="Profile" class="h-24 w-24 rounded-full border-4 border-white object-cover shadow-lg transition-all duration-300 group-hover:ring-4 group-hover:ring-blue-200">
+                            <img src="{{ asset('storage/'. $user->foto_user) }}" alt="Profile" class="h-24 w-24 rounded-full border-4 border-white object-cover shadow-lg transition-all duration-300 group-hover:ring-4 group-hover:ring-blue-200">
                             <div class="absolute inset-0 bg-blue-500 bg-opacity-30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
@@ -56,7 +56,7 @@
 
                                     <div class="flex items-center justify-center lg:justify-start space-x-3 p-2 bg-white hover:bg-white/90 rounded-lg transition-all duration-300 shadow-sm hover:shadow-md">
                                         <span class="material-icons text-indigo-500 text-[24px]">person</span>
-                                        <span class="text-gray-700 capitalize">{{ $user->jenis_pengguna }}</span>
+                                        <span class="text-gray-700 capitalize">{{ $user->jenis_user }}</span>
                                     </div>
 
                                     <div class="flex items-center justify-center lg:justify-start space-x-3 p-2 bg-white hover:bg-white/90 rounded-lg transition-all duration-300 shadow-sm hover:shadow-md">

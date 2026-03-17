@@ -36,8 +36,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
 
-    // Route untuk pengguna
-    Route::middleware('role:pengguna')->group(function () {
+    // Route untuk user
+    Route::middleware('role:user')->group(function () {
         //Dashboard
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -76,14 +76,14 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin-dashboard');
             // user
             Route::get('/users', [AdminUserController::class, 'index'])->name('admin-users');
-            Route::delete('/users/{id_pengguna}', [AdminUserController::class, 'delete'])->name('users.delete');
+            Route::delete('/users/{id_user}', [AdminUserController::class, 'delete'])->name('users.delete');
 
             // search
             Route::get('/search', [SearchController::class, 'search'])->name('search');
 
             //aprove
             Route::get('/approval', [AdminApprovalController::class, 'index'])->name('admin-approval');
-            Route::put('/approval/{id_pengguna}', [AdminApprovalController::class, 'updateUserStatus'])->name('update.userStatus');
+            Route::put('/approval/{id_user}', [AdminApprovalController::class, 'updateUserStatus'])->name('update.userStatus');
             Route::put('/handleApproval/{id_kendaraan}', [AdminApprovalController::class, 'handleApproval'])->name('admin.handleApproval');
 
             // zona

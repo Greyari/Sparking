@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
             ['email' => 'admin@gmail.com'], // kondisi unik
             [
                 'identitas' => '12345678',
-                'jenis_pengguna' => 'karyawan',
+                'jenis_user' => 'karyawan',
                 'nama' => 'Admin',
                 'password' => Hash::make('123'),
                 'jenis_kendaraan' => 'motor',
@@ -31,12 +31,12 @@ class DatabaseSeeder extends Seeder
             ['email' => 'dosen@gmail.com'],
             [
                 'identitas' => '1234567',
-                'jenis_pengguna' => 'karyawan',
+                'jenis_user' => 'karyawan',
                 'nama' => 'Dosen',
                 'password' => Hash::make('123'),
                 'jenis_kendaraan' => 'motor',
                 'no_plat' => 'BP12341A',
-                'role' => 'pengguna',
+                'role' => 'user',
                 'status' => 'aktif',
             ]
         );

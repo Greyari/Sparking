@@ -12,9 +12,9 @@ class QrCodeController extends Controller
 {
     public function index()
     {
-        $vehicles = Datakendaraan::with('pengguna')
+        $vehicles = Datakendaraan::with('user')
             ->where('status1', 'aktif')
-            ->where('id_pengguna', auth()->id())
+            ->where('id_user', auth()->id())
             ->get();
 
         return view('qrCode', [
@@ -35,7 +35,7 @@ class QrCodeController extends Controller
     {
         $user = Auth::user();
         $gambar = $user->qr_code;
-        $id_pengguna = $user->id;
+        $id_user = $user->id;
         $nama_lengkap = $user->nama;
         $jenis_kendaraan = $user->jenis_kendaraan;
         $no_plat = $user->no_plat;
@@ -43,7 +43,7 @@ class QrCodeController extends Controller
         // Step 3: Generate the HTML content
         $html = view('printPDF', [
             'gambar' => $this->fotoQrcode($gambar),
-            'id_pengguna' => $id_pengguna,
+            'id_user' => $id_user,
             'nama_lengkap' => $nama_lengkap,
             'jenis_kendaraan' => $jenis_kendaraan,
             'no_plat' => $no_plat
@@ -59,7 +59,7 @@ class QrCodeController extends Controller
         $dompdf->render();
 
         // Step 7: Output the PDF
-        return $dompdf->stream('informasi_qr_code_' . $id_pengguna . '.pdf', ['Attachment' => 0]);
+        return $dompdf->stream('informasi_qr_code_' . $id_user . '.pdf', ['Attachment' => 0]);
     }
 
     public function storeVehicle(Request $request)
@@ -72,7 +72,7 @@ class QrCodeController extends Controller
         ]);
 
         // Check if user already has a vehicle
-        $existingVehicle = Datakendaraan::where('id_pengguna', Auth::id())->first();
+        $existingVehicle = Datakendaraan::where('id_user', Auth::id())->first();
         if ($existingVehicle) {
             return back()->with('error', 'Anda sudah memiliki kendaraan terdaftar.');
         }
@@ -82,7 +82,7 @@ class QrCodeController extends Controller
 
         // Create new vehicle entry
         $vehicle = new Datakendaraan();
-        $vehicle->id_pengguna = Auth::id();
+        $vehicle->id_user = Auth::id();
         $vehicle->jenis_kendaraan1 = $validatedData['jenis_kendaraan1'];
         $vehicle->no_plat1 = $validatedData['no_plat1'];
         $vehicle->foto_kendaraan1 = $imagePath;

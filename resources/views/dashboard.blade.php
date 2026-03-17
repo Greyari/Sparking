@@ -66,7 +66,7 @@
                         <i class="fas fa-chart-bar text-indigo-600 text-2xl"></i>
                     </div>
                     <h3 class="text-xl font-semibold text-gray-800 mb-2">Analisis Data</h3>
-                    <p class="text-gray-500 text-sm">Statistik dan analisis penggunaan parkir</p>
+                    <p class="text-gray-500 text-sm">Statistik dan analisis useran parkir</p>
                 </div>
             </a>
         </div>
