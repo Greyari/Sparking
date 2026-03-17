@@ -11,7 +11,6 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminZonaController;
 use App\Http\Controllers\AdminAnalysisController;
-use App\Http\Controllers\AdminApprovalController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\AdminSlotController;
 use App\Http\Controllers\LandingPageController;
