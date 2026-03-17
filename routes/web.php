@@ -81,11 +81,6 @@ Route::middleware(['auth'])->group(function () {
             // search
             Route::get('/search', [SearchController::class, 'search'])->name('search');
 
-            //aprove
-            Route::get('/approval', [AdminApprovalController::class, 'index'])->name('admin-approval');
-            Route::put('/approval/{id_user}', [AdminApprovalController::class, 'updateUserStatus'])->name('update.userStatus');
-            Route::put('/handleApproval/{id_kendaraan}', [AdminApprovalController::class, 'handleApproval'])->name('admin.handleApproval');
-
             // zona
             Route::get('/zona', [AdminZonaController::class, 'index'])->name('admin-zona');
             Route::post('/addZona', [AdminZonaController::class, 'store'])->name('zona.store');
