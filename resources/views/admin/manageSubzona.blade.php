@@ -179,12 +179,12 @@
                             <div id="image-previewsubzona" class="hidden mb-2">
                                 <img src="" alt="Preview Foto" class="object-cover w-full h-32 rounded-lg">
                             </div>
-                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="foto">
+                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="fotosubzona">
                                 Foto Area Sub-Zona
                             </label>
                             <input
                                 class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                aria-describedby="file_input_help" id="foto" type="file" name="foto"
+                                aria-describedby="file_input_help" id="fotosubzona" type="file" name="fotosubzona"
                                 accept="image/*" required>
                             <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">
                                 SVG, PNG, JPG or GIF (MAX. 800x400px).
@@ -260,18 +260,18 @@
                                         class="border border-gray-300 text-gray-500 text-sm rounded-lg block w-full p-2.5">
                                 </div>
                                 <div class="col-span-2">
-                                    @if ($subzona->foto)
+                                    @if ($subzona->fotosubzona)
                                         <div class="mb-2">
-                                            <img src="{{ $subzona->foto }}" alt="Foto Subzona" class="object-cover w-full h-32 rounded-lg">
+                                            <img src="{{ $subzona->fotosubzona }}" alt="Foto Subzona" class="object-cover w-full h-32 rounded-lg">
                                         </div>
                                     @endif
                                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                        for="foto">
+                                        for="fotosubzona">
                                         Foto Area Sub-Zona
                                     </label>
                                     <input
                                         class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                        aria-describedby="file_input_help" type="file" name="foto" id="foto"
+                                        aria-describedby="file_input_help" type="file" name="fotosubzona" id="fotosubzona"
                                         accept="image/*">
                                     <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">
                                         SVG, PNG, JPG or GIF (MAX. 800x400px).
@@ -343,7 +343,7 @@
             }
         }, 5000);
 
-        document.getElementById('foto').addEventListener('change', function(event) {
+        document.getElementById('fotosubzona').addEventListener('change', function(event) {
             const preview = document.getElementById('image-previewsubzona');
             const file = event.target.files[0];
 

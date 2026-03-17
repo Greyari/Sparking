@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('zona_id');
             $table->string('nama_subzona');
-            $table->string('foto');
+            $table->string('fotosubzona');
             $table->timestamps();
             $table->integer('camera_id')->nullable();
 

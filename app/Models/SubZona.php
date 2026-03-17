@@ -11,9 +11,9 @@ class SubZona extends Model
     protected $table = 'subzona';
 
     protected $fillable = [
-        'zona_id', 
-        'nama_subzona', 
-        'foto', 
+        'zona_id',
+        'nama_subzona',
+        'fotosubzona',
         'camera_id'
     ];
 
