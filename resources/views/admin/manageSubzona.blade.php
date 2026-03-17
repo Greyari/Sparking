@@ -3,7 +3,7 @@
 @section('main')
 
     <div class="flex flex-col p-6 -ml-5 space-y-4 -mt-7">
-        
+
         <!-- tombol tambah sub zona -->
         <div class="ml-10">
             <button data-modal-target="tambah-subzona" data-modal-toggle="tambah-subzona"
@@ -34,10 +34,10 @@
 
         <!-- Tabel Subzona -->
         <div class="grid w-9/12 grid-cols-1 p-5 mx-6">
-            @if (session('succes'))
+            @if (session('success'))
                 <div class="p-4 mb-4 text-sm text-green-800 bg-green-400 rounded-lg dark:bg-gray-800 dark:text-green-400"
                     role="alert">
-                    <span class="font-medium">Success!</span> {{ session('succes') }}
+                    <span class="font-medium">Success!</span> {{ session('success') }}
                 </div>
             @endif
             <table class="text-sm font-medium">
