@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\SubZona;
 use App\Models\Zona;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class AdminSubZonaController extends Controller
 {
@@ -48,7 +47,11 @@ class AdminSubZonaController extends Controller
         ]);
 
         if ($request->hasFile('foto')) {
-            $validated['foto'] = $request->file('foto')->store('datafoto', 'public');
+            $result = cloudinary()->uploadApi()->upload(
+                $request->file('foto')->getRealPath(),
+                ['folder' => 'datafoto']
+            );
+            $validated['foto'] = $result['secure_url'];
         }
 
         SubZona::create($validated);
@@ -71,11 +74,19 @@ class AdminSubZonaController extends Controller
         ]);
 
         if ($request->hasFile('foto')) {
-            // Hapus foto lama jika ada
-            if ($subzona->foto) {
-                Storage::disk('public')->delete($subzona->foto);
+            if ($subzona->foto) {   
+                $urlPath = parse_url($subzona->foto, PHP_URL_PATH);
+                $publicId = preg_replace('/\.[^.]+$/', '',
+                    implode('/', array_slice(explode('/', $urlPath), 5))
+                );
+                cloudinary()->uploadApi()->destroy($publicId);
             }
-            $validated['foto'] = $request->file('foto')->store('datafoto', 'public');
+
+            $result = cloudinary()->uploadApi()->upload(
+                $request->file('foto')->getRealPath(),
+                ['folder' => 'datafoto']
+            );
+            $validated['foto'] = $result['secure_url'];
         }
 
         $subzona->update($validated);
@@ -85,11 +96,14 @@ class AdminSubZonaController extends Controller
 
     public function destroy($id)
     {
-        $subzona = SubZona::findOrFail($id); // Fix: huruf kapital konsisten
+        $subzona = SubZona::findOrFail($id);
 
-        // Hapus foto via Storage (konsisten dengan cara penyimpanan)
         if ($subzona->foto) {
-            Storage::disk('public')->delete($subzona->foto);
+            $urlPath = parse_url($subzona->foto, PHP_URL_PATH);
+            $publicId = preg_replace('/\.[^.]+$/', '',
+                implode('/', array_slice(explode('/', $urlPath), 5))
+            );
+            cloudinary()->uploadApi()->destroy($publicId);
         }
 
         $subzona->delete();

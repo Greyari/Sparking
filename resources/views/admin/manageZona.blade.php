@@ -209,17 +209,8 @@
                             </div>
                             <div class="col-span-2">
                                 @if ($zona->fotozona)
-                                    @php
-                                        $fotoPath = $zona->fotozona;
-                                        if (Str::startsWith($fotoPath, 'datafoto')) {
-                                            $fotoUrl = asset('storage/' . $fotoPath);
-                                        } else {
-                                            $fotoUrl = asset(ltrim($fotoPath, '/'));
-                                        }
-                                    @endphp
                                     <div class="mb-2">
-                                        <img src="{{ $fotoUrl }}" alt="Foto Zona"
-                                            class="object-cover w-full h-32 rounded-lg">
+                                        <img src="{{ $zona->fotozona }}" alt="Foto Zona" class="object-cover w-full h-32 rounded-lg">
                                     </div>
                                 @endif
                                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -296,21 +287,6 @@
             }
         }, 5000);
 
-        document.getElementById('foto').addEventListener('change', function(event) {
-            const preview = document.getElementById('image-previewsubzona');
-            const file = event.target.files[0];
-
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    preview.querySelector('img').src = e.target.result;
-                    preview.classList.remove('hidden');
-                }
-                reader.readAsDataURL(file);
-            } else {
-                preview.classList.add('hidden');
-            }
-        });
 
         document.getElementById('fotozona').addEventListener('change', function(event) {
             const preview = document.getElementById('image-preview');

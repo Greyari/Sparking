@@ -44,7 +44,7 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
-        
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
@@ -57,6 +57,14 @@ return [
             'throw' => false,
         ],
 
+        'cloudinary' => [
+            'driver' => 'cloudinary',
+            'url'    => env('CLOUDINARY_URL'),
+            'cloud'  => env('CLOUDINARY_CLOUD_NAME'),
+            'key'    => env('CLOUDINARY_API_KEY'),
+            'secret' => env('CLOUDINARY_API_SECRET'),
+            'secure' => true,
+        ],
     ],
 
     /*

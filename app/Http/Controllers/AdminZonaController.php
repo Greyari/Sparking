@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Zona;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class AdminZonaController extends Controller
 {
@@ -33,7 +32,11 @@ class AdminZonaController extends Controller
         ]);
 
         if ($request->hasFile('fotozona')) {
-            $validated['fotozona'] = $request->file('fotozona')->store('datafoto', 'public');
+            $result = cloudinary()->uploadApi()->upload(
+                $request->file('fotozona')->getRealPath(),
+                ['folder' => 'datafoto']
+            );
+            $validated['fotozona'] = $result['secure_url'];
         }
 
         Zona::create($validated);
@@ -55,11 +58,19 @@ class AdminZonaController extends Controller
         ]);
 
         if ($request->hasFile('fotozona')) {
-            // Hapus foto lama jika ada
             if ($zona->fotozona) {
-                Storage::disk('public')->delete($zona->fotozona);
+                $urlPath = parse_url($zona->fotozona, PHP_URL_PATH);
+                $publicId = preg_replace('/\.[^.]+$/', '',
+                    implode('/', array_slice(explode('/', $urlPath), 5))
+                );
+                cloudinary()->uploadApi()->destroy($publicId);
             }
-            $validated['fotozona'] = $request->file('fotozona')->store('datafoto', 'public');
+
+            $result = cloudinary()->uploadApi()->upload(
+                $request->file('fotozona')->getRealPath(),
+                ['folder' => 'datafoto']
+            );
+            $validated['fotozona'] = $result['secure_url'];
         }
 
         $zona->update($validated);
@@ -71,9 +82,12 @@ class AdminZonaController extends Controller
     {
         $zona = Zona::findOrFail($id);
 
-        // Hapus foto via Storage (konsisten dengan cara penyimpanan)
         if ($zona->fotozona) {
-            Storage::disk('public')->delete($zona->fotozona);
+            $urlPath = parse_url($zona->fotozona, PHP_URL_PATH);
+            $publicId = preg_replace('/\.[^.]+$/', '',
+                implode('/', array_slice(explode('/', $urlPath), 5))
+            );
+            cloudinary()->uploadApi()->destroy($publicId);
         }
 
         $zona->delete();
