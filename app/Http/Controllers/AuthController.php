@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Notifications\VerifikasiEmail;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
 
 class AuthController extends Controller
 {
@@ -104,8 +104,7 @@ class AuthController extends Controller
         }
     }
 
-
-    public function verifyEmail(Request $request, $id, $hash)
+    public function verifyEmail($id, $hash)
     {
         $user = User::findOrFail($id);
 

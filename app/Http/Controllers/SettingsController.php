@@ -21,7 +21,6 @@ class SettingsController extends Controller
         ]);
     }
 
-
     public function updateFotoKendaraan(Request $request)
     {
         $request->validate([
@@ -50,7 +49,7 @@ class SettingsController extends Controller
 
         return response()->json([
             'message' => 'Foto kendaraan berhasil diperbarui.',
-            'path' => $result['secure_url'] 
+            'path' => $result['secure_url']
         ]);
     }
 

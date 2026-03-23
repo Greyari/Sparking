@@ -13,16 +13,13 @@ class ApiRealtimeController extends Controller
 {
 
     public function getAllSubzonas()
-{
-    $subzonas = SubZona::select('id', 'nama_subzona', 'camera_id')
-        ->whereNotNull('camera_id')
-        ->get();
+    {
+        $subzonas = SubZona::select('id', 'nama_subzona', 'camera_id')
+            ->whereNotNull('camera_id')
+            ->get();
 
-    return response()->json($subzonas);
-}
-
-
-
+        return response()->json($subzonas);
+    }
 
     /**
      * Polling card zona di component informasi ringkas real time
@@ -49,8 +46,6 @@ class ApiRealtimeController extends Controller
 
         return response()->json($data);
     }
-
-
 
     /**
      * Dropdown select subzona berdasarkan zona_id
@@ -171,15 +166,15 @@ class ApiRealtimeController extends Controller
     }
 
     public function getCamera($id)
-{
-    $subzona = SubZona::find($id);
+    {
+        $subzona = SubZona::find($id);
 
-    if (!$subzona) {
-        return response()->json(['error' => 'Subzona tidak ditemukan'], 404);
+        if (!$subzona) {
+            return response()->json(['error' => 'Subzona tidak ditemukan'], 404);
+        }
+
+        return response()->json([
+            'camera_id' => $subzona->camera_id
+        ]);
     }
-
-    return response()->json([
-        'camera_id' => $subzona->camera_id
-    ]);
-}
 }

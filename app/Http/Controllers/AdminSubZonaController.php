@@ -11,7 +11,7 @@ class AdminSubZonaController extends Controller
     public function index(Request $request)
     {
         $zonas   = Zona::all();
-        $zonaId  = $request->zona_id; // diperlukan view untuk pre-select dropdown
+        $zonaId  = $request->zona_id;
 
         $query = SubZona::with('zona');
 

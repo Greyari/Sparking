@@ -75,9 +75,7 @@ Route::middleware(['auth'])->group(function () {
             // user
             Route::get('/users', [AdminUserController::class, 'index'])->name('admin-users');
             Route::delete('/users/{id_user}', [AdminUserController::class, 'delete'])->name('users.delete');
-
-            // search
-            Route::get('/search', [SearchController::class, 'search'])->name('search');
+            Route::get('/search', [AdminUserController::class, 'search'])->name('search');
 
             // zona
             Route::get('/zona', [AdminZonaController::class, 'index'])->name('admin-zona');

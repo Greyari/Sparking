@@ -27,7 +27,6 @@ return new class extends Migration
             $table->integer('onboarding_step')->default(0);
             $table->boolean('onboarding_completed')->default(false);
             $table->timestamp('email_verified_at')->nullable();
-
         });
     }
 
