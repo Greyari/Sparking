@@ -20,14 +20,11 @@
         <!-- Slider Images -->
         <div id="slider" class="flex h-full transition-transform duration-700 ease-in-out">
             <img src="img/Gedung.jpg" class="flex-shrink-0 object-cover w-full" alt="Gedung" />
-            {{-- <img src="img/techno.jpg" class="flex-shrink-0 object-cover w-full" alt="Techno" />
-            <img src="img/keunggulan.png" class="flex-shrink-0 object-cover w-full" alt="Keunggulan" /> --}}
         </div>
     </section>
 
     <!-- Konten lainnya tetap sama -->
     @include('component.success-error')
-    @include('component.lending_page.animasi_tiga_gambar')
     @include('component.lending_page.tentang_kami')
     @include('component.lending_page.keunggulan')
     @include('component/footerUser')

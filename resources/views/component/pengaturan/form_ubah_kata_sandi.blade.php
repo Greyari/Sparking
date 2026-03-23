@@ -1,9 +1,7 @@
 @extends('layout.mainUser')
 
-
 <link rel="stylesheet" href="{{ asset('css_user/form_ubah_kata_sandi.css') }}">
 <script src="{{ asset('js/form_ubah_kata_sandi.js') }}"></script>
-
 
 <body class="min-h-screen flex items-center justify-center p-4">
     @include('component.success-error')

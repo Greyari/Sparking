@@ -94,13 +94,6 @@
                     <li>Minggu : 12.00</li>
                 </ul>
             </div>
-
-
-
-
-
-
-
         </div>
     </div>
 @endsection

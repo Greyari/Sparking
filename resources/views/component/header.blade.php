@@ -1,11 +1,7 @@
-<!-- Navbar -->
 <nav class="sticky top-0 z-50 shadow-lg bg-biru_tua font-poppins">
     <div class="flex items-center justify-between px-4 py-4 mx-auto max-w-7xl">
         <!-- Logo -->
-        <img src="images/icon.png"
-            class="object-cover w-12 h-12" />
-
-
+        <img src="images/icon.png" class="object-cover w-12 h-12" />
 
         <!-- Hamburger menu button (mobile) -->
         <div class="md:hidden">

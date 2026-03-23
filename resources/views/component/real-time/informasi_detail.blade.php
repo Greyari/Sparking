@@ -111,8 +111,6 @@
     </div>
 </div>
 
-
-
 <script>
     let pollingInterval;
     let currentSubzonaId = "{{ $selectedSubzonaId ?? '' }}";

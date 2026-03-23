@@ -127,7 +127,7 @@
 
     </div>
 </div>
- <script>
+<script>
     // Slider otomatis
     document.addEventListener("DOMContentLoaded", function () {
         @if(session('showLogin'))

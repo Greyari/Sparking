@@ -1,4 +1,3 @@
-<!-- resources/views/onboarding/welcome.blade.php -->
 @extends('layout.mainUser')
 
 @section('main')

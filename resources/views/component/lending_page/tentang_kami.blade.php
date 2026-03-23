@@ -13,7 +13,6 @@
                 style="clip-path: polygon(0 0, 80% 0, 30% 100%, 0% 100%); background: white; opacity: 0.9;"></div>
         </div>
 
-
         <!-- Kanan: Konten -->
         <div class="w-full lg:w-1/2">
             <div class="p-6 lg:p-8">

@@ -89,7 +89,6 @@
             </table>
         </div>
 
-
         <!-- Pop-Up Error Message -->
         <div id="validation-popup" class="fixed inset-x-0 z-50 flex justify-center hidden top-5">
             <div
@@ -112,7 +111,6 @@
         </div>
 
     </div>
-
 
     <!-- Main Modal Tambah sub-zona -->
     <div id="tambah-subzona" tabindex="-1" aria-hidden="true"

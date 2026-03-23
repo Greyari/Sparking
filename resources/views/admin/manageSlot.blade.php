@@ -54,7 +54,7 @@
 
         <!-- tabel slot -->
         <div class="grid w-9/12 grid-cols-1 px-5 mx-6">
-            
+
             @if (session('success'))
                 <div class="p-4 mb-4 text-sm text-green-800 bg-green-400 rounded-lg dark:bg-gray-800 dark:text-green-400"
                     role="alert">
@@ -277,8 +277,6 @@
                 </button>
             </div>
         </div>
-
-
 
         <!-- Modal Edit Slot -->
         @foreach ($slots as $slot)

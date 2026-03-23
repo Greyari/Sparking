@@ -141,16 +141,7 @@
             transform: translateY(0);
         }
     }
-</style>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const audio = new Audio('{{ asset("sounds/success.mp3") }}');
-        audio.volume = 0.3;
-        audio.play().catch(err => console.warn("Sound playback blocked:", err));
-    });
-</script>
-<style>
     .animate-bounce {
         animation: bounce 2s ease-in-out infinite;
     }
@@ -180,4 +171,12 @@
         }
     }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const audio = new Audio('{{ asset("sounds/success.mp3") }}');
+        audio.volume = 0.3;
+        audio.play().catch(err => console.warn("Sound playback blocked:", err));
+    });
+</script>
 @endsection

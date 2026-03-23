@@ -130,8 +130,7 @@
         from { opacity: 0; }
         to { opacity: 1; }
     }
-</style>
-<style>
+
     .animate-wiggle {
         animation: wiggle 2s ease-in-out infinite;
     }
