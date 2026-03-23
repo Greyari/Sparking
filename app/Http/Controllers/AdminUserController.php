@@ -39,9 +39,9 @@ class AdminUserController extends Controller
         ]);
     }
 
-    public function delete($id_user)
+    public function delete($id)
     {
-        $user = User::findOrFail($id_user);
+        $user = User::findOrFail($id);
         $user->delete();
         return redirect()->back()->with('success', 'User berhasil dihapus');
     }

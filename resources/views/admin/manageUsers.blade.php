@@ -47,12 +47,12 @@
 
                         <td class="px-1 py-2 text-sm">{{ $user->no_plat }}</td>
                         <td class="px-1 py-2 text-sm">
-                            <button data-modal-target="small-modal{{ $user->id_user }}"
-                                data-modal-toggle="small-modal{{ $user->id_user }}"
+                            <button data-modal-target="small-modal{{ $user->id }}"
+                                data-modal-toggle="small-modal{{ $user->id }}"
                                 class="inline-flex items-center justify-center px-2 py-1 text-sm text-blue-500 hover:underline">
                                 <i class="w-3 h-3 text-blue-500 me-2 fas fa-eye"></i>Detail</button>
-                            <button data-modal-target="hapus-modal{{ $user->id_user }}"
-                                data-modal-toggle="hapus-modal{{ $user->id_user }}"
+                            <button data-modal-target="hapus-modal{{ $user->id }}"
+                                data-modal-toggle="hapus-modal{{ $user->id }}"
                                 class="inline-flex items-center justify-center px-2 py-1 text-sm text-red-400 hover:underline">
                                 <i class="w-3 h-3 text-red-400 me-2 fas fa-trash"></i>Hapus</button>
                         </td>
@@ -67,13 +67,13 @@
 
     @foreach ($users as $user)
         <!-- Main Modal hapus slot -->
-        <div id="hapus-modal{{ $user->id_user }}" tabindex="-1"
+        <div id="hapus-modal{{ $user->id }}" tabindex="-1"
             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative w-full max-w-md max-h-full p-4">
                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                     <button
                         class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                        data-modal-hide="hapus-modal{{ $user->id_user }}">
+                        data-modal-hide="hapus-modal{{ $user->id }}">
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -89,7 +89,7 @@
                         </svg>
                         <h3 class="mb-5 text-lg font-bold text-gray-500 dark:text-gray-400">Apakah anda ingin menghapus
                             user {{ $user->nama }}</h3>
-                        <form action="{{ route('users.delete', $user->id_user) }}" method="POST"
+                        <form action="{{ route('users.delete', $user->id) }}" method="POST"
                             class="inline-block">
                             @csrf
                             @method('DELETE')
@@ -98,7 +98,7 @@
                                 Iya
                             </button>
                         </form>
-                        <button data-modal-hide="hapus-modal{{ $user->id_user }}" type="button"
+                        <button data-modal-hide="hapus-modal{{ $user->id }}" type="button"
                             class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                             Tidak
                         </button>
@@ -109,7 +109,7 @@
         </div>
 
         <!-- Small Modal -->
-        <div id="small-modal{{ $user->id_user }}" tabindex="-1"
+        <div id="small-modal{{ $user->id }}" tabindex="-1"
             class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative w-full max-w-2xl max-h-full mx-4">
                 <!-- Modal content -->
@@ -122,7 +122,7 @@
                         </h3>
                         <button type="button"
                             class="inline-flex items-center justify-center w-8 h-8 text-sm text-white bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto dark:hover:bg-gray-600 dark:hover:text-white"
-                            data-modal-hide="small-modal{{ $user->id_user }}">
+                            data-modal-hide="small-modal{{ $user->id }}">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                                 viewBox="0 0 14 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -140,8 +140,8 @@
                                     class="object-cover w-48 h-56 rounded-md shadow-md">
                             </div>
                             <div class="flex flex-col space-y-2">
-                                <button type="button" data-modal-target="lihat-kendaraan1-{{ $user->id_user }}"
-                                    data-modal-toggle="lihat-kendaraan1-{{ $user->id_user }}"
+                                <button type="button" data-modal-target="lihat-kendaraan1-{{ $user->id }}"
+                                    data-modal-toggle="lihat-kendaraan1-{{ $user->id }}"
                                     class="w-full bg-white hover:underline text-gray-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-center">
                                     <i class="w-4 h-4 mt-1 me-2 fas fa-car "></i>
                                     Lihat Kendaraan
@@ -219,13 +219,13 @@
         </div>
 
         <!-- modal foto kendaraan -->
-        <div id="lihat-kendaraan1-{{ $user->id_user }}" tabindex="-1" aria-hidden="true"
+        <div id="lihat-kendaraan1-{{ $user->id }}" tabindex="-1" aria-hidden="true"
             class="fixed inset-0 z-50 items-center justify-center hidden w-full h-full overflow-x-hidden overflow-y-auto bg-black/70">
             <div class="relative w-full max-w-xl mx-4 md:mx-auto">
                 <!-- tombol tutup -->
                 <button type="button"
                     class="absolute right-0 z-50 text-white transition-colors duration-300 -top-10 hover:text-gray-300"
-                    data-modal-hide="lihat-kendaraan1-{{ $user->id_user }}">
+                    data-modal-hide="lihat-kendaraan1-{{ $user->id }}">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">

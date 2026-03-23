@@ -11,7 +11,7 @@ class Transaksi extends Model
 
     protected $table = 'transaksi';
     protected $primaryKey = 'id_transaksi';
-    protected $fillable = ['id_user', 'zona_id', 'waktu_masuk', 'waktu_keluar', 'status_transaksi'];
+    protected $fillable = ['id', 'zona_id', 'waktu_masuk', 'waktu_keluar', 'status_transaksi'];
 
     public function zona()
     {

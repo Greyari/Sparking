@@ -86,7 +86,7 @@ class SettingsController extends Controller
     public function sendResetLink(Request $request)
     {
         $request->validate([
-            'email' => 'required|email|exists:user,email',
+            'email' => 'required|email|exists:users,email',
         ]);
 
         $user = User::where('email', $request->email)->first();
@@ -102,7 +102,7 @@ class SettingsController extends Controller
             now()->addMinutes(30),
             [
                 'token' => $token,
-                'id' => $user->id_user
+                'id' => $user->id
             ]
         );
 
