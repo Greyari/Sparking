@@ -1,4 +1,4 @@
-<footer id="footer" class="py-6 text-white bg-biru_tua">
+<footer id="footer" class="py-6 text-white bg-blue-900">
     <div class="grid grid-cols-1 px-4 mx-auto text-center sm:text-left max-w-7xl sm:grid-cols-2 md:grid-cols-3 gap-y-8 gap-x-6">
         <!-- Deskripsi -->
         <div>

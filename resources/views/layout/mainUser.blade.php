@@ -20,11 +20,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
     <link rel="icon" href="{{ secure_asset('images/icon.png')}}" type="image/x-icon">
-    <link href="{{ secure_asset('css/dashboard.css') }}" rel="stylesheet">
-    <link href="{{ secure_asset('css_user/user_landing_page.css') }}" rel="stylesheet">
-
 </head>
 
 <body class="min-h-screen bg-gray-100">

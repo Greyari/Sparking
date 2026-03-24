@@ -1,6 +1,6 @@
 @extends('layout.mainUser')
 
-@include('component/header')
+@include('component/headerLanding')
 
 @section('main')
     @include('component.auth.modal_login_regis')

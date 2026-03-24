@@ -1,5 +1,5 @@
 <!-- Navbar -->
-<nav class="sticky top-0 z-50 shadow-lg bg-biru_tua font-poppins">
+<nav class="sticky top-0 z-50 shadow-lg bg-blue-900 font-poppins">
     <div class="flex items-center justify-between px-4 py-4 mx-auto max-w-7xl">
         <!--logo dan nama-->
         <div class="flex items-center text-white">
@@ -7,17 +7,6 @@
             <h1 class="pt-1 text-2xl font-bold ">PARKING</h1>
         </div>
 
-
-        @guest
-        <!-- Menu untuk user yang belum login (landing page) -->
-            <div>
-                <a href="#tentang" class="px-4 text-white hover:text-blue-500">Tentang</a>
-                <a href="#keunggulan" class="px-4 text-white hover:text-blue-500">Keunggulan</a>
-                <a href="javascript:void(0);" onclick="openModal()" class="px-6 py-2 font-semibold text-white transition duration-300 rounded-full shadow bg-biru_muda hover:bg-white hover:text-biru_muda">Login</a>
-            </div>
-        @endguest
-
-        @auth
         <div x-data="{ open: false }" class="relative">
             <button @click="open = !open" @click.outside="open = false"
                 class="text-blue-200 transition-colors hover:text-white focus:outline-none">
@@ -46,6 +35,5 @@
                 </form>
             </div>
         </div>
-        @endauth
     </div>
 </nav>
