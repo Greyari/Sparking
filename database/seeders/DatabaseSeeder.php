@@ -47,7 +47,7 @@ class DatabaseSeeder extends Seeder
 
         Zona::updateOrCreate(
             [
-                'nama_zona' => 'test 1',
+                'nama_zona' => 'Zona 1',
                 'keterangan' => 'test',
                 'fotozona' => 'test',
             ]
@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
 
         Zona::updateOrCreate(
             [
-                'nama_zona' => 'test 2',
+                'nama_zona' => 'Zona 2',
                 'keterangan' => 'test',
                 'fotozona' => 'test',
             ]
@@ -63,8 +63,17 @@ class DatabaseSeeder extends Seeder
 
         SubZona::updateOrCreate(
             [
+                'zona_id' => 2,
+                'nama_subzona' => 'Sub zona 1',
+                'fotosubzona' => 'test',
+                'camera_id' => '2',
+            ]
+        );
+
+        SubZona::updateOrCreate(
+            [
                 'zona_id' => 1,
-                'nama_subzona' => 'test 1',
+                'nama_subzona' => 'Sub zona 1',
                 'fotosubzona' => 'test',
                 'camera_id' => '1',
             ]
