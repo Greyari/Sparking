@@ -5,6 +5,10 @@ namespace App\Services;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * Service untuk mengirim email notifikasi menggunakan Brevo API.
+ * Dokumentasi Brevo API: https://developers.brevo.com/reference/sendtransacemail
+ */
 class BrevoMailService
 {
     protected string $apiKey;
@@ -13,21 +17,32 @@ class BrevoMailService
 
     public function __construct()
     {
+        // Ambil konfigurasi dari config/services.php dan config/mail.php
         $this->apiKey    = config('services.brevo.api_key');
         $this->fromEmail = config('mail.from.address');
         $this->fromName  = config('mail.from.name');
     }
 
+    /**
+     * Kirim email notifikasi ketika slot parkir tersedia.
+     *
+     * @param string $toEmail  Email penerima
+     * @param string $toName   Nama penerima
+     * @param string $namaZona Nama zona parkir yang slot-nya tersedia
+     * @return bool True jika berhasil, false jika gagal
+     */
     public function sendSlotAvailableNotification(string $toEmail, string $toName, string $namaZona): bool
     {
         $response = Http::withHeaders([
             'api-key'      => $this->apiKey,
             'Content-Type' => 'application/json',
         ])->post('https://api.brevo.com/v3/smtp/email', [
+            // Pengirim email
             'sender' => [
                 'email' => $this->fromEmail,
                 'name'  => $this->fromName,
             ],
+            // Penerima email
             'to' => [
                 ['email' => $toEmail, 'name' => $toName]
             ],
@@ -35,6 +50,7 @@ class BrevoMailService
             'htmlContent' => $this->buildEmailTemplate($toName, $namaZona),
         ]);
 
+        // Jika request ke Brevo API gagal, log error dan return false
         if ($response->failed()) {
             Log::error('Brevo gagal kirim email', [
                 'email'  => $toEmail,
@@ -48,6 +64,13 @@ class BrevoMailService
         return true;
     }
 
+    /**
+     * Buat template HTML untuk email notifikasi.
+     *
+     * @param string $nama     Nama penerima untuk sapaan
+     * @param string $namaZona Nama zona parkir
+     * @return string HTML email
+     */
     private function buildEmailTemplate(string $nama, string $namaZona): string
     {
         return "
