@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('notifikasi_slot', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->constrained('users')->onDelete('cascade');
-            $table->unsignedBigInteger('zona_id')->constrained('zonas')->onDelete('cascade');
+            $table->unsignedBigInteger('zona_id')->constrained('zona')->onDelete('cascade');
             $table->enum('status', ['menunggu', 'terkirim'])->default('menunggu');
             $table->timestamp('terkirim_at')->nullable();
             $table->timestamps();

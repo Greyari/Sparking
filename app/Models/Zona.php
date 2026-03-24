@@ -13,7 +13,8 @@ class Zona extends Model
     protected $fillable = [
         'nama_zona',
         'keterangan',
-        'fotozona'];
+        'fotozona'
+    ];
 
     public function subzonas()
     {

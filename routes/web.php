@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminSubZonaController;
+use App\Http\Controllers\NotifikasiSlotController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
@@ -11,7 +12,6 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminZonaController;
 use App\Http\Controllers\AdminAnalysisController;
-use App\Http\Controllers\SearchController;
 use App\Http\Controllers\AdminSlotController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\OnboardingController;
@@ -58,12 +58,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
         Route::post('/change-password', [SettingsController::class, 'changePassword'])->name('change.password');
 
-
         //Email ubah kata sandi
         Route::get('/reset-password/{token}/{id}', [SettingsController::class, 'showResetForm'])->middleware('signed')->name('password.reset');
         Route::post('/send-reset-link', [SettingsController::class, 'sendResetLink'])->name('password.email');
         Route::post('/reset-password', [SettingsController::class, 'reset'])->name('password.update');
 
+        // Notifikasi slot
+        Route::post('/notifikasi-slot/daftar', [NotifikasiSlotController::class, 'daftar'])->name('notifikasi.daftar');
+        Route::post('/notifikasi-slot/batal', [NotifikasiSlotController::class, 'batal'])->name('notifikasi.batal');
+        Route::get('/notifikasi-slot/status', [NotifikasiSlotController::class, 'status'])->name('notifikasi.status');
     });
 
     // Route untuk admin

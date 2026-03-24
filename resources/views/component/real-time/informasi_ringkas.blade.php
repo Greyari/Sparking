@@ -35,20 +35,45 @@
                     $colorIndex = $index % count($zoneColors);
                     $bgClass = $zoneColors[$colorIndex];
                 @endphp
+
                 <div id="zona-{{ $zone->id }}" class="relative overflow-hidden bg-gradient-to-br {{ $bgClass }} p-5 rounded-xl shadow-md text-white transform transition-all duration-300 hover:scale-[1.03] hover:shadow-xl group">
                     <div class="absolute top-0 right-0 w-16 h-16 -mr-5 -mt-5 rounded-full opacity-20 group-hover:opacity-30 transition-opacity duration-300"></div>
                     <div class="relative z-10">
+
+                        {{-- Header zona --}}
                         <div class="flex items-start justify-between">
                             <h3 class="text-xl font-bold truncate">{{ $zone->nama_zona ?? 'Zona ' . ($index + 1) }}</h3>
                             <span id="percentage-zona-{{ $zone->id }}" class="px-2 py-1 text-xs font-bold bg-white bg-opacity-20 rounded-full">{{ $percentage }}%</span>
                         </div>
+
+                        {{-- Info slot --}}
                         <div class="mt-4">
                             <p class="text-sm opacity-90">Slot Tersedia</p>
                             <div class="flex items-end justify-between mt-1">
                                 <span id="available-zona-{{ $zone->id }}" class="text-3xl font-bold">{{ $available }}</span>
-                                <span id="total-zona-{{$zone->id}}" class="text-sm opacity-80">/{{ $total }} total</span>
+                                <span id="total-zona-{{ $zone->id }}" class="text-sm opacity-80">/{{ $total }} total</span>
                             </div>
                         </div>
+
+                        {{-- Tombol notifikasi --}}
+                        @auth
+                        <div class="mt-4 pt-3 border-t border-white border-opacity-30">
+                            <button
+                                id="btn-notif-{{ $zone->id }}"
+                                data-terdaftar="false"
+                                onclick="toggleNotifikasi({{ $zone->id }}, this)"
+                                class="w-full py-2 px-3 rounded-lg text-xs font-semibold transition-all duration-300
+                                       bg-white bg-opacity-20 hover:bg-opacity-30 text-white border border-white border-opacity-40
+                                       flex items-center justify-center gap-2 {{ $available > 0 ? 'hidden' : '' }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                </svg>
+                                <span id="btn-notif-text-{{ $zone->id }}">🔕 Beritahu Saya</span>
+                            </button>
+                        </div>
+                        @endauth
+
                     </div>
                 </div>
             @endforeach
@@ -67,45 +92,106 @@
     @endif
 </div>
 
+{{-- SATU script gabungan, tidak ada duplikasi --}}
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Fungsi untuk memperbarui UI setiap zona
-        function updateUI(zonaId, tersedia, total) {
-        const availableEl = document.getElementById(`available-zona-${zonaId}`);
-        const percentageEl = document.getElementById(`percentage-zona-${zonaId}`);
-        const totalEl = document.getElementById(`total-zona-${zonaId}`);
+    document.addEventListener('DOMContentLoaded', function () {
 
-        if (!availableEl || !percentageEl || !totalEl) {
-            console.warn(`Elemen untuk zona ${zonaId} belum lengkap di DOM.`);
-            return;
-        }
+        // Cek status notifikasi semua tombol saat pertama load
+        document.querySelectorAll('[id^="btn-notif-"]').forEach(btn => {
+            const zonaId = btn.id.replace('btn-notif-', '');
+            cekStatusNotifikasi(zonaId);
+        });
+
+        // Polling realtime setiap 5 detik
+        realtimeUpdate();
+        setInterval(realtimeUpdate, 5000);
+    });
+
+    // ─── Realtime polling ────────────────────────────────────────
+    function realtimeUpdate() {
+        fetch('/api/zona-slot')
+            .then(res => res.json())
+            .then(data => {
+                data.forEach(zona => updateUI(zona.id, zona.tersedia, zona.total));
+            })
+            .catch(err => console.error('Gagal mengambil data zona:', err));
+    }
+
+    function updateUI(zonaId, tersedia, total) {
+        const availableEl  = document.getElementById(`available-zona-${zonaId}`);
+        const percentageEl = document.getElementById(`percentage-zona-${zonaId}`);
+        const totalEl      = document.getElementById(`total-zona-${zonaId}`);
+        const btnNotif     = document.getElementById(`btn-notif-${zonaId}`);
+
+        if (!availableEl || !percentageEl || !totalEl) return;
 
         const percentage = total === 0 ? 0 : Math.round((tersedia / total) * 100);
+        availableEl.textContent  = tersedia;
+        percentageEl.textContent = percentage + '%';
+        totalEl.textContent      = `/${total} total`;
 
-        availableEl.textContent = tersedia;
-        percentageEl.textContent = percentage + "%";
-        totalEl.textContent = `/${total} total`;
-
-        console.log(`Updating zona ${zonaId}: tersedia = ${tersedia}, total = ${total}, persentase = ${percentage}%`);
+        // Show/hide tombol notifikasi berdasarkan ketersediaan slot
+        if (btnNotif) {
+            if (tersedia === 0) {
+                btnNotif.classList.remove('hidden'); // penuh → tampilkan tombol
+            } else {
+                btnNotif.classList.add('hidden');    // ada slot → sembunyikan
+            }
+        }
     }
 
+    // ─── Notifikasi ──────────────────────────────────────────────
+    function cekStatusNotifikasi(zonaId) {
+        fetch(`/notifikasi-slot/status?zona_id=${zonaId}`)
+            .then(res => res.json())
+            .then(data => updateTombolNotifikasi(zonaId, data.terdaftar))
+            .catch(console.error);
+    }
 
-    // Fungsi polling untuk update realtime data zona
-    function realtimeUpdate() {
-    fetch("/api/zona-slot")
-        .then(response => response.json())
-        .then(data => {
-        data.forEach(zona => {
-            updateUI(zona.id, zona.tersedia, zona.total);
-        });
+    function toggleNotifikasi(zonaId, btn) {
+        const terdaftar = btn.dataset.terdaftar === 'true';
+        const url = terdaftar ? '/notifikasi-slot/batal' : '/notifikasi-slot/daftar';
+
+        btn.disabled = true;
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            },
+            body: JSON.stringify({ zona_id: zonaId }),
         })
-        .catch(err => {
-        console.error("Gagal mengambil data zona:", err);
-        });
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                updateTombolNotifikasi(zonaId, !terdaftar);
+                showToast(data.message, 'success');
+            } else {
+                showToast(data.message, 'error');
+            }
+        })
+        .catch(() => showToast('Terjadi kesalahan, coba lagi.', 'error'))
+        .finally(() => { btn.disabled = false; });
     }
 
-    // Mulai polling setiap 5 detik setelah halaman siap
-    realtimeUpdate(); // Update pertama saat load
-    setInterval(realtimeUpdate, 5000);
-    });
+    function updateTombolNotifikasi(zonaId, terdaftar) {
+        const btn  = document.getElementById(`btn-notif-${zonaId}`);
+        const text = document.getElementById(`btn-notif-text-${zonaId}`);
+        if (!btn || !text) return;
+
+        btn.dataset.terdaftar = String(terdaftar);
+        text.textContent = terdaftar ? '🔔 Notifikasi Aktif' : '🔕 Beritahu Saya';
+    }
+
+    // ─── Toast ───────────────────────────────────────────────────
+    function showToast(message, type = 'success') {
+        const toast = document.createElement('div');
+        toast.className = `fixed bottom-5 right-5 z-50 px-5 py-3 rounded-xl text-white text-sm shadow-lg transition-all duration-300 ${
+            type === 'success' ? 'bg-green-500' : 'bg-red-500'
+        }`;
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3500);
+    }
 </script>
