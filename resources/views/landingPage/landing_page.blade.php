@@ -1,9 +1,9 @@
 @extends('layout.mainUser')
 
-@include('component/headerLanding')
+@include('landingPage.component.headerLanding')
 
 @section('main')
-    @include('component.auth.modal_login_regis')
+    @include('landingPage.component.modal_login_regis')
 
     <section class="relative h-[calc(100vh-4rem)]">
         <!-- Hero Section (hanya satu) -->
@@ -24,8 +24,8 @@
     </section>
 
     <!-- Konten lainnya tetap sama -->
-    @include('component.success-error')
-    @include('component.lending_page.tentang_kami')
-    @include('component.lending_page.keunggulan')
-    @include('component/footerUser')
+    @include('landingPage.component.success-error')
+    @include('landingPage.component.tentang_kami')
+    @include('landingPage.component.keunggulan')
+    @include('landingPage.component.footerLanding')
 @endsection

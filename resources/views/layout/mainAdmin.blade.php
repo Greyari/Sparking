@@ -30,14 +30,14 @@
     <div class="flex h-full overflow-y-auto">
         <!-- Sidebar -->
         <div class="md:w-64 xl:w-[19rem]">
-            @include('component/sidebar')
+            @include('admin.component.sidebarAdmin')
         </div>
 
         <!-- Main Content -->
         <div class="flex flex-col flex-grow">
             <!-- Header -->
             <div class="grid grid-cols-5 p-5 border-b-4">
-                @include('component/headerAdmin')
+                @include('admin.component.headerAdmin')
             </div>
 
             <!-- Content -->

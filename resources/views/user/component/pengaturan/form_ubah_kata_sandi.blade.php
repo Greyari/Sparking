@@ -4,7 +4,7 @@
 <script src="{{ asset('js/form_ubah_kata_sandi.js') }}"></script>
 
 <body class="min-h-screen flex items-center justify-center p-4">
-    @include('component.success-error')
+    @include('user.component.success-error')
 
     <div class="card bg-white rounded-xl p-8 w-full max-w-md">
         <div class="text-center mb-8">

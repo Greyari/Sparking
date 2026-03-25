@@ -58,7 +58,7 @@ class RealTimeController extends Controller
         $totalSubzona = $zonas->sum(fn($zona) => $zona->subzonas->count());
         $totalSlot = Slot::count();
 
-        return view('realTime', [
+        return view('user.realTime', [
             'zonas' => $zonas,
             'selectedZona' => $selectedZona,
             'selectedZonaId' => $selectedZonaId,

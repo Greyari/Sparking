@@ -10,7 +10,7 @@ class DashboardController extends Controller
             return redirect()->route('onboarding.show');
         }
 
-        return view('dashboard', [
+        return view('user.dashboard', [
             'title' => 'dashboard',
         ]);
     }

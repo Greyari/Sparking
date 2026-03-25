@@ -1,6 +1,6 @@
 @extends('layout.mainUser')
 
-@include('component.headerUser')
+@include('user.component.headerUser')
 
 @section('main')
 <div class="min-h-[calc(100vh-80px)] bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
@@ -8,7 +8,7 @@
         <div class="flex flex-col gap-6 p-6">
 
             <div class="mb-3 w-max">
-                <a href="{{ route('dashboard') }}"
+                <a href="{{ route('user-dashboard') }}"
                     class="inline-flex items-center bg-white hover:bg-gray-50 border border-gray-200 text-gray-700 px-4 py-2 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-x-0.5">
                     <i class="mr-2 text-gray-500 fas fa-arrow-left"></i>
                     Kembali
@@ -33,8 +33,8 @@
                 </div>
             </div>
 
-            @include('component.real-time.informasi_ringkas')
-            @include('component.real-time.informasi_detail')
+            @include('user.component.real-time.informasi_ringkas')
+            @include('user.component.real-time.informasi_detail')
 
             <!-- Image Modal -->
             <div id="imageModal" class="fixed inset-0 z-50 items-center justify-center hidden p-4 bg-black bg-opacity-90 animate-fadeIn">

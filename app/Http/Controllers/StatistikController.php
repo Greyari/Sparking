@@ -94,7 +94,7 @@ class StatistikController extends Controller
         $durasiFormat = sprintf('%02d jam %02d menit', $jam, $menit);
 
         // Kirim data ke view
-        return view('statistik', [
+        return view('user.statistik', [
             'title' => "Statistik",
             'zonas' => $zonas,
             'jamSibuk' => $jumlahPerSlotPerHari,

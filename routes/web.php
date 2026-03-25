@@ -38,7 +38,7 @@ Route::middleware(['auth'])->group(function () {
     // Route untuk user
     Route::middleware('role:user')->group(function () {
         //Dashboard
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('user-dashboard');
 
         //Update Foto Kendaran
         Route::post('/profil/update-foto-kendaraan', [SettingsController::class, 'updateFotoKendaraan'])->name('profil.update.foto.kendaraan');

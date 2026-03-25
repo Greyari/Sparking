@@ -1,12 +1,12 @@
 @extends('layout.mainUser')
-@include('component.headerUser')
+@include('user.component.headerUser')
 
 @section('main')
 <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 md:p-8">
     <div class="max-w-4xl mx-auto space-y-6">
 
         <div class="mb-3 w-max">
-            <a href="{{ route('dashboard') }}"
+            <a href="{{ route('user-dashboard') }}"
                 class="inline-flex items-center bg-white hover:bg-gray-50 border border-gray-200 text-gray-700 px-4 py-2 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-x-0.5">
                 <i class="fas fa-arrow-left mr-2 text-gray-500"></i>
                 Kembali
@@ -26,7 +26,6 @@
                             <option value="{{ $zona->id }}">{{ $zona->nama_zona }}</option>
                         @endforeach
                     </select>
-
                 </div>
             </div>
         </div>
@@ -64,7 +63,7 @@
             </div>
         </div>
 
-        @include('component.statistik.jam_sibuk')
+        @include('user.component.statistik.jam_sibuk')
 
     </div>
 </div>

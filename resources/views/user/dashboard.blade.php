@@ -1,6 +1,6 @@
 @extends('layout.mainUser')
 
-@include('component.headerUser')
+@include('user.component.headerUser')
 
 @section('main')
 <div class="min-h-[calc(100vh-80px)] bg-gradient-to-br from-blue-50 to-indigo-100 p-4 md:p-8 flex items-center justify-center transition-colors duration-300">

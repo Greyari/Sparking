@@ -105,7 +105,7 @@
                 </div>
             </div>
 
-            @include('component/real-time/tampilkan_sub_zona')
+            @include('user.component.real-time.tampilkan_sub_zona')
 
         </div>
     </div>
