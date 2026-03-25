@@ -105,4 +105,42 @@ class BrevoMailService
 
         return true;
     }
+
+    /**
+     * Kirim email verifikasi akun baru.
+     */
+    public function sendVerificationEmail(string $toEmail, string $toName, string $verificationUrl): bool
+    {
+        // Render blade template yang sudah ada
+        $htmlContent = view('email.verifikasi', [
+            'nama' => $toName,
+            'url'  => $verificationUrl,
+        ])->render();
+
+        $response = Http::withHeaders([
+            'api-key'      => $this->apiKey,
+            'Content-Type' => 'application/json',
+        ])->post('https://api.brevo.com/v3/smtp/email', [
+            'sender' => [
+                'email' => $this->fromEmail,
+                'name'  => $this->fromName,
+            ],
+            'to' => [
+                ['email' => $toEmail, 'name' => $toName]
+            ],
+            'subject'     => '✅ Verifikasi Email Anda di SPARKING',
+            'htmlContent' => $htmlContent,
+        ]);
+
+        if ($response->failed()) {
+            Log::error('Brevo gagal kirim email verifikasi', [
+                'email'  => $toEmail,
+                'status' => $response->status(),
+                'body'   => $response->body(),
+            ]);
+            return false;
+        }
+
+        return true;
+    }
 }

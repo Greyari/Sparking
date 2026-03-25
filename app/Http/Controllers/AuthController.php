@@ -4,13 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Notifications\VerifikasiEmail;
+use App\Services\BrevoMailService;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
+    protected BrevoMailService $brevo;
+
+    public function __construct(BrevoMailService $brevo)
+    {
+        $this->brevo = $brevo;
+    }
+
     public function login_proses(Request $request)
     {
         $request->validate([
@@ -59,49 +68,56 @@ class AuthController extends Controller
     {
         try {
             $validated = $request->validate([
-                'email' => 'required|unique:user,email|email',
-                'nama' => 'required',
+                'email'    => 'required|unique:users,email|email',
+                'nama'     => 'required',
                 'password' => 'required|confirmed',
             ], [
-                'nama.required' => 'Nama Lengkap harus diisi',
-                'email.required' => 'Email harus diisi',
-                'email.unique' => 'Email sudah terdaftar',
-                'email.email' => 'Format email tidak valid',
-                'password.required' => 'Password wajib diisi',
+                'nama.required'      => 'Nama Lengkap harus diisi',
+                'email.required'     => 'Email harus diisi',
+                'email.unique'       => 'Email sudah terdaftar',
+                'email.email'        => 'Format email tidak valid',
+                'password.required'  => 'Password wajib diisi',
                 'password.confirmed' => 'Konfirmasi password tidak cocok',
             ]);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            $errorMessage = collect($e->validator->errors()->all())->first();
-
+        } catch (ValidationException $e) {
             return back()
                 ->withInput()
-                ->with('error', $errorMessage)
+                ->with('error', collect($e->validator->errors()->all())->first())
                 ->with('showModalError', true);
         }
 
-        $store = [
-            'email' => $validated['email'],
-            'nama' => $validated['nama'],
-            'password' => Hash::make($validated['password']),
-            'onboarding_step' => 0,
+        $user = User::create([
+            'email'                => $validated['email'],
+            'nama'                 => $validated['nama'],
+            'password'             => Hash::make($validated['password']),
+            'onboarding_step'      => 0,
             'onboarding_completed' => false,
-        ];
-
-        $user = User::create($store);
+        ]);
 
         if ($user) {
-            $user->notify(new VerifikasiEmail());
+            $verificationUrl = URL::temporarySignedRoute(
+                'verification.verify',
+                now()->addMinutes(60),
+                ['id' => $user->id, 'hash' => sha1($user->email)]
+            );
+
+            // Kirim via Brevo
+            $this->brevo->sendVerificationEmail(
+                $user->email,
+                $user->nama,
+                $verificationUrl
+            );
 
             return redirect()
                 ->route('login')
                 ->with('success', 'Pendaftaran berhasil. Silakan periksa email Anda untuk verifikasi.')
                 ->with('showVerificationModal', true);
-        } else {
-            return back()
-                ->withInput()
-                ->with('error', 'Pendaftaran gagal')
-                ->with('showModalError', true);
         }
+
+        return back()
+            ->withInput()
+            ->with('error', 'Pendaftaran gagal')
+            ->with('showModalError', true);
     }
 
     public function verifyEmail($id, $hash)
@@ -123,15 +139,12 @@ class AuthController extends Controller
         return redirect()->route('login')->with('success', 'Akun anda sudah diverifikasi dan siap digunakan!');
     }
 
-
     public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
+
         return redirect()->route('login')->with('succes', 'Logout Berhasil');
     }
-
-
 }
