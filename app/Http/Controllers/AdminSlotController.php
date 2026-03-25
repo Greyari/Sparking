@@ -7,6 +7,7 @@ use App\Models\Zona;
 use App\Models\SubZona;
 use App\Models\Slot;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class AdminSlotController extends Controller
 {
@@ -67,43 +68,32 @@ class AdminSlotController extends Controller
 
     public function store(Request $request)
     {
-        // Validate the incoming request data
-        $validatedData = $request->validate([
-            'subzona_id' => 'required|exists:subzona,id',
-            'nomor_slot' => [
-                'required',
-                'integer',
-                'min:1',
-                Rule::unique('slot', 'nomor_slot')->where(function ($query) use ($request) {
-                    return $query->where('subzona_id', $request->subzona_id);
-                })
-            ],
-
-            'keterangan' => 'required|in:Tersedia,Terisi,Perbaikan',
-
-        ], [
-            // Custom error messages
-            'subzona_id.required' => 'Sub-zona wajib diisi.',
-            'subzona_id.exists' => 'Sub-zona yang dipilih tidak valid.',
-            'nomor_slot.required' => 'Nomor slot harus diisi.',
-            'nomor_slot.integer' => 'Nomor slot harus berupa angka.',
-            'nomor_slot.min' => 'Nomor slot minimal adalah 1.',
-            'nomor_slot.unique' => 'Nomor slot ini sudah terdaftar pada sub-zona yang dipilih.',
-            'keterangan.required' => 'Keterangan harus dipilih.',
-            'keterangan.in' => 'Keterangan tidak valid.'
-        ]);
-
         try {
-            // Create the new slot
-            $slot = Slot::create($validatedData);
+            $validatedData = $request->validate([
+                'subzona_id' => 'required|exists:subzona,id',
+                'nomor_slot' => [
+                    'required',
+                    'integer',
+                    'min:1',
+                    Rule::unique('slot', 'nomor_slot')->where(function ($query) use ($request) {
+                        return $query->where('subzona_id', $request->subzona_id);
+                    })
+                ],
+                'keterangan' => 'required|in:Tersedia,Terisi,Perbaikan',
+            ]);
+
+            Slot::create($validatedData);
 
             return redirect()->back()->with('success', 'Slot berhasil ditambahkan');
 
-        } catch (\Exception $e) {
-            // Handle any unexpected errors
+        } catch (ValidationException $e) {
             return redirect()->back()
                 ->withInput()
-                ->with('error', 'Terjadi kesalahan saat menambahkan slot: ' . $e->getMessage());
+                ->with('error', implode(' ', $e->validator->errors()->all()));
+
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
 
@@ -111,37 +101,40 @@ class AdminSlotController extends Controller
     {
         $slot = Slot::findOrFail($id);
 
-        $validatedData = $request->validate([
-            'nomor_slot' => [
-                'required',
-                'integer',
-                'min:1',
-                // Unique validation for slot number within the specific subzona
-                Rule::unique('slot', 'nomor_slot')->where(function ($query) use ($request) {
-                    return $query->where('subzona_id', $request->subzona_id);
-                })
-            ],
-            'keterangan' => 'required|in:Tersedia,Terisi,Perbaikan',
-            'x1' => 'required|integer|min:0',
-            'y1' => 'required|integer|min:0',
-            'x2' => 'required|integer|min:0',
-            'y2' => 'required|integer|min:0',
-            'x3' => 'required|integer|min:0',
-            'y3' => 'required|integer|min:0',
-            'x4' => 'required|integer|min:0',
-            'y4' => 'required|integer|min:0',
-        ], [
-            'nomor_slot.required' => 'Nomor slot harus diisi.',
-            'nomor_slot.integer' => 'Nomor slot harus berupa angka.',
-            'nomor_slot.min' => 'Nomor slot minimal adalah 1.',
-            'nomor_slot.unique' => 'Nomor slot ini sudah terdaftar pada sub-zona yang dipilih.',
-            'keterangan.required' => 'Keterangan harus dipilih.',
-            'keterangan.in' => 'Keterangan tidak valid.'
-        ]);
+        try {
+            $validatedData = $request->validate([
+                'nomor_slot' => [
+                    'required',
+                    'integer',
+                    'min:1',
+                    Rule::unique('slot', 'nomor_slot')->where(function ($query) use ($request) {
+                        return $query->where('subzona_id', $request->subzona_id);
+                    })->ignore($slot->id)
+                ],
+                'keterangan' => 'required|in:Tersedia,Terisi,Perbaikan',
+                'x1' => 'required|integer|min:0',
+                'y1' => 'required|integer|min:0',
+                'x2' => 'required|integer|min:0',
+                'y2' => 'required|integer|min:0',
+                'x3' => 'required|integer|min:0',
+                'y3' => 'required|integer|min:0',
+                'x4' => 'required|integer|min:0',
+                'y4' => 'required|integer|min:0',
+            ]);
 
-        $slot->update($validatedData);
+            $slot->update($validatedData);
 
-        return redirect()->route('admin-slot')->with('success', 'Slot berhasil diupdate');
+            return redirect()->route('admin-slot')->with('success', 'Slot berhasil diupdate');
+
+        } catch (ValidationException $e) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', implode(' ', $e->validator->errors()->all()));
+
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 
     public function destroy($id)

@@ -1,6 +1,9 @@
 @extends('layout/mainAdmin')
 
 @section('main')
+    <!-- Modal Alert -->
+    @include('admin.component.success-error')
+
     <div class="flex flex-col p-6 -ml-5 space-y-4 -mt-7">
         <!-- dropdown pilih zona -->
         <div class="ml-10 dropdown">
@@ -54,14 +57,6 @@
 
         <!-- tabel slot -->
         <div class="grid w-9/12 grid-cols-1 px-5 mx-6">
-
-            @if (session('success'))
-                <div class="p-4 mb-4 text-sm text-green-800 bg-green-400 rounded-lg dark:bg-gray-800 dark:text-green-400"
-                    role="alert">
-                    <span class="font-medium">Success!</span> {{ session('success') }}
-                </div>
-            @endif
-
             <table class="text-sm font-medium">
                 <thead class="bg-[#95AFE5]">
                     <tr>
@@ -101,27 +96,6 @@
                     @endforelse
                 </tbody>
             </table>
-
-            <!-- Pop-Up Error Message -->
-            <div id="validation-popup" class="fixed inset-x-0 z-50 flex justify-center hidden top-5">
-                <div
-                    class="relative w-full max-w-sm p-6 bg-white border-l-4 border-red-500 rounded-lg shadow-lg shadow-red-500/80">
-                    <div class="flex items-center">
-                        <svg class="w-6 h-6 text-red-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                            stroke-width="2" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.054 0 1.63-1.08.928-1.918l-6.928-8.562a1.25 1.25 0 00-1.856 0l-6.928 8.562c-.702.838-.126 1.918.928 1.918z" />
-                        </svg>
-                        <span class="ml-3 text-sm font-medium text-gray-900" id="popup-message"></span>
-                    </div>
-                    <button onclick="closePopup()" class="absolute text-gray-500 top-2 right-2 hover:text-gray-700">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
         </div>
 
         <!-- Modal Tambah Slot -->
@@ -417,24 +391,4 @@
             </div>
         @endforeach
     </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const errors = @json($errors->all());
-            if (errors.length > 0) {
-                const popup = document.getElementById("validation-popup");
-                const messageContainer = document.getElementById("popup-message");
-
-                // Set error messages
-                messageContainer.innerHTML = errors.map(error => `<p>${error}</p>`).join("");
-
-                // Show the popup
-                popup.classList.remove("hidden");
-            }
-        });
-
-        function closePopup() {
-            document.getElementById("validation-popup").classList.add("hidden");
-        }
-    </script>
 @endsection
