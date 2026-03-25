@@ -184,14 +184,71 @@
         text.textContent = terdaftar ? '🔔 Notifikasi Aktif' : '🔕 Beritahu Saya';
     }
 
-    // ─── Toast ───────────────────────────────────────────────────
+    // // ─── Toast ───────────────────────────────────────────────────
     function showToast(message, type = 'success') {
-        const toast = document.createElement('div');
-        toast.className = `fixed bottom-5 right-5 z-50 px-5 py-3 rounded-xl text-white text-sm shadow-lg transition-all duration-300 ${
-            type === 'success' ? 'bg-green-500' : 'bg-red-500'
-        }`;
-        toast.textContent = message;
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 3500);
+        if (type === 'success') {
+            // Buat modal success dinamis
+            const modal = document.createElement('div');
+            modal.id = 'modalSuccess';
+            modal.className = 'fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 backdrop-blur-sm transition-opacity duration-300 opacity-0';
+            modal.innerHTML = `
+                <div class="bg-white p-8 rounded-xl shadow-2xl text-center max-w-md w-full mx-4 animate-bounce-in">
+                    <div class="h-1.5 bg-gray-200 rounded-full mb-6 overflow-hidden">
+                        <div id="successProgress" class="h-full bg-green-500 rounded-full" style="width: 100%; transition: width 3s linear;"></div>
+                    </div>
+                    <div class="flex justify-center mb-4">
+                        <svg class="w-16 h-16 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-3xl font-bold mb-4 text-green-600">Berhasil!</h2>
+                    <p class="text-gray-700 mb-6 text-lg">${message}</p>
+                    <button onclick="fadeOutModal('modalSuccess')"
+                        class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors duration-300 font-medium text-lg shadow-md">
+                        Tutup
+                    </button>
+                </div>`;
+            document.body.appendChild(modal);
+
+        } else {
+            // Buat modal error dinamis
+            const modal = document.createElement('div');
+            modal.id = 'modalError';
+            modal.className = 'fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 backdrop-blur-sm transition-opacity duration-300 opacity-0';
+            modal.innerHTML = `
+                <div class="bg-white p-8 rounded-xl shadow-2xl text-center max-w-md w-full mx-4 animate-bounce-in">
+                    <div class="h-1.5 bg-gray-200 rounded-full mb-6 overflow-hidden">
+                        <div id="errorProgress" class="h-full bg-red-500 rounded-full" style="width: 100%; transition: width 3s linear;"></div>
+                    </div>
+                    <div class="flex justify-center mb-4">
+                        <svg class="w-16 h-16 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-3xl font-bold mb-4 text-red-600">Gagal!</h2>
+                    <p class="text-gray-700 mb-6 text-lg">${message}</p>
+                    <button onclick="fadeOutModal('modalError')"
+                        class="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors duration-300 font-medium text-lg shadow-md">
+                        Tutup
+                    </button>
+                </div>`;
+            document.body.appendChild(modal);
+        }
+
+        // Tampilkan modal dengan animasi
+        const modalId = type === 'success' ? 'modalSuccess' : 'modalError';
+        const progressId = type === 'success' ? 'successProgress' : 'errorProgress';
+
+        setTimeout(() => {
+            document.getElementById(modalId)?.classList.remove('opacity-0');
+        }, 10);
+
+        setTimeout(() => {
+            const progress = document.getElementById(progressId);
+            if (progress) progress.style.width = '0%';
+        }, 50);
+
+        // Tutup otomatis setelah 3 detik
+        setTimeout(() => fadeOutModal(modalId), 3050);
     }
 </script>
