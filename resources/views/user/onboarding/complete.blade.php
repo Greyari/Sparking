@@ -31,7 +31,7 @@
 
             <!-- Dashboard Button -->
             <div class="animate-fade-in-down delay-300">
-            <a href="{{ route('dashboard') }}"
+            <a href="{{ route('user-dashboard') }}"
             class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-base rounded-xl font-semibold hover:from-blue-700 hover:to-indigo-800 transition-all duration-300 transform hover:scale-[1.02] shadow-md">
                 Mulai Menggunakan SPARKING
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 -mr-1" viewBox="0 0 20 20" fill="currentColor">

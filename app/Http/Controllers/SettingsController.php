@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Notifications\UbahpasswordEmail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Password;
 
@@ -110,7 +109,7 @@ class SettingsController extends Controller
         return response()->json(['message' => 'Link reset telah dikirim ke email.']);
     }
 
-    public function showResetForm(Request $request, $token, $id)
+    public function showResetForm($token, $id)
     {
         $user = User::findOrFail($id);
 
@@ -133,7 +132,7 @@ class SettingsController extends Controller
             'password.confirmed' => 'Konfirmasi kata sandi tidak sesuai.',
         ]);
 
-        $user = \App\Models\User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->first();
 
         if ($user && Hash::check($request->password, $user->password)) {
             return back()->withErrors([

@@ -15,12 +15,7 @@ use App\Http\Controllers\AdminAnalysisController;
 use App\Http\Controllers\AdminSlotController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\OnboardingController;
-use Illuminate\Support\Facades\Artisan;
 
-Route::get('/run-migrate', function () {
-    Artisan::call('migrate', ['--force' => true]);
-    return '✅ Migrasi berhasil dijalankan!';
-});
 
 // landing Page
 Route::get('/', [LandingPageController::class, 'index'])->name('login');
@@ -40,8 +35,10 @@ Route::middleware(['auth'])->group(function () {
         //Dashboard
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('user-dashboard');
 
-        //Update Foto Kendaran
-        Route::post('/profil/update-foto-kendaraan', [SettingsController::class, 'updateFotoKendaraan'])->name('profil.update.foto.kendaraan');
+        // Onboarding
+        Route::get('/onboarding', [OnboardingController::class, 'show'])->name('onboarding.show');
+        Route::post('/onboarding/next', [OnboardingController::class, 'nextStep'])->name('onboarding.next');
+        Route::post('/onboarding', [OnboardingController::class, 'update'])->name('onboarding.update');
 
         //real rime
         Route::get('/real-time', [RealTimeController::class, 'index'])->name('real-time');
@@ -49,16 +46,10 @@ Route::middleware(['auth'])->group(function () {
         //analysis
         Route::get('/statistik', [StatistikController::class, 'index'])->name('statistik');
 
-        // Onboarding
-        Route::get('/onboarding', [OnboardingController::class, 'show'])->name('onboarding.show');
-        Route::post('/onboarding/next', [OnboardingController::class, 'nextStep'])->name('onboarding.next');
-        Route::post('/onboarding', [OnboardingController::class, 'update'])->name('onboarding.update');
-
-        //ubah kata sandi
+        //setting
         Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
         Route::post('/change-password', [SettingsController::class, 'changePassword'])->name('change.password');
-
-        //Email ubah kata sandi
+        Route::post('/profil/update-foto-kendaraan', [SettingsController::class, 'updateFotoKendaraan'])->name('profil.update.foto.kendaraan');
         Route::get('/reset-password/{token}/{id}', [SettingsController::class, 'showResetForm'])->middleware('signed')->name('password.reset');
         Route::post('/send-reset-link', [SettingsController::class, 'sendResetLink'])->name('password.email');
         Route::post('/reset-password', [SettingsController::class, 'reset'])->name('password.update');
@@ -75,6 +66,7 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('admin')->group(function () {
             // dashboard
             Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin-dashboard');
+            
             // user
             Route::get('/users', [AdminUserController::class, 'index'])->name('admin-users');
             Route::delete('/users/{id}', [AdminUserController::class, 'delete'])->name('users.delete');

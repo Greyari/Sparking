@@ -20,20 +20,20 @@ class OnboardingController extends Controller
 
         // Menampilkan view berdasarkan step
         if ($user->onboarding_step === 0) {
-            return view('onboarding.welcome', ['title' => 'Selamat Datang di SPARKING']);
+            return view('user.onboarding.welcome', ['title' => 'Selamat Datang di SPARKING']);
         } elseif ($user->onboarding_step === 1) {
-            return view('onboarding.step1', ['title' => 'Pilih Jenis User']);
+            return view('user.onboarding.step1', ['title' => 'Pilih Jenis User']);
         } elseif ($user->onboarding_step === 2) {
-            return view('onboarding.step2', ['title' => 'Upload Foto Profil']);
+            return view('user.onboarding.step2', ['title' => 'Upload Foto Profil']);
         } elseif ($user->onboarding_step === 3) {
-            return view('onboarding.step3', ['title' => 'Pilih Kendaraan']);
+            return view('user.onboarding.step3', ['title' => 'Pilih Kendaraan']);
         } elseif ($user->onboarding_step === 4) {
-            return view('onboarding.step4', ['title' => 'Upload Foto Kendaraan']);
+            return view('user.onboarding.step4', ['title' => 'Upload Foto Kendaraan']);
         } elseif ($user->onboarding_step === 5) {
-            return view('onboarding.step5', ['title' => 'Plat Kendaraan']);
+            return view('user.onboarding.step5', ['title' => 'Plat Kendaraan']);
         } else {
             $user->update(['onboarding_completed' => true]);
-            return view('onboarding.complete', ['title' => 'Onboarding Selesai']);
+            return view('user.onboarding.complete', ['title' => 'Onboarding Selesai']);
         }
     }
 
