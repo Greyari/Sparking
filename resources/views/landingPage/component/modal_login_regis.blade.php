@@ -24,19 +24,18 @@
             </div>
         </div>
 
-        <!-- Form Container (kanan) — wrapper relatif -->
+        <!-- Form Container (kanan) -->
         <div class="relative w-full md:w-1/2 h-full overflow-hidden">
 
             {{-- Gambar background --}}
             <img src="img/login.jpg" alt="Login Image"
                 class="absolute inset-0 object-cover w-full h-full" />
 
-            {{-- Slider — id hanya satu di sini --}}
-            <div class="absolute inset-0 flex transition-transform duration-500 ease-in-out" id="formSlider"
-                 style="width: 200%;">
+            {{-- ↓↓↓ DIUBAH: hapus style width 200% dan id formSlider --}}
+            <div class="absolute inset-0" id="formSlider">
 
-                <!-- Login Form -->
-                <div class="flex items-center justify-center h-full p-10" style="width: 50%; flex-shrink: 0;">
+                <!-- ↓↓↓ DIUBAH: hapus style width 50%, tambah id="loginForm" -->
+                <div class="flex items-center justify-center w-full h-full p-10" id="loginForm">
                     <div class="z-20 w-full max-w-md p-4 border border-white shadow-lg bg-white/30 backdrop-blur-md backdrop-saturate-150 md:p-6 rounded-xl">
                         <h2 class="mb-3 text-xl font-extrabold tracking-widest text-center text-white md:text-2xl font-poppins">Login</h2>
                         <form action="{{ route('login_proses') }}" method="POST">
@@ -48,7 +47,7 @@
                                 @error('email')
                                     <div class="mt-1 text-red-500">{{ $message }}</div>
                                 @enderror
-                                <input type="email" placeholder="Email" name="email" value="{{ old('email') }}"
+                                <input type="email" placeholder="Email" name="email" value="{{ old('email') }}" required
                                     class="w-full px-3 py-2 pl-10 text-white border shadow-md bg-white/20 backdrop-blur-md border-white/30 placeholder-white/70 rounded-2xl focus:outline-none focus:ring-1 focus:ring-white focus:border-white/50" />
                             </div>
                             <div class="relative py-2">
@@ -58,7 +57,7 @@
                                 @error('password')
                                     <div class="mt-1 text-red-500">{{ $message }}</div>
                                 @enderror
-                                <input type="password" placeholder="Password" name="password"
+                                <input type="password" placeholder="Password" name="password" required
                                     class="w-full px-3 py-2 pl-10 text-white border shadow-md bg-white/20 backdrop-blur-md border-white/30 placeholder-white/70 rounded-2xl focus:outline-none focus:ring-1 focus:ring-white focus:border-white/50" />
                             </div>
                             <div class="flex flex-col items-center mt-6 mb-2 space-y-2">
@@ -77,8 +76,8 @@
                     </div>
                 </div>
 
-                <!-- Register Form -->
-                <div class="flex items-center justify-center h-full p-10" style="width: 50%; flex-shrink: 0;">
+                <!-- ↓↓↓ DIUBAH: hapus style width 50%, tambah id="registerForm" dan class hidden -->
+                <div class="flex items-center justify-center w-full h-full p-10 hidden" id="registerForm">
                     <div class="z-20 w-full max-w-md p-4 border border-white shadow-lg bg-white/30 backdrop-blur-md backdrop-saturate-150 md:p-6 rounded-xl">
                         <h2 class="mb-3 text-xl font-extrabold tracking-widest text-center text-white md:text-2xl font-poppins">Daftar</h2>
                         <form action="{{ route('registrasi_proses') }}" method="POST">
@@ -133,26 +132,20 @@
     </div>
 </div>
 
+{{-- ↓↓↓ SEMUA SCRIPT DIUBAH --}}
 <script>
-    // Slider otomatis
     document.addEventListener("DOMContentLoaded", function () {
         @if(session('showLogin'))
             const modal = document.getElementById('loginModal');
-            const formSlider = document.getElementById('formSlider');
-            const toggleTitle = document.getElementById('toggleTitle');
-            const toggleButton = document.getElementById('toggleButton');
-            const dots = document.querySelectorAll('.toggle-dot');
-
-            if (modal && formSlider) {
+            if (modal) {
                 modal.classList.remove('hidden');
                 modal.classList.add('flex');
-                formSlider.style.transform = 'translateX(0%)';
-                if (toggleTitle) toggleTitle.innerText = 'Selamat Datang Kembali';
+                document.getElementById('loginForm')?.classList.remove('hidden');
+                document.getElementById('registerForm')?.classList.add('hidden');
+                const toggleTitle  = document.getElementById('toggleTitle');
+                const toggleButton = document.getElementById('toggleButton');
+                if (toggleTitle)  toggleTitle.innerText  = 'Selamat Datang Kembali';
                 if (toggleButton) toggleButton.innerText = 'Belum memiliki akun?';
-                if (dots.length >= 2) {
-                    dots[0].classList.add('active');
-                    dots[1].classList.remove('active');
-                }
             }
         @endif
     });
@@ -174,29 +167,28 @@
     }
 
     function toggleForm() {
-        const formSlider   = document.getElementById('formSlider');
+        const loginForm    = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
         const toggleTitle  = document.getElementById('toggleTitle');
         const toggleButton = document.getElementById('toggleButton');
         const toggleDots   = document.querySelectorAll('.toggle-dot');
 
-        if (!formSlider) return;
+        if (!loginForm || !registerForm) return;
 
-        const isLogin = formSlider.style.transform === 'translateX(0%)' || formSlider.style.transform === '';
+        const isLogin = !loginForm.classList.contains('hidden');
 
         if (isLogin) {
-            formSlider.style.transform = 'translateX(-50%)';
-            if (toggleTitle) toggleTitle.textContent = 'Bergabunglah Dengan Kami';
+            loginForm.classList.add('hidden');
+            registerForm.classList.remove('hidden');
+            if (toggleTitle)  toggleTitle.textContent  = 'Bergabunglah Dengan Kami';
             if (toggleButton) toggleButton.textContent = 'Sudah memiliki akun?';
-            toggleDots.forEach((dot, i) => {
-                dot.classList.toggle('active', i === 1);
-            });
+            toggleDots.forEach((dot, i) => dot.classList.toggle('active', i === 1));
         } else {
-            formSlider.style.transform = 'translateX(0%)';
-            if (toggleTitle) toggleTitle.textContent = 'Selamat Datang Kembali';
+            registerForm.classList.add('hidden');
+            loginForm.classList.remove('hidden');
+            if (toggleTitle)  toggleTitle.textContent  = 'Selamat Datang Kembali';
             if (toggleButton) toggleButton.textContent = 'Belum memiliki akun?';
-            toggleDots.forEach((dot, i) => {
-                dot.classList.toggle('active', i === 0);
-            });
+            toggleDots.forEach((dot, i) => dot.classList.toggle('active', i === 0));
         }
     }
 </script>
