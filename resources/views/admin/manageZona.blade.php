@@ -1,8 +1,7 @@
 @extends('layout/mainAdmin')
 
 @section('main')
-    <!-- Modal Alert -->
-    @include('admin.component.success-error')
+
 
     <div class="flex flex-col p-6 -ml-5 space-y-4 -mt-7">
         <!-- tombol tambah zona -->
