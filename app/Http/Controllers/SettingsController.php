@@ -3,7 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Notifications\UbahpasswordEmail;
+use App\Services\BrevoMailService;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
@@ -11,6 +11,13 @@ use Illuminate\Support\Facades\Password;
 
 class SettingsController extends Controller
 {
+    protected BrevoMailService $brevo;
+
+    public function __construct(BrevoMailService $brevo)
+    {
+        $this->brevo = $brevo;
+    }
+
     public function index()
     {
         $user = Auth::user();
@@ -90,22 +97,23 @@ class SettingsController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if (!$user) {
-            return response()->json(['error' => 'Email tidak ditemukan.'], 404);
-        }
-
-        $token = Password::createToken($user);
-
+        $token    = Password::createToken($user);
         $resetUrl = URL::temporarySignedRoute(
             'password.reset',
             now()->addMinutes(30),
-            [
-                'token' => $token,
-                'id' => $user->id
-            ]
+            ['token' => $token, 'id' => $user->id]
         );
 
-        $user->notify(new UbahpasswordEmail($resetUrl, $user->nama));
+        $berhasil = $this->brevo->sendPasswordResetEmail(
+            $user->email,
+            $user->nama,
+            $resetUrl
+        );
+
+        if (!$berhasil) {
+            return response()->json(['error' => 'Gagal mengirim email.'], 500);
+        }
+
         return response()->json(['message' => 'Link reset telah dikirim ke email.']);
     }
 
@@ -115,7 +123,7 @@ class SettingsController extends Controller
 
         Auth::login($user);
 
-        return view('component.pengaturan.form_ubah_kata_sandi', [
+        return view('user.component.pengaturan.form_ubah_kata_sandi', [
             'token' => $token,
             'email' => $user->email,
             'title' => 'Ubah Kata Sandi'

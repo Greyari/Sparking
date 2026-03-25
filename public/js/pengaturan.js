@@ -19,28 +19,37 @@ function closePasswordResetModal() {
 }
 
 function sendPasswordResetLink() {
-    fetch("{{ route('password.email') }}", {
+    const btn = document.querySelector('[onclick="sendPasswordResetLink()"]');
+    btn.disabled = true;
+    btn.textContent = 'Mengirim...';
+
+    fetch(APP_ROUTES.passwordEmail, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            "Accept": "application/json",
+            "X-CSRF-TOKEN": APP_ROUTES.csrfToken
         },
         body: JSON.stringify({
-            email: "{{ $user->email }}"
+            email: document.getElementById('userEmail').value
         })
     })
-    .then(response => {
-        if (response.ok) {
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
             closePasswordResetModal();
-            openPasswordResetSuccessModal();
+            setTimeout(() => openPasswordResetSuccessModal(), 350);
         } else {
-            return response.json().then(data => {
-                throw new Error(data.message || 'Gagal mengirim email.');
-            });
+            alert(data.error || 'Gagal mengirim email.');
         }
     })
     .catch(error => {
-        alert(error.message);
+        console.error('Error:', error);
+        alert('Terjadi kesalahan, silakan coba lagi.');
+    })
+    .finally(() => {
+        btn.disabled = false;
+        btn.textContent = 'Kirim Link';
     });
 }
 

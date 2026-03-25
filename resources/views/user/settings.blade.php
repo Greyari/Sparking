@@ -30,7 +30,6 @@
                 </div>
             </div>
 
-
             <div class="p-6 pt-16">
                 <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-6 shadow-inner">
                     <div class="flex flex-col lg:flex-row gap-8 items-center">
@@ -97,12 +96,21 @@
 
     </div>
 </div>
+{{-- untuk scrip solf error input email di kirim reset sandi --}}
+<input type="hidden" id="userEmail" value="{{ $user->email }}">
 
 @include('user.component.success-error')
 @include('user.component.pengaturan.perbesar_gambar')
 @include('user.component.pengaturan.ubah_foto_kendaraan')
 @include('user.component.pengaturan.ubah_kata_sandi')
 
+{{-- Pass URL ke JavaScript --}}
+<script>
+    const APP_ROUTES = {
+        passwordEmail: "{{ route('password.email') }}",
+        csrfToken: "{{ csrf_token() }}"
+    };
+</script>
 <script src="{{ asset('js/pengaturan.js') }}"></script>
 
 @endsection
