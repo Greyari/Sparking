@@ -1,12 +1,12 @@
 <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-20 top-[4rem] hidden">
-    <div class="bg-white flex flex-col md:flex-row rounded-3xl w-[95%] md:w-[80%] lg:w-[70%] xl:w-[60%] max-w-4xl relative h-[90%]">
+    <div class="bg-white flex flex-col md:flex-row rounded-3xl w-[95%] md:w-[80%] lg:w-[70%] xl:w-[60%] max-w-4xl relative h-[90%] overflow-hidden">
 
         <!-- Tombol Close -->
         <button onclick="closeModal()" class="absolute z-30 text-xl text-white top-3 left-3 hover:text-red-600">
             <i class="fas fa-times"></i>
         </button>
 
-        <!-- Toggle Section -->
+        <!-- Toggle Section (kiri) -->
         <div class="relative items-center justify-center hidden w-full md:w-1/2 md:flex bg-gradient-to-br from-blue-500 to-purple-600 rounded-t-3xl md:rounded-l-2xl md:rounded-tr-none">
             <div class="z-20 px-8 text-center">
                 <h2 class="mb-6 text-2xl font-bold tracking-wider text-white md:text-3xl" id="toggleTitle">Selamat Datang Kembali</h2>
@@ -24,14 +24,19 @@
             </div>
         </div>
 
-        <!-- Form Container -->
-        <div class="relative w-full h-full overflow-hidden md:w-1/2">
+        <!-- Form Container (kanan) — wrapper relatif -->
+        <div class="relative w-full md:w-1/2 h-full overflow-hidden">
+
+            {{-- Gambar background --}}
             <img src="img/login.jpg" alt="Login Image"
-                class="absolute inset-0 object-cover w-full h-full rounded-b-3xl md:rounded-r-2xl md:rounded-bl-none" />
-            <div class="absolute inset-0 form-container" id="formSlider">
+                class="absolute inset-0 object-cover w-full h-full" />
+
+            {{-- Slider — id hanya satu di sini --}}
+            <div class="absolute inset-0 flex transition-transform duration-500 ease-in-out" id="formSlider"
+                 style="width: 200%;">
 
                 <!-- Login Form -->
-                <div class="flex items-center justify-center h-full p-10 form-page">
+                <div class="flex items-center justify-center h-full p-10" style="width: 50%; flex-shrink: 0;">
                     <div class="z-20 w-full max-w-md p-4 border border-white shadow-lg bg-white/30 backdrop-blur-md backdrop-saturate-150 md:p-6 rounded-xl">
                         <h2 class="mb-3 text-xl font-extrabold tracking-widest text-center text-white md:text-2xl font-poppins">Login</h2>
                         <form action="{{ route('login_proses') }}" method="POST">
@@ -61,9 +66,9 @@
                                     class="w-4/5 px-4 py-2 font-semibold tracking-wide text-black transition-all duration-300 bg-white border border-white shadow-md rounded-2xl hover:bg-opacity-90 hover:shadow-lg">
                                     Login
                                 </button>
-                                <p class="mt-2 text-sm text-gray-600 md:hidden">
+                                <p class="mt-2 text-sm text-white md:hidden">
                                     Belum punya akun?
-                                    <a href="javascript:void(0)" onclick="toggleForm()" class="font-semibold text-blue-600 hover:text-blue-800">
+                                    <a href="javascript:void(0)" onclick="toggleForm()" class="font-semibold text-blue-200 hover:text-white">
                                         Daftar disini
                                     </a>
                                 </p>
@@ -73,7 +78,7 @@
                 </div>
 
                 <!-- Register Form -->
-                <div class="flex items-center justify-center h-full p-10 form-page">
+                <div class="flex items-center justify-center h-full p-10" style="width: 50%; flex-shrink: 0;">
                     <div class="z-20 w-full max-w-md p-4 border border-white shadow-lg bg-white/30 backdrop-blur-md backdrop-saturate-150 md:p-6 rounded-xl">
                         <h2 class="mb-3 text-xl font-extrabold tracking-widest text-center text-white md:text-2xl font-poppins">Daftar</h2>
                         <form action="{{ route('registrasi_proses') }}" method="POST">
@@ -111,9 +116,9 @@
                                     class="w-4/5 px-4 py-2 font-semibold tracking-wide text-black transition-all duration-300 bg-white border border-white shadow-md rounded-2xl hover:bg-opacity-90 hover:shadow-lg">
                                     Daftar
                                 </button>
-                                <p class="mt-2 text-sm text-gray-600 md:hidden">
+                                <p class="mt-2 text-sm text-white md:hidden">
                                     Sudah punya akun?
-                                    <a href="javascript:void(0)" onclick="toggleForm()" class="font-semibold text-blue-600 hover:text-blue-800">
+                                    <a href="javascript:void(0)" onclick="toggleForm()" class="font-semibold text-blue-200 hover:text-white">
                                         Masuk disini
                                     </a>
                                 </p>
@@ -127,6 +132,7 @@
 
     </div>
 </div>
+
 <script>
     // Slider otomatis
     document.addEventListener("DOMContentLoaded", function () {
@@ -137,14 +143,12 @@
             const toggleButton = document.getElementById('toggleButton');
             const dots = document.querySelectorAll('.toggle-dot');
 
-            if (modal && formSlider && toggleTitle && toggleButton) {
+            if (modal && formSlider) {
                 modal.classList.remove('hidden');
                 modal.classList.add('flex');
-
                 formSlider.style.transform = 'translateX(0%)';
-                toggleTitle.innerText = 'Selamat Datang Kembali';
-                toggleButton.innerText = 'Belum memiliki akun?';
-
+                if (toggleTitle) toggleTitle.innerText = 'Selamat Datang Kembali';
+                if (toggleButton) toggleButton.innerText = 'Belum memiliki akun?';
                 if (dots.length >= 2) {
                     dots[0].classList.add('active');
                     dots[1].classList.remove('active');
@@ -170,30 +174,28 @@
     }
 
     function toggleForm() {
-        const formContainer = document.getElementById('formSlider');
-        const toggleTitle = document.getElementById('toggleTitle');
+        const formSlider   = document.getElementById('formSlider');
+        const toggleTitle  = document.getElementById('toggleTitle');
         const toggleButton = document.getElementById('toggleButton');
-        const toggleDots = document.querySelectorAll('.toggle-dot');
+        const toggleDots   = document.querySelectorAll('.toggle-dot');
 
-        if (!formContainer) return;
+        if (!formSlider) return;
 
-        const isLogin = formContainer.style.transform === 'translateX(0%)' || formContainer.style.transform === '';
+        const isLogin = formSlider.style.transform === 'translateX(0%)' || formSlider.style.transform === '';
 
         if (isLogin) {
-            formContainer.style.transform = 'translateX(-50%)';
+            formSlider.style.transform = 'translateX(-50%)';
             if (toggleTitle) toggleTitle.textContent = 'Bergabunglah Dengan Kami';
             if (toggleButton) toggleButton.textContent = 'Sudah memiliki akun?';
-            toggleDots.forEach((dot, index) => {
-                if (index === 0) dot.classList.remove('active');
-                if (index === 1) dot.classList.add('active');
+            toggleDots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === 1);
             });
         } else {
-            formContainer.style.transform = 'translateX(0%)';
+            formSlider.style.transform = 'translateX(0%)';
             if (toggleTitle) toggleTitle.textContent = 'Selamat Datang Kembali';
             if (toggleButton) toggleButton.textContent = 'Belum memiliki akun?';
-            toggleDots.forEach((dot, index) => {
-                if (index === 0) dot.classList.add('active');
-                if (index === 1) dot.classList.remove('active');
+            toggleDots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === 0);
             });
         }
     }
