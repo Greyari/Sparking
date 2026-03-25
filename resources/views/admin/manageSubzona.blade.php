@@ -303,22 +303,4 @@
             </div>
         @endforeach
     @endif
-
-    <script>
-        document.getElementById('fotosubzona').addEventListener('change', function(event) {
-            const preview = document.getElementById('image-previewsubzona');
-            const file = event.target.files[0];
-
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    preview.querySelector('img').src = e.target.result;
-                    preview.classList.remove('hidden');
-                }
-                reader.readAsDataURL(file);
-            } else {
-                preview.classList.add('hidden');
-            }
-        });
-    </script>
 @endsection
