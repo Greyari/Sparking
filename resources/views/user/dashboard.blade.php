@@ -11,7 +11,7 @@
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
                         <div class="relative h-full w-full">
-                            <img src="{{ asset('images/carousel.png') }}" alt="Gambar Dashboard 1"
+                            <img src="{{ asset('images/carousel1.png') }}" alt="Gambar Dashboard 1"
                                 class="object-cover w-full h-full transition-all duration-500 hover:scale-105">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-6">
                                 <h3 class="text-white text-xl font-bold">Area Parkir Kampus</h3>
@@ -20,7 +20,7 @@
                     </div>
                     <div class="swiper-slide">
                         <div class="relative h-full w-full">
-                            <img src="{{ asset('foto parkir/zona 5/IMG-20240920-WA0010.jpg') }}" alt="Gambar Dashboard 2"
+                            <img src="{{ asset('images/carousel2.webp') }}" alt="Gambar Dashboard 2"
                                 class="object-cover w-full h-full transition-all duration-500 hover:scale-105">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-6">
                                 <h3 class="text-white text-xl font-bold">Zona Parkir 5</h3>
@@ -29,7 +29,7 @@
                     </div>
                     <div class="swiper-slide">
                         <div class="relative h-full w-full">
-                            <img src="{{ asset('foto parkir/zona 5/IMG-20240920-WA0009.jpg') }}" alt="Gambar Dashboard 3"
+                            <img src="{{ asset('images/carousel3.png') }}" alt="Gambar Dashboard 3"
                                 class="object-cover w-full h-full transition-all duration-500 hover:scale-105">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-6">
                                 <h3 class="text-white text-xl font-bold">Denah Parkir</h3>
