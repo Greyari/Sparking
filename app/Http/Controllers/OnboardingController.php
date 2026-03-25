@@ -75,12 +75,15 @@ class OnboardingController extends Controller
         // Step 2 - Upload Foto Profil
         elseif ($step == 2) {
             $request->validate([
-                'foto_user' => 'required|image|max:2048',
+                'foto_user' => 'required|image|mimes:jpg,jpeg,png|max:5120',
             ]);
 
             $result = cloudinary()->uploadApi()->upload(
                 $request->file('foto_user')->getRealPath(),
-                ['folder' => 'foto_user']
+                [
+                    'folder' => 'foto_user',
+                    'timeout' => 120
+                ]
             );
 
             $user->update([
@@ -108,12 +111,15 @@ class OnboardingController extends Controller
         // Step 4 - Upload Foto Kendaraan
         elseif ($step == 4) {
             $request->validate([
-                'foto_kendaraan' => 'required|image|max:2048',
+                'foto_kendaraan' => 'required|image|mimes:jpg,jpeg,png|max:5120',
             ]);
 
             $result = cloudinary()->uploadApi()->upload(
                 $request->file('foto_kendaraan')->getRealPath(),
-                ['folder' => 'foto_kendaraan']
+                [
+                    'folder' => 'foto_kendaraan',
+                    'timeout' => 120
+                ]
             );
 
             $user->update([
