@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('notifikasi_slot', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->constrained('users')->onDelete('cascade');
-            $table->unsignedBigInteger('zona_id')->constrained('zona')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('zona_id');
             $table->enum('status', ['menunggu', 'terkirim'])->default('menunggu');
             $table->timestamp('terkirim_at')->nullable();
             $table->timestamps();
             $table->unique(['user_id', 'zona_id']);
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('zona_id')->references('id')->on('zona')->onDelete('cascade');
         });
     }
 
