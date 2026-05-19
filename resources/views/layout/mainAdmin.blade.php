@@ -19,7 +19,7 @@
     @vite('resources/js/sidebar.js')
 </head>
 
-<body class="font-poppins  [&::-webkit-scrollbar]:w-3
+<body class="bg-white text-gray-800 font-poppins [&::-webkit-scrollbar]:w-3
     [&::-webkit-scrollbar-track]:rounded-full
     [&::-webkit-scrollbar-track]:bg-gray-100
     [&::-webkit-scrollbar-thumb]:rounded-full
