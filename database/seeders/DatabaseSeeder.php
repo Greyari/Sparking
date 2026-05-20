@@ -42,28 +42,29 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        Zona::updateOrCreate(
+        // Ambil ID zona secara dinamis, jangan hardcode
+        $zona1 = Zona::updateOrCreate(
             ['nama_zona' => 'Zona 1'],
             ['keterangan' => 'test', 'fotozona' => 'test']
         );
 
-        Zona::updateOrCreate(
+        $zona2 = Zona::updateOrCreate(
             ['nama_zona' => 'Zona 2'],
             ['keterangan' => 'test', 'fotozona' => 'test']
         );
 
-        SubZona::updateOrCreate(
-            ['zona_id' => 2, 'nama_subzona' => 'Sub zona 1'],
+        $subzona1 = SubZona::updateOrCreate(
+            ['zona_id' => $zona2->id, 'nama_subzona' => 'Sub zona 1'],
             ['fotosubzona' => 'test', 'camera_id' => '1']
         );
 
-        SubZona::updateOrCreate(
-            ['zona_id' => 1, 'nama_subzona' => 'Sub zona 1'],
+        $subzona2 = SubZona::updateOrCreate(
+            ['zona_id' => $zona1->id, 'nama_subzona' => 'Sub zona 1'],
             ['fotosubzona' => 'test', 'camera_id' => '0']
         );
 
         Slot::updateOrCreate(
-            ['subzona_id' => 1, 'nomor_slot' => '1'],
+            ['subzona_id' => $subzona2->id, 'nomor_slot' => '1'],
             [
                 'keterangan' => 'Terisi',
                 'x1' => 89,  'y1' => 71,
@@ -74,7 +75,7 @@ class DatabaseSeeder extends Seeder
         );
 
         Slot::updateOrCreate(
-            ['subzona_id' => 1, 'nomor_slot' => '2'],
+            ['subzona_id' => $subzona2->id, 'nomor_slot' => '2'],
             [
                 'keterangan' => 'Terisi',
                 'x1' => 428, 'y1' => 96,
@@ -85,7 +86,7 @@ class DatabaseSeeder extends Seeder
         );
 
         Slot::updateOrCreate(
-            ['subzona_id' => 1, 'nomor_slot' => '3'],
+            ['subzona_id' => $subzona2->id, 'nomor_slot' => '3'],
             [
                 'keterangan' => 'Terisi',
                 'x1' => 201, 'y1' => 114,
