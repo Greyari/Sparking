@@ -66,7 +66,7 @@ class DatabaseSeeder extends Seeder
                 'zona_id' => 2,
                 'nama_subzona' => 'Sub zona 1',
                 'fotosubzona' => 'test',
-                'camera_id' => '2',
+                'camera_id' => '1',
             ]
         );
 
@@ -75,7 +75,7 @@ class DatabaseSeeder extends Seeder
                 'zona_id' => 1,
                 'nama_subzona' => 'Sub zona 1',
                 'fotosubzona' => 'test',
-                'camera_id' => '1',
+                'camera_id' => '0',
             ]
         );
 
@@ -84,14 +84,10 @@ class DatabaseSeeder extends Seeder
                 'subzona_id' => 1,
                 'nomor_slot' => '1',
                 'keterangan' => 'Terisi',
-                'x1' => 0,
-                'y1' => 0,
-                'x2' => 0,
-                'y2' => 0,
-                'x3' => 0,
-                'y3' => 0,
-                'x4' => 0,
-                'y4' => 0,
+                'x1' => 89, 'y1' => 71,
+                'x2' => 184, 'y2' => 66,
+                'x3' => 216, 'y3' => 238,
+                'x4' => 67, 'y4' => 239,
             ]
         );
 
@@ -100,14 +96,10 @@ class DatabaseSeeder extends Seeder
                 'subzona_id' => 1,
                 'nomor_slot' => '2',
                 'keterangan' => 'Terisi',
-                'x1' => 0,
-                'y1' => 0,
-                'x2' => 0,
-                'y2' => 0,
-                'x3' => 0,
-                'y3' => 0,
-                'x4' => 0,
-                'y4' => 0,
+                'x1' => 428, 'y1' => 96,
+                'x2' => 519, 'y2' => 94,
+                'x3' => 524, 'y3' => 214,
+                'x4' => 428, 'y4' => 212,
             ]
         );
 
@@ -116,15 +108,12 @@ class DatabaseSeeder extends Seeder
                 'subzona_id' => 1,
                 'nomor_slot' => '3',
                 'keterangan' => 'Terisi',
-                'x1' => 0,
-                'y1' => 0,
-                'x2' => 0,
-                'y2' => 0,
-                'x3' => 0,
-                'y3' => 0,
-                'x4' => 0,
-                'y4' => 0,
+                'x1' => 201, 'y1' => 114,
+                'x2' => 391, 'y2' => 118,
+                'x3' => 388, 'y3' => 246,
+                'x4' => 194, 'y4' => 233,
             ]
         );
     }
 }
+

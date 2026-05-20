@@ -38,4 +38,8 @@ return [
     'brevo' => [
         'api_key' => env('BREVO_API_KEY'),
     ],
+
+    'cloudflare' => [
+        'stream_url' => env('CLOUDFLARE_STREAM_URL'),
+    ],
 ];
