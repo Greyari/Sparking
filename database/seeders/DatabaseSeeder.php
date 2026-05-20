@@ -11,13 +11,10 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
         User::updateOrCreate(
-            ['email' => 'admin@gmail.com'], // kondisi unik
+            ['email' => 'admin@gmail.com'],
             [
                 'identitas' => '12345678',
                 'jenis_user' => 'karyawan',
@@ -46,55 +43,39 @@ class DatabaseSeeder extends Seeder
         );
 
         Zona::updateOrCreate(
-            [
-                'nama_zona' => 'Zona 1',
-                'keterangan' => 'test',
-                'fotozona' => 'test',
-            ]
+            ['nama_zona' => 'Zona 1'],
+            ['keterangan' => 'test', 'fotozona' => 'test']
         );
 
         Zona::updateOrCreate(
-            [
-                'nama_zona' => 'Zona 2',
-                'keterangan' => 'test',
-                'fotozona' => 'test',
-            ]
+            ['nama_zona' => 'Zona 2'],
+            ['keterangan' => 'test', 'fotozona' => 'test']
         );
 
         SubZona::updateOrCreate(
-            [
-                'zona_id' => 2,
-                'nama_subzona' => 'Sub zona 1',
-                'fotosubzona' => 'test',
-                'camera_id' => '1',
-            ]
+            ['zona_id' => 2, 'nama_subzona' => 'Sub zona 1'],
+            ['fotosubzona' => 'test', 'camera_id' => '1']
         );
 
         SubZona::updateOrCreate(
-            [
-                'zona_id' => 1,
-                'nama_subzona' => 'Sub zona 1',
-                'fotosubzona' => 'test',
-                'camera_id' => '0',
-            ]
+            ['zona_id' => 1, 'nama_subzona' => 'Sub zona 1'],
+            ['fotosubzona' => 'test', 'camera_id' => '0']
         );
 
         Slot::updateOrCreate(
+            ['subzona_id' => 1, 'nomor_slot' => '1'],
             [
-                'subzona_id' => 1,
-                'nomor_slot' => '1',
                 'keterangan' => 'Terisi',
-                'x1' => 89, 'y1' => 71,
+                'x1' => 89,  'y1' => 71,
                 'x2' => 184, 'y2' => 66,
                 'x3' => 216, 'y3' => 238,
-                'x4' => 67, 'y4' => 239,
+                'x4' => 67,  'y4' => 239,
             ]
         );
 
         Slot::updateOrCreate(
+            ['subzona_id' => 1, 'nomor_slot' => '2'],
             [
-                'subzona_id' => 1,
-                'nomor_slot' => '2',
                 'keterangan' => 'Terisi',
                 'x1' => 428, 'y1' => 96,
                 'x2' => 519, 'y2' => 94,
@@ -104,9 +85,8 @@ class DatabaseSeeder extends Seeder
         );
 
         Slot::updateOrCreate(
+            ['subzona_id' => 1, 'nomor_slot' => '3'],
             [
-                'subzona_id' => 1,
-                'nomor_slot' => '3',
                 'keterangan' => 'Terisi',
                 'x1' => 201, 'y1' => 114,
                 'x2' => 391, 'y2' => 118,
@@ -116,4 +96,3 @@ class DatabaseSeeder extends Seeder
         );
     }
 }
-
