@@ -1,21 +1,23 @@
 <?php
 
-use App\Http\Controllers\AdminSubZonaController;
-use App\Http\Controllers\NotifikasiSlotController;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\NotifikasiSlotController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\RealTimeController;
-use App\Http\Controllers\StatistikController;
-use App\Http\Controllers\SettingsController;
-use App\Http\Controllers\AdminDashboardController;
-use App\Http\Controllers\AdminUserController;
-use App\Http\Controllers\AdminZonaController;
-use App\Http\Controllers\AdminAnalysisController;
-use App\Http\Controllers\AdminSlotController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\OnboardingController;
 
+use App\Http\Controllers\User\DashboardController;
+use App\Http\Controllers\User\StatistikController;
+use App\Http\Controllers\User\SettingsController;
+use App\Http\Controllers\User\RealTimeController;
+
+use App\Http\Controllers\Admin\AdminSubZonaController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\AdminZonaController;
+use App\Http\Controllers\Admin\AdminAnalysisController;
+use App\Http\Controllers\Admin\AdminSlotController;
 
 // landing Page
 Route::get('/', [LandingPageController::class, 'index'])->name('login');

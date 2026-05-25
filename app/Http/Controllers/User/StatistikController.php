@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use App\Models\Zona;
 use App\Models\LogParkir;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class StatistikController extends Controller
 {
