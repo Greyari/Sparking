@@ -93,7 +93,7 @@
 
                             {{-- Stream video dari camera_id subzona yang dipilih --}}
                             <img id="picker-feed"
-                                 src="{{ config('services.cloudflare.stream_url') }}/video_feed?camera_id={{ $selectedSubzona->camera_id }}"
+                                 src="{{ config('services.cloudflare.stream_url') }}/clean_video_feed?camera_id={{ $selectedSubzona->camera_id }}"
                                  style="width:480px; height:320px; display:block; object-fit:cover;"
                                  alt="Live feed kamera {{ $selectedSubzona->camera_id }}">
 
