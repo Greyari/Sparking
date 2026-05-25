@@ -66,7 +66,7 @@ class DatabaseSeeder extends Seeder
         Slot::updateOrCreate(
             ['subzona_id' => $subzona2->id, 'nomor_slot' => '1'],
             [
-                'keterangan' => 'Terisi',
+                'keterangan' => 'Tersedia',
                 'x1' => 89,  'y1' => 71,
                 'x2' => 184, 'y2' => 66,
                 'x3' => 216, 'y3' => 238,
@@ -77,7 +77,7 @@ class DatabaseSeeder extends Seeder
         Slot::updateOrCreate(
             ['subzona_id' => $subzona2->id, 'nomor_slot' => '2'],
             [
-                'keterangan' => 'Terisi',
+                'keterangan' => 'Tersedia',
                 'x1' => 428, 'y1' => 96,
                 'x2' => 519, 'y2' => 94,
                 'x3' => 524, 'y3' => 214,
@@ -88,7 +88,7 @@ class DatabaseSeeder extends Seeder
         Slot::updateOrCreate(
             ['subzona_id' => $subzona2->id, 'nomor_slot' => '3'],
             [
-                'keterangan' => 'Terisi',
+                'keterangan' => 'Tersedia',
                 'x1' => 201, 'y1' => 114,
                 'x2' => 391, 'y2' => 118,
                 'x3' => 388, 'y3' => 246,
