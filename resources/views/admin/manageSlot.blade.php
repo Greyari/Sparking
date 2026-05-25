@@ -49,12 +49,6 @@
                     @endforeach
                 </select>
             </div>
-            <div class="pt-6 ml-auto">
-                <button onclick="pickerModeNew()"
-                    class="rounded-md bg-base-200 hover:bg-[#95AFE5] p-2 px-3 flex items-center gap-2 font-bold">
-                    <i class="fas fa-plus"></i> Tambah Slot
-                </button>
-            </div>
         </div>
 
         @if($selectedSubzona)
@@ -132,18 +126,18 @@
                         </div>
 
                         {{-- PANEL: MODE GAMBAR (tambah baru) --}}
-                        <div id="picker-panel-draw" class="hidden flex-col gap-3">
-                            <div class="bg-gray-50 rounded-lg p-3 border border-gray-200">
-                                <p class="text-xs font-medium text-gray-500 mb-1">
-                                    Mode: <span id="draw-mode-label" class="text-green-600">Tambah Slot Baru</span>
-                                </p>
+                        <div id="picker-panel-new" class="hidden flex-col gap-3">
+                            <div class="bg-green-50 rounded-lg p-3 border border-green-200">
+                                <p class="text-xs font-medium text-green-700 mb-1">Tambah Slot Baru</p>
                                 <p id="picker-status" class="text-sm font-bold text-orange-500">0 / 4 titik</p>
-                                <p class="text-xs text-gray-400 mt-1">Klik 4 sudut area parkir di video</p>
+                                <p class="text-xs text-green-600 mt-1">Klik 4 sudut area parkir di video, lalu isi form dan simpan.</p>
                                 <div class="mt-1 text-xs text-gray-400">
                                     <div>① Kiri atas &nbsp;② Kanan atas</div>
                                     <div>③ Kanan bawah &nbsp;④ Kiri bawah</div>
                                 </div>
                             </div>
+
+                            {{-- Preview 4 titik --}}
                             <div class="grid grid-cols-2 gap-2 text-xs">
                                 @foreach(['1','2','3','4'] as $n)
                                 <div class="bg-gray-50 border border-gray-200 rounded p-2">
@@ -152,14 +146,48 @@
                                 </div>
                                 @endforeach
                             </div>
-                            <button id="picker-btn-apply" onclick="pickerApply()" disabled
-                                class="w-full py-2 px-4 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed">
-                                ✓ Lanjut Isi Form
-                            </button>
-                            <button onclick="pickerModeView()"
-                                class="w-full py-1.5 px-4 bg-gray-100 text-gray-600 text-sm rounded-lg hover:bg-gray-200">
-                                ✕ Batal
-                            </button>
+
+                            <form action="{{ route('slot.store') }}" method="POST" class="flex flex-col gap-3">
+                                @csrf
+                                <input type="hidden" name="subzona_id" value="{{ $selectedSubzona->id }}">
+                                <input type="hidden" id="new-x1" name="x1">
+                                <input type="hidden" id="new-y1" name="y1">
+                                <input type="hidden" id="new-x2" name="x2">
+                                <input type="hidden" id="new-y2" name="y2">
+                                <input type="hidden" id="new-x3" name="x3">
+                                <input type="hidden" id="new-y3" name="y3">
+                                <input type="hidden" id="new-x4" name="x4">
+                                <input type="hidden" id="new-y4" name="y4">
+
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-600 mb-1">Nomor Slot <span class="text-red-500">*</span></label>
+                                    <input type="number" name="nomor_slot" id="new-nomor_slot" min="1" required
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2"
+                                        placeholder="Nomor slot">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-600 mb-1">Keterangan <span class="text-red-500">*</span></label>
+                                    <select name="keterangan" required
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2">
+                                        <option value="Tersedia" selected>Tersedia</option>
+                                        <option value="Terisi">Terisi</option>
+                                        <option value="Perbaikan">Perbaikan</option>
+                                    </select>
+                                </div>
+
+                                <div class="flex gap-2">
+                                    <button type="submit" id="picker-btn-apply"
+                                        class="flex-1 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 font-medium disabled:opacity-40 disabled:cursor-not-allowed"
+                                        disabled>
+                                        <i class="fas fa-save mr-1"></i> Simpan
+                                    </button>
+                                    <button type="button" onclick="pickerModeView()"
+                                        class="flex-1 py-2 bg-gray-100 text-gray-600 text-sm rounded-lg hover:bg-gray-200">
+                                        ✕ Batal
+                                    </button>
+                                </div>
+                            </form>
                         </div>
 
                         {{-- PANEL: MODE EDIT INLINE --}}
@@ -170,9 +198,10 @@
                             </div>
 
                             {{-- Form edit inline --}}
-                            <form id="inline-edit-form" method="POST" class="flex flex-col gap-3">
+                            <form id="inline-edit-form" method="POST" action="" class="flex flex-col gap-3">
                                 @csrf
                                 @method('PUT')
+                                <input type="hidden" id="edit-slot-id" name="_slot_id">
                                 <input type="hidden" name="subzona_id" value="{{ $selectedSubzona->id }}">
                                 <input type="hidden" id="edit-x1" name="x1">
                                 <input type="hidden" id="edit-y1" name="y1">
@@ -242,79 +271,6 @@
         </div>
         @endif
 
-        {{-- Modal Tambah Slot --}}
-        <div id="tambah-slot" tabindex="-1" aria-hidden="true"
-            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <div class="relative w-full max-w-md max-h-full p-4">
-                <div class="relative bg-white rounded-lg shadow">
-                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t bg-[#95AFE5]">
-                        <h3 class="text-lg font-semibold text-white">Tambah Slot Baru</h3>
-                        <button type="button" onclick="pickerModeView()" data-modal-toggle="tambah-slot"
-                            class="inline-flex items-center justify-center w-8 h-8 text-sm text-white bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto">
-                            <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                            </svg>
-                        </button>
-                    </div>
-                    <form action="{{ route('slot.store') }}" method="POST" class="p-4 md:p-5">
-                        @csrf
-                        <div class="grid grid-cols-2 gap-4 mb-4">
-                            <div class="col-span-2">
-                                <label class="block mb-2 text-sm font-medium text-gray-900">Sub-Zona <span class="text-red-500">*</span></label>
-                                <select name="subzona_id" id="tambah-subzona_id" required
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
-                                    <option value="" disabled selected>Pilih Sub-Zona</option>
-                                    @foreach ($subzonas as $subzona)
-                                        <option value="{{ $subzona->id }}"
-                                            {{ ($selectedSubzona && $selectedSubzona->id == $subzona->id) || old('subzona_id') == $subzona->id ? 'selected' : '' }}>
-                                            {{ $subzona->nama_subzona }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-span-2">
-                                <label class="block mb-2 text-sm font-medium text-gray-900">Nomor Slot <span class="text-red-500">*</span></label>
-                                <input type="number" name="nomor_slot" id="tambah-nomor_slot"
-                                    value="{{ old('nomor_slot') }}" min="1"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
-                                    placeholder="Masukkan Nomor Slot" required>
-                            </div>
-                            <div class="col-span-2">
-                                <label class="block mb-2 text-sm font-medium text-gray-900">Keterangan <span class="text-red-500">*</span></label>
-                                <select name="keterangan" id="tambah-keterangan" required
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
-                                    <option value="" disabled selected>Pilih Keterangan</option>
-                                    <option value="Tersedia">Tersedia</option>
-                                    <option value="Terisi">Terisi</option>
-                                    <option value="Perbaikan">Perbaikan</option>
-                                </select>
-                            </div>
-                            <div class="col-span-2">
-                                <label class="block mb-2 text-sm font-medium text-gray-900">
-                                    Koordinat <span class="ml-1 text-xs text-blue-500 font-normal">← dari polygon picker</span>
-                                </label>
-                                <div class="grid grid-cols-4 gap-2">
-                                    @foreach(['x1','y1','x2','y2','x3','y3','x4','y4'] as $c)
-                                    <input type="number" name="{{ $c }}" id="tambah-{{ $c }}"
-                                        value="{{ old($c) }}" min="0" step="1"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
-                                        placeholder="{{ $c }}" required>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit"
-                            class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5">
-                            <svg class="w-5 h-5 me-1 -ms-1" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"/>
-                            </svg>
-                            Tambah Slot
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-
         {{-- Modal Hapus Slot --}}
         @foreach ($slots as $slot)
         <div id="hapus-slot-{{ $slot->id }}" tabindex="-1"
@@ -349,12 +305,16 @@
     (function () {
         const CANVAS_W = 480, CANVAS_H = 320;
         const SLOT_COLORS = ['#3b82f6','#ef4444','#22c55e','#f59e0b','#a855f7','#06b6d4','#f97316'];
+        const BASE_URL = '{{ url("admin/slot") }}';
 
         let existingSlots = @json($slotsData ?? []);
-        let pickerPoints  = [];
-        let currentMode   = 'view';
-        let editingSlotId = null;
-        let editPickerPoints = []; // titik baru saat mode edit
+        let pickerPoints     = [];
+        let currentMode      = 'view';
+        let editingSlotId    = null;
+        let editPickerPoints = [];
+
+        // Debug: pastikan data terbaca
+        console.log('existingSlots:', existingSlots);
 
         const canvas = document.getElementById('picker-canvas');
         if (!canvas) return;
@@ -371,7 +331,6 @@
 
         function redraw() {
             ctx.clearRect(0, 0, CANVAS_W, CANVAS_H);
-
             existingSlots.forEach((slot, si) => {
                 const color = SLOT_COLORS[si % SLOT_COLORS.length];
                 const pts   = slotToPoints(slot);
@@ -383,7 +342,7 @@
                 pts.forEach(p => ctx.lineTo(p.x, p.y));
                 ctx.closePath();
 
-                const isEditing = currentMode === 'edit' && editingSlotId === slot.id;
+                const isEditing = currentMode === 'edit' && editingSlotId == slot.id;
                 ctx.fillStyle   = isEditing ? color + '40' : color + '28';
                 ctx.fill();
                 ctx.strokeStyle = color;
@@ -403,7 +362,6 @@
                 ctx.textBaseline = 'alphabetic';
             });
 
-            // Gambar titik baru (mode new)
             const drawPts = currentMode === 'new' ? pickerPoints : editPickerPoints;
             if (drawPts.length > 0 && currentMode !== 'view') {
                 ctx.beginPath();
@@ -415,7 +373,6 @@
                 ctx.setLineDash(drawPts.length < 4 ? [6, 3] : []);
                 ctx.stroke();
                 ctx.setLineDash([]);
-
                 drawPts.forEach((p, i) => {
                     ctx.beginPath();
                     ctx.arc(p.x, p.y, 7, 0, Math.PI * 2);
@@ -438,7 +395,10 @@
         function updatePickerUI() {
             const n = pickerPoints.length;
             const el = document.getElementById('picker-status');
-            if (el) { el.textContent = `${n} / 4 titik`; el.className = n === 4 ? 'text-sm font-bold text-green-600' : 'text-sm font-bold text-orange-500'; }
+            if (el) {
+                el.textContent = `${n} / 4 titik`;
+                el.className = n === 4 ? 'text-sm font-bold text-green-600' : 'text-sm font-bold text-orange-500';
+            }
             ['1','2','3','4'].forEach((num, i) => {
                 const c = document.getElementById('picker-coord-' + num);
                 if (c) c.textContent = pickerPoints[i] ? `${pickerPoints[i].x}, ${pickerPoints[i].y}` : '—';
@@ -453,9 +413,9 @@
 
         function updateEditPickerUI() {
             const n = editPickerPoints.length;
-            const statusEl = document.getElementById('edit-picker-status');
-            const countEl  = document.getElementById('edit-picker-count');
-            const coordsEl = document.getElementById('edit-picker-coords');
+            const statusEl    = document.getElementById('edit-picker-status');
+            const countEl     = document.getElementById('edit-picker-count');
+            const coordsEl    = document.getElementById('edit-picker-coords');
             const coordsStatus = document.getElementById('coords-status');
 
             if (statusEl) statusEl.classList.toggle('hidden', n === 0);
@@ -467,36 +427,38 @@
             if (n === 4 && coordsStatus) {
                 coordsStatus.textContent = '(koordinat baru siap)';
                 coordsStatus.className = 'ml-1 text-green-600';
-                // Update hidden inputs & preview
                 const coords = ['x1','y1','x2','y2','x3','y3','x4','y4'];
-                const vals = [editPickerPoints[0].x, editPickerPoints[0].y, editPickerPoints[1].x, editPickerPoints[1].y,
-                              editPickerPoints[2].x, editPickerPoints[2].y, editPickerPoints[3].x, editPickerPoints[3].y];
+                const vals = [
+                    editPickerPoints[0].x, editPickerPoints[0].y,
+                    editPickerPoints[1].x, editPickerPoints[1].y,
+                    editPickerPoints[2].x, editPickerPoints[2].y,
+                    editPickerPoints[3].x, editPickerPoints[3].y,
+                ];
                 coords.forEach((c, i) => {
-                    const hidden = document.getElementById('edit-' + c);
+                    const hidden  = document.getElementById('edit-' + c);
                     const preview = document.getElementById('preview-' + c);
-                    if (hidden) hidden.value = vals[i];
+                    if (hidden)  hidden.value        = vals[i];
                     if (preview) preview.textContent = `${c}: ${vals[i]}`;
                 });
             }
         }
 
         function setMode(mode, slotId = null) {
-            currentMode   = mode;
-            editingSlotId = slotId;
-            pickerPoints  = [];
+            currentMode      = mode;
+            editingSlotId    = slotId ? parseInt(slotId) : null; // pastikan integer
+            pickerPoints     = [];
             editPickerPoints = [];
 
             const panelView = document.getElementById('picker-panel-view');
-            const panelDraw = document.getElementById('picker-panel-draw');
+            const panelNew  = document.getElementById('picker-panel-new');
             const panelEdit = document.getElementById('picker-panel-edit');
             const modeBadge = document.getElementById('picker-mode-badge');
-            const modeLabel = document.getElementById('draw-mode-label');
             const info      = document.getElementById('picker-points-info');
 
-            // Sembunyikan semua panel dulu
-            panelView?.classList.add('hidden');
-            panelDraw?.classList.add('hidden');
-            panelEdit?.classList.add('hidden');
+            [panelView, panelNew, panelEdit].forEach(p => {
+                p?.classList.add('hidden');
+                p?.classList.remove('flex');
+            });
             if (info) info.innerHTML = '';
 
             if (mode === 'view') {
@@ -508,9 +470,10 @@
             } else if (mode === 'new') {
                 canvas.style.cursor = 'crosshair';
                 canvas.onclick = pickerClickNew;
-                panelDraw?.classList.remove('hidden');
-                panelDraw?.classList.add('flex');
-                if (modeLabel) modeLabel.textContent = 'Tambah Slot Baru';
+                panelNew?.classList.remove('hidden');
+                panelNew?.classList.add('flex');
+                const btn = document.getElementById('picker-btn-apply');
+                if (btn) btn.disabled = true;
                 if (modeBadge) { modeBadge.textContent = 'Mode: Gambar'; modeBadge.className = 'text-xs px-2 py-0.5 rounded bg-green-100 text-green-600'; }
 
             } else if (mode === 'edit') {
@@ -520,45 +483,60 @@
                 panelEdit?.classList.add('flex');
                 if (modeBadge) { modeBadge.textContent = 'Mode: Edit'; modeBadge.className = 'text-xs px-2 py-0.5 rounded bg-yellow-100 text-yellow-600'; }
 
-                // Isi form edit dengan data slot yang dipilih
-                const slot = existingSlots.find(s => s.id === slotId);
+                // Cari slot — gunakan == bukan === supaya int/string tidak masalah
+                const slot = existingSlots.find(s => s.id == slotId);
+                console.log('edit slotId:', slotId, '| found:', slot);
+
                 if (slot) {
                     const label = document.getElementById('edit-slot-label');
                     if (label) label.textContent = `Slot ${slot.nomor_slot}`;
 
-                    // Nomor slot
                     const nomorDisplay = document.getElementById('edit-nomor_slot_display');
                     const nomorHidden  = document.getElementById('edit-nomor_slot');
                     if (nomorDisplay) nomorDisplay.value = slot.nomor_slot;
                     if (nomorHidden)  nomorHidden.value  = slot.nomor_slot;
 
-                    // Keterangan
                     const ket = document.getElementById('edit-keterangan');
                     if (ket) ket.value = slot.keterangan;
 
-                    // Preview koordinat lama
                     ['x1','y1','x2','y2','x3','y3','x4','y4'].forEach(c => {
                         const hidden  = document.getElementById('edit-' + c);
                         const preview = document.getElementById('preview-' + c);
-                        if (hidden)  hidden.value      = slot[c];
+                        if (hidden)  hidden.value        = slot[c];
                         if (preview) preview.textContent = `${c}: ${slot[c]}`;
                     });
 
                     const coordsStatus = document.getElementById('coords-status');
                     if (coordsStatus) { coordsStatus.textContent = '(koordinat lama)'; coordsStatus.className = 'ml-1 text-gray-400'; }
+                    document.getElementById('edit-picker-status')?.classList.add('hidden');
 
-                    const editPickerStatus = document.getElementById('edit-picker-status');
-                    if (editPickerStatus) editPickerStatus.classList.add('hidden');
-
-                    // Set action form
-                    const form = document.getElementById('inline-edit-form');
-                    if (form) form.action = `/admin/slot/${slotId}`;
+                    // ← Set hidden input ID, bukan form.action
+                    const slotIdInput = document.getElementById('edit-slot-id');
+                    if (slotIdInput) slotIdInput.value = slot.id;
                 }
             }
 
             updatePickerUI();
             redraw();
         }
+
+        // ← Submit handler: set action tepat sebelum kirim
+        document.getElementById('inline-edit-form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const slotIdInput = document.getElementById('edit-slot-id');
+            const id = slotIdInput ? slotIdInput.value : null;
+
+            console.log('submit edit, id:', id);
+
+            if (!id || id == '0') {
+                alert('Error: ID slot tidak ditemukan, coba klik Edit lagi.');
+                return;
+            }
+
+            this.action = BASE_URL + '/' + id;
+            console.log('form action set to:', this.action);
+            this.submit();
+        });
 
         function pickerClickNew(event) {
             if (pickerPoints.length >= 4) return;
@@ -569,6 +547,14 @@
             });
             redraw();
             updatePickerUI();
+            if (pickerPoints.length === 4) {
+                ['x1','y1','x2','y2','x3','y3','x4','y4'].forEach((c, i) => {
+                    const vals = [pickerPoints[0].x, pickerPoints[0].y, pickerPoints[1].x, pickerPoints[1].y,
+                                pickerPoints[2].x, pickerPoints[2].y, pickerPoints[3].x, pickerPoints[3].y];
+                    const hidden = document.getElementById('new-' + c);
+                    if (hidden) hidden.value = vals[i];
+                });
+            }
         }
 
         function pickerClickEdit(event) {
@@ -582,26 +568,11 @@
             updateEditPickerUI();
         }
 
-        function applyCoords() {
-            if (pickerPoints.length !== 4) return;
-            const coords = ['x1','y1','x2','y2','x3','y3','x4','y4'];
-            const vals   = [pickerPoints[0].x, pickerPoints[0].y, pickerPoints[1].x, pickerPoints[1].y,
-                            pickerPoints[2].x, pickerPoints[2].y, pickerPoints[3].x, pickerPoints[3].y];
-            coords.forEach((c, i) => {
-                const el = document.getElementById('tambah-' + c);
-                if (el) el.value = vals[i];
-            });
-            const m = document.getElementById('tambah-slot');
-            if (m) { m.classList.remove('hidden'); m.classList.add('flex'); }
-        }
-
         window.pickerModeView = () => setMode('view');
         window.pickerModeNew  = () => setMode('new');
         window.pickerModeEdit = (id) => setMode('edit', id);
-        window.pickerApply    = applyCoords;
 
         setMode('view');
     })();
     </script>
-
 @endsection
