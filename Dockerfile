@@ -1,6 +1,5 @@
 FROM laravelsail/php83-composer:latest
 
-# Install dependency
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
@@ -18,24 +17,21 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /var/www
 
-# Copy seluruh project terlebih dahulu
 COPY . .
 
-# Install dependency PHP dan JS
 RUN composer install --no-dev --optimize-autoloader --no-interaction \
     && npm install \
     && npm run build \
     && npm install -g vite
 
-# Set permission
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
 RUN chmod -R 775 storage bootstrap/cache
 
-# Expose port
 EXPOSE 8080
 
-# Jalankan Laravel
 CMD ["sh", "-c", "\
-  echo 'Menunggu koneksi ke MySQL di $DB_HOST:$DB_PORT...' && \
+  echo 'Menunggu koneksi ke MySQL...' && \
   while ! nc -z \"$DB_HOST\" \"$DB_PORT\"; do \
     echo 'MySQL belum siap...' && sleep 5; \
   done && \
@@ -44,5 +40,6 @@ CMD ["sh", "-c", "\
   php artisan route:cache && \
   php artisan view:cache && \
   php artisan storage:link && \
+  echo '🚀 Memulai supervisord...' && \
   /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf \
 "]
