@@ -15,11 +15,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('zona_id');
             $table->string('nama_subzona');
-            $table->string('fotosubzona');
-            $table->timestamps();
             $table->integer('camera_id')->nullable();
             $table->foreign('zona_id')->references('id')->on('zona')->onDelete('cascade');
             $table->unique(['zona_id', 'nama_subzona']);
+            $table->timestamps();
         });
     }
 

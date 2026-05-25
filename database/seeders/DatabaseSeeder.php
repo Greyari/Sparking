@@ -55,12 +55,12 @@ class DatabaseSeeder extends Seeder
 
         $subzona1 = SubZona::updateOrCreate(
             ['zona_id' => $zona2->id, 'nama_subzona' => 'Sub zona 1'],
-            ['fotosubzona' => 'test', 'camera_id' => '1']
+            ['camera_id' => '1']
         );
 
         $subzona2 = SubZona::updateOrCreate(
             ['zona_id' => $zona1->id, 'nama_subzona' => 'Sub zona 1'],
-            ['fotosubzona' => 'test', 'camera_id' => '0']
+            ['camera_id' => '0']
         );
 
         Slot::updateOrCreate(

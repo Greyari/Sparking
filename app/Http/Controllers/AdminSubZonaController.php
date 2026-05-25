@@ -35,7 +35,6 @@ class AdminSubZonaController extends Controller
                 'zona_id'      => 'required|exists:zona,id',
                 'nama_subzona' => 'required|unique:subzona,nama_subzona',
                 'camera_id'    => 'required|integer',
-                'fotosubzona'  => 'required|image|max:5000',
             ], [
                 'zona_id.required'      => 'Zona wajib dipilih.',
                 'zona_id.exists'        => 'Zona yang dipilih tidak valid.',
@@ -43,18 +42,7 @@ class AdminSubZonaController extends Controller
                 'nama_subzona.unique'   => 'Nama Subzona sudah terdaftar.',
                 'camera_id.required'    => 'Kamera ID wajib diisi.',
                 'camera_id.integer'     => 'Kamera ID harus berupa angka.',
-                'fotosubzona.required'  => 'Foto area Sub-Zona wajib diisi.',
-                'fotosubzona.image'     => 'File yang diunggah harus berupa gambar.',
-                'fotosubzona.max'       => 'Ukuran gambar tidak boleh lebih dari 5MB.',
             ]);
-
-            if ($request->hasFile('fotosubzona')) {
-                $result = cloudinary()->uploadApi()->upload(
-                    $request->file('fotosubzona')->getRealPath(),
-                    ['folder' => 'datafoto', 'timeout' => 120]
-                );
-                $validated['fotosubzona'] = $result['secure_url'];
-            }
 
             SubZona::create($validated);
 
@@ -64,7 +52,6 @@ class AdminSubZonaController extends Controller
             return redirect()->back()
                 ->withInput()
                 ->with('error', implode(' ', $e->validator->errors()->all()));
-
         } catch (\Exception $e) {
             return redirect()->back()
                 ->withInput()
@@ -78,30 +65,11 @@ class AdminSubZonaController extends Controller
 
         try {
             $validated = $request->validate([
-                'camera_id'   => 'required|integer',
-                'fotosubzona' => 'nullable|image|max:5000',
+                'camera_id' => 'required|integer',
             ], [
                 'camera_id.required' => 'Kamera ID wajib diisi.',
                 'camera_id.integer'  => 'Kamera ID harus berupa angka.',
-                'fotosubzona.image'  => 'File yang diunggah harus berupa gambar.',
-                'fotosubzona.max'    => 'Ukuran gambar tidak boleh lebih dari 5MB.',
             ]);
-
-            if ($request->hasFile('fotosubzona')) {
-                if ($subzona->fotosubzona) {
-                    $urlPath  = parse_url($subzona->fotosubzona, PHP_URL_PATH);
-                    $publicId = preg_replace('/\.[^.]+$/', '',
-                        implode('/', array_slice(explode('/', $urlPath), 5))
-                    );
-                    cloudinary()->uploadApi()->destroy($publicId);
-                }
-
-                $result = cloudinary()->uploadApi()->upload(
-                    $request->file('fotosubzona')->getRealPath(),
-                    ['folder' => 'datafoto', 'timeout' => 120]
-                );
-                $validated['fotosubzona'] = $result['secure_url'];
-            }
 
             $subzona->update($validated);
 
@@ -111,7 +79,6 @@ class AdminSubZonaController extends Controller
             return redirect()->back()
                 ->withInput()
                 ->with('error', implode(' ', $e->validator->errors()->all()));
-
         } catch (\Exception $e) {
             return redirect()->back()
                 ->withInput()
@@ -123,19 +90,8 @@ class AdminSubZonaController extends Controller
     {
         try {
             $subzona = SubZona::findOrFail($id);
-
-            if ($subzona->fotosubzona) {
-                $urlPath  = parse_url($subzona->fotosubzona, PHP_URL_PATH);
-                $publicId = preg_replace('/\.[^.]+$/', '',
-                    implode('/', array_slice(explode('/', $urlPath), 5))
-                );
-                cloudinary()->uploadApi()->destroy($publicId);
-            }
-
             $subzona->delete();
-
             return redirect()->back()->with('success', 'Subzona berhasil dihapus.');
-
         } catch (\Exception $e) {
             return redirect()->back()
                 ->with('error', 'Gagal menghapus subzona: ' . $e->getMessage());
