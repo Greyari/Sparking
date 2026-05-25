@@ -80,6 +80,14 @@ class AdminSlotController extends Controller
                     })
                 ],
                 'keterangan' => 'required|in:Tersedia,Terisi,Perbaikan',
+                'x1' => 'required|integer|min:0',
+                'y1' => 'required|integer|min:0',
+                'x2' => 'required|integer|min:0',
+                'y2' => 'required|integer|min:0',
+                'x3' => 'required|integer|min:0',
+                'y3' => 'required|integer|min:0',
+                'x4' => 'required|integer|min:0',
+                'y4' => 'required|integer|min:0',
             ]);
 
             Slot::create($validatedData);
@@ -90,7 +98,6 @@ class AdminSlotController extends Controller
             return redirect()->back()
                 ->withInput()
                 ->with('error', implode(' ', $e->validator->errors()->all()));
-
         } catch (\Exception $e) {
             return redirect()->back()
                 ->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
