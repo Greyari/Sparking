@@ -95,26 +95,36 @@ class SettingsController extends Controller
             'email' => 'required|email|exists:users,email',
         ]);
 
-        $user = User::where('email', $request->email)->first();
+        try {
+            $user = User::where('email', $request->email)->first();
 
-        $token    = Password::createToken($user);
-        $resetUrl = URL::temporarySignedRoute(
-            'password.reset',
-            now()->addMinutes(30),
-            ['token' => $token, 'id' => $user->id]
-        );
+            $token    = Password::createToken($user);
+            $resetUrl = URL::temporarySignedRoute(
+                'password.reset',
+                now()->addMinutes(30),
+                ['token' => $token, 'id' => $user->id]
+            );
 
-        $berhasil = $this->brevo->sendPasswordResetEmail(
-            $user->email,
-            $user->nama,
-            $resetUrl
-        );
+            $berhasil = $this->brevo->sendPasswordResetEmail(
+                $user->email,
+                $user->nama,
+                $resetUrl
+            );
 
-        if (!$berhasil) {
-            return response()->json(['error' => 'Gagal mengirim email.'], 500);
+            if (!$berhasil) {
+                return response()->json(['error' => 'Gagal mengirim email.'], 500);
+            }
+
+            return response()->json(['message' => 'Link reset telah dikirim ke email.']);
+
+        } catch (\Exception $e) {
+            // ← Ini akan tampil di response saat APP_DEBUG=true
+            return response()->json([
+                'error' => $e->getMessage(),
+                'file'  => $e->getFile(),
+                'line'  => $e->getLine(),
+            ], 500);
         }
-
-        return response()->json(['message' => 'Link reset telah dikirim ke email.']);
     }
 
     public function showResetForm($token, $id)
