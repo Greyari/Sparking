@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder
         User::updateOrCreate(
             ['email' => 'admin@gmail.com'],
             [
-                'identitas' => '12345678',
                 'jenis_user' => 'karyawan',
                 'nama' => 'Admin',
                 'password' => Hash::make('123'),
@@ -30,7 +29,6 @@ class DatabaseSeeder extends Seeder
         User::updateOrCreate(
             ['email' => 'dosen@gmail.com'],
             [
-                'identitas' => '1234567',
                 'jenis_user' => 'karyawan',
                 'nama' => 'Dosen',
                 'password' => Hash::make('123'),

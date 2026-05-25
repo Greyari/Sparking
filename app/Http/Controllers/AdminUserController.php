@@ -26,7 +26,6 @@ class AdminUserController extends Controller
                 $query->where(function ($q) use ($search) {
                     $q->where('nama', 'LIKE', "%{$search}%")
                     ->orWhere('no_plat', 'LIKE', "%{$search}%")
-                    ->orWhere('identitas', 'LIKE', "%{$search}%")
                     ->orWhere('email', 'LIKE', "%{$search}%")
                     ->orWhere('jenis_user', 'LIKE', "%{$search}%")
                     ->orWhere('jenis_kendaraan', 'LIKE', "%{$search}%");
