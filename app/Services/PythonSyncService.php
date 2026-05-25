@@ -9,7 +9,7 @@ class PythonSyncService
 {
     public static function syncSlots(int $subzonaId): void
     {
-        $pythonUrl = config('services.python.url');
+        $pythonUrl = config('services.cloudflare.url');
         if (!$pythonUrl) return;
 
         try {

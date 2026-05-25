@@ -128,7 +128,7 @@
         init() {
             const timestamp = Date.now();
             // ini ambil url dari env
-            this.streamUrl = `{{ config('services.cloudflare.stream_url') }}/clean_video_feed?camera_id=${this.cameraId}&subzona_id=${this.subzonaId}`;
+            this.streamUrl = `{{ config('services.cloudflare.url') }}/clean_video_feed?camera_id=${this.cameraId}&subzona_id=${this.subzonaId}`;
             console.log("Starting clean stream:", this.streamUrl);
 
             const videoElement = document.getElementById(this.elementId);
