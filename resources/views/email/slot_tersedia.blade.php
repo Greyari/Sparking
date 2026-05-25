@@ -38,7 +38,7 @@
         </div>
 
         <div style="max-width: 600px; margin: 20px auto; text-align: center; color: #718096; font-size: 12px;">
-            <p>© 2025 SPARKING</p>
+            <p>© 2026 SPARKING</p>
         </div>
     </div>
 </body>
