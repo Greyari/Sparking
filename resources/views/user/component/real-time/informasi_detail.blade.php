@@ -166,13 +166,20 @@
             }
         });
 
-        // Zona berubah -> ambil subzona
         zonaSelect?.addEventListener('change', function () {
             const zonaId = this.value;
             if (!zonaId) return;
 
-            subzonaSelect.innerHTML = '<option selected disabled>Loading...</option>';
+            subzonaSelect.innerHTML = '<option value="" disabled selected>Pilih Sub Zona</option>';
+
             resetSlotStats();
+
+            currentSubzonaId = '';
+
+            if (videoStreamInstance) {
+                videoStreamInstance.stop();
+                videoStreamInstance = null;
+            }
 
             fetch(`/api/get-subzonas/${zonaId}`)
                 .then(res => {
@@ -180,7 +187,6 @@
                     return res.json();
                 })
                 .then(data => {
-                    subzonaSelect.innerHTML = '<option value="" disabled selected>Pilih Sub Zona</option>';
                     data.forEach(subzona => {
                         const option = document.createElement('option');
                         option.value = subzona.id;
@@ -188,15 +194,9 @@
                         subzonaSelect.appendChild(option);
                     });
 
-                    if (currentSubzonaId) {
-                        subzonaSelect.value = currentSubzonaId;
-                        loadSubzonaData(currentSubzonaId);
-                    }
                 })
                 .catch(error => {
                     console.error('Gagal mengambil subzona:', error);
-                    subzonaSelect.innerHTML = '<option value="" disabled selected>Pilih Sub Zona</option>';
-                    resetSlotStats();
                 });
         });
 
