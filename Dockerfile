@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
+    supervisor \
     && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd \
     && rm -rf /var/lib/apt/lists/*
 
@@ -36,19 +37,12 @@ EXPOSE 8080
 CMD ["sh", "-c", "\
   echo 'Menunggu koneksi ke MySQL di $DB_HOST:$DB_PORT...' && \
   while ! nc -z \"$DB_HOST\" \"$DB_PORT\"; do \
-    echo 'MySQL belum siap, menunggu...' && sleep 5; \
+    echo 'MySQL belum siap...' && sleep 5; \
   done && \
-  echo '✅ MySQL terkoneksi, lanjut migrasi...' && \
-  php artisan migrate --seed --force || { echo '❌ Migrasi gagal!'; exit 1; } && \
-  php artisan config:clear && \
-  php artisan cache:clear && \
+  php artisan migrate --seed --force && \
   php artisan config:cache && \
   php artisan route:cache && \
   php artisan view:cache && \
   php artisan storage:link && \
-  echo '🚀 Menjalankan scheduler di background...' && \
-  (while true; do php artisan schedule:run >> /var/www/storage/logs/scheduler.log 2>&1; sleep 60; done) & \
-  echo '🚀 Menjalankan Laravel server...' && \
-  php artisan serve --host=0.0.0.0 --port=8080 \
+  /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf \
 "]
-
