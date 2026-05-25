@@ -42,4 +42,8 @@ return [
     'cloudflare' => [
         'stream_url' => env('CLOUDFLARE_STREAM_URL'),
     ],
+    
+    'python' => [
+        'url' => env('PYTHON_URL'),
+    ],
 ];

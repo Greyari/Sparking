@@ -8,6 +8,7 @@ use App\Models\SubZona;
 use App\Models\Slot;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use App\Services\PythonSyncService;
 
 class AdminSlotController extends Controller
 {
@@ -92,6 +93,9 @@ class AdminSlotController extends Controller
 
             Slot::create($validatedData);
 
+            // Sinkronisasi dengan Python setelah slot berhasil dibuat
+            PythonSyncService::syncSlots($request->subzona_id);
+
             return redirect()->back()->with('success', 'Slot berhasil ditambahkan');
 
         } catch (ValidationException $e) {
@@ -131,6 +135,10 @@ class AdminSlotController extends Controller
 
             $slot->update($validatedData);
 
+            // Sinkronisasi dengan Python setelah slot berhasil diupdate
+            PythonSyncService::syncSlots($slot->subzona_id);
+
+
             return redirect()->route('admin-slot')->with('success', 'Slot berhasil diupdate');
 
         } catch (ValidationException $e) {
@@ -147,8 +155,12 @@ class AdminSlotController extends Controller
     public function destroy($id)
     {
         $slot = Slot::findOrFail($id);
+        $subzonaId = $slot->subzona_id;
         $slot->delete();
 
-        return redirect()->route('admin-slot')->with('success', 'Slot berhasil dihapus');
+        // Sinkronisasi dengan Python setelah slot berhasil dihapus
+        PythonSyncService::syncSlots($subzonaId);
+
+        return redirect()->back()->with('success', 'Slot berhasil dihapus');
     }
 }
