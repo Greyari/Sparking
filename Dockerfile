@@ -46,6 +46,8 @@ CMD ["sh", "-c", "\
   php artisan route:cache && \
   php artisan view:cache && \
   php artisan storage:link && \
+  echo '🚀 Menjalankan scheduler di background...' && \
+  (while true; do php artisan schedule:run >> /var/www/storage/logs/scheduler.log 2>&1; sleep 60; done) & \
   echo '🚀 Menjalankan Laravel server...' && \
   php artisan serve --host=0.0.0.0 --port=8080 \
 "]
