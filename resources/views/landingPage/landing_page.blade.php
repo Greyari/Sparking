@@ -19,7 +19,7 @@
 
         <!-- Slider Images -->
         <div id="slider" class="flex h-full transition-transform duration-700 ease-in-out">
-            <img src="img/Gedung.jpg" class="flex-shrink-0 object-cover w-full" alt="Gedung" />
+            <img src="img/Landing Page/Gedung.jpg" class="flex-shrink-0 object-cover w-full" alt="Gedung" />
         </div>
     </section>
 

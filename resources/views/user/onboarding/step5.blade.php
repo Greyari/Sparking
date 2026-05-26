@@ -6,7 +6,7 @@
         <div class="p-8 text-center">
             <!-- Animated Illustration -->
             <div class="w-40 h-40 mx-auto mb-6 animate-bounce">
-                <img src="{{ asset('images/step5.png') }}" alt="Vehicle Plate" class="w-full h-full object-cover">
+                <img src="{{ asset('img/Onboarding/step5.png') }}" alt="Vehicle Plate" class="w-full h-full object-cover">
             </div>
 
             <h1 class="text-3xl font-bold text-gray-800 mb-3 animate-fade-in-down">Plat Nomor Kendaraan</h1>

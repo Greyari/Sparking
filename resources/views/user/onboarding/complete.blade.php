@@ -23,7 +23,7 @@
 
         <div class="p-8 text-center relative z-10">
             <div class="w-40 h-40 mx-auto mb-6 animate-bounce">
-                <img src="{{ asset('images/complate.png') }}" alt="Vehicle Plate" class="w-full h-full object-contain scale-125">
+                <img src="{{ asset('img/Onboarding/complate.png') }}" alt="Vehicle Plate" class="w-full h-full object-contain scale-125">
             </div>
 
             <h1 class="text-3xl font-bold text-gray-800 mb-3 animate-fade-in-down">Profil Lengkap!</h1>

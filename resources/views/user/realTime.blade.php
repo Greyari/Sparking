@@ -45,7 +45,7 @@
                  class="relative w-full h-64 overflow-hidden shadow-lg cursor-pointer rounded-2xl group"
                  onclick="openImageModal(this)">
 
-                <img src="{{ asset('images/peta.png') }}"
+                <img src="{{ asset('img/User/peta.png') }}"
                      alt="Parking Area"
                      class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105">
 

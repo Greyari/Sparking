@@ -47,7 +47,7 @@
             {{-- ---- Cover Photo & Avatar ---- --}}
             <div class="px-6 pt-6">
                 <div class="relative h-48 overflow-visible">
-                    <img src="{{ asset('images/bg_pengaturan.jpg') }}" alt="Cover"
+                    <img src="{{ asset('img/User/bg_pengaturan.jpg') }}" alt="Cover"
                         class="w-full h-full object-cover rounded-xl object-center">
 
                     {{-- Avatar melayang di bawah cover --}}

@@ -28,7 +28,7 @@
         <div class="relative w-full md:w-1/2 h-full overflow-hidden">
 
             {{-- Gambar background --}}
-            <img src="img/login.jpg" alt="Login Image"
+            <img src="img/Landing Page/login.jpg" alt="Login Image"
                 class="absolute inset-0 object-cover w-full h-full" />
 
             {{-- ↓↓↓ DIUBAH: hapus style width 200% dan id formSlider --}}

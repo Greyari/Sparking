@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between px-4 py-4 mx-auto max-w-7xl">
         <!--logo dan nama-->
         <div class="flex items-center text-white">
-            <img src="{{ asset('images/icon.png') }}" alt="Logo" class="w-12 h-12">
+            <img src="{{ asset('img/icon.png') }}" alt="Logo" class="w-12 h-12">
             <h1 class="pt-1 text-2xl font-bold ">PARKING</h1>
         </div>
 

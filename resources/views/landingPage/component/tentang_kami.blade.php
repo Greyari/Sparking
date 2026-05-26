@@ -2,7 +2,7 @@
     <div class="flex flex-col items-center max-w-6xl gap-8 mx-auto lg:flex-row">
         <!-- Kiri: Gambar dengan Triangle Effect -->
         <div class="relative w-full h-[200px] sm:h-[300px] md:h-[400px] lg:w-1/2 lg:h-[500px]">
-            <img src="{{ asset('img/mobil1.jpeg') }}" alt="Smart Parking System"
+            <img src="{{ asset('img/Landing Page/mobil1.jpeg') }}" alt="Smart Parking System"
                 class="object-cover w-full h-full shadow-lg rounded-xl" />
 
             <!-- Triangle Overlay Effect -->
@@ -68,23 +68,23 @@
     <div class="max-w-6xl px-4 mx-auto mt-16">
         <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5">
             <div class="overflow-hidden transition-shadow rounded-lg shadow-md hover:shadow-xl">
-                <img src="{{ asset('img/gambar3.png') }}" alt="Parking Sensor"
+                <img src="{{ asset('img/Landing Page/gambar3.png') }}" alt="Parking Sensor"
                     class="object-cover w-full h-32 transition-transform hover:scale-110">
             </div>
             <div class="overflow-hidden transition-shadow rounded-lg shadow-md hover:shadow-xl">
-                <img src="{{ asset('img/gambar2.png') }}" alt="IoT Technology"
+                <img src="{{ asset('img/Landing Page/gambar2.png') }}" alt="IoT Technology"
                     class="object-cover w-full h-32 transition-transform hover:scale-110">
             </div>
             <div class="overflow-hidden transition-shadow rounded-lg shadow-md hover:shadow-xl">
-                <img src="{{ asset('img/gambar1.png') }}" alt="Parking Lot"
+                <img src="{{ asset('img/Landing Page/gambar1.png') }}" alt="Parking Lot"
                     class="object-cover w-full h-32 transition-transform hover:scale-110">
             </div>
             <div class="overflow-hidden transition-shadow rounded-lg shadow-md hover:shadow-xl">
-                <img src="{{ asset('img/gambar4.jpeg') }}" alt="Data Dashboard"
+                <img src="{{ asset('img/Landing Page/gambar4.jpeg') }}" alt="Data Dashboard"
                     class="object-cover w-full h-32 transition-transform hover:scale-110">
             </div>
             <div class="overflow-hidden transition-shadow rounded-lg shadow-md hover:shadow-xl">
-                <img src="{{ asset('img/gambar5.jpeg') }}" alt="Coding Session"
+                <img src="{{ asset('img/Landing Page/gambar5.jpeg') }}" alt="Coding Session"
                     class="object-cover w-full h-32 transition-transform hover:scale-110">
             </div>
         </div>

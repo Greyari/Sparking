@@ -46,7 +46,7 @@
             <!-- Gambar (Kanan) -->
             <div class="w-full lg:w-1/2">
                 <div class="relative h-64 overflow-hidden rounded-lg shadow-lg sm:h-80 lg:h-[500px]">
-                    <img src="{{ asset('img/aboutme.jpg') }}"
+                    <img src="{{ asset('img/Landing Page/aboutme.jpg') }}"
                          alt="Sistem Parkir Polibatam"
                          class="object-cover w-full h-full transition duration-500 hover:scale-105">
                     <div class="absolute inset-0 bg-gradient-to-l from-white/30 to-transparent"></div>

@@ -6,7 +6,7 @@
         <!-- Header -->
         <div class="px-8 pt-8 text-center">
             <div class="w-40 h-40 mx-auto mb-6 animate-wiggle">
-                <img src="{{ asset('images/step2.png') }}" alt="Select User Type" class="w-full h-full object-contain scale-125">
+                <img src="{{ asset('img/Onboarding/step2.png') }}" alt="Select User Type" class="w-full h-full object-contain scale-125">
             </div>
             <h2 class="text-3xl font-bold text-gray-800 mb-2 animate-fade-in-down">Foto Wajah</h2>
             <p class="text-gray-600 animate-fade-in-down delay-100">Silakan unggah foto wajah Anda dengan jelas</p>
