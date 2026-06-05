@@ -59,45 +59,45 @@ class ApiRealtimeController extends Controller
     /**
      * Mendapatkan detail subzona untuk card detail
      */
-    // public function getSubzonaDetails($subzonaId)
-    // {
-    //     $subzona = SubZona::with(['slots' => function($query) {
-    //         $query->orderBy('nomor_slot');
-    //     }])->findOrFail($subzonaId);
+    public function getSubzonaDetails($subzonaId)
+    {
+        $subzona = SubZona::with(['slots' => function($query) {
+            $query->orderBy('nomor_slot');
+        }])->findOrFail($subzonaId);
 
-    //     // Hitung statistik slot
-    //     $slotStats = [
-    //         'total'      => $subzona->slots->count(),
-    //         'tersedia'   => $subzona->slots->where('keterangan', 'Tersedia')->count(),
-    //         'terisi'     => $subzona->slots->where('keterangan', 'Terisi')->count(),
-    //         'perbaikan'  => $subzona->slots->where('keterangan', 'Perbaikan')->count(),
-    //     ];
+        // Hitung statistik slot
+        $slotStats = [
+            'total'      => $subzona->slots->count(),
+            'tersedia'   => $subzona->slots->where('keterangan', 'Tersedia')->count(),
+            'terisi'     => $subzona->slots->where('keterangan', 'Terisi')->count(),
+            'perbaikan'  => $subzona->slots->where('keterangan', 'Perbaikan')->count(),
+        ];
 
-    //     // Format response
-    //     return response()->json([
-    //         'nama_subzona' => $subzona->nama_subzona,
-    //         'foto'         => $subzona->foto ? asset('storage/' . $subzona->foto) : asset('images/default-subzona.jpg'),
-    //         'camera_id'    => $subzona->camera_id,
-    //         'slots'        => $subzona->slots->map(function($slot) {
-    //             return [
-    //                 'id'          => $slot->id,
-    //                 'nomor_slot'  => $slot->nomor_slot,
-    //                 'keterangan'  => $slot->keterangan,
-    //                 'area'        => [
-    //                     'x1' => $slot->x1,
-    //                     'y1' => $slot->y1,
-    //                     'x2' => $slot->x2,
-    //                     'y2' => $slot->y2,
-    //                     'x3' => $slot->x3,
-    //                     'y3' => $slot->y3,
-    //                     'x4' => $slot->x4,
-    //                     'y4' => $slot->y4,
-    //                 ]
-    //             ];
-    //         }),
-    //         'slotStats' => $slotStats
-    //     ]);
-    // }
+        // Format response
+        return response()->json([
+            'nama_subzona' => $subzona->nama_subzona,
+            'foto'         => $subzona->foto ? asset('storage/' . $subzona->foto) : asset('images/default-subzona.jpg'),
+            'camera_id'    => $subzona->camera_id,
+            'slots'        => $subzona->slots->map(function($slot) {
+                return [
+                    'id'          => $slot->id,
+                    'nomor_slot'  => $slot->nomor_slot,
+                    'keterangan'  => $slot->keterangan,
+                    'area'        => [
+                        'x1' => $slot->x1,
+                        'y1' => $slot->y1,
+                        'x2' => $slot->x2,
+                        'y2' => $slot->y2,
+                        'x3' => $slot->x3,
+                        'y3' => $slot->y3,
+                        'x4' => $slot->x4,
+                        'y4' => $slot->y4,
+                    ]
+                ];
+            }),
+            'slotStats' => $slotStats
+        ]);
+    }
 
     /**
      * Mendapatkan zona berdasarkan subzona_id
