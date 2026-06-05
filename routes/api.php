@@ -1,21 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApiLogParkirController;
 use App\Http\Controllers\Api\ApiRealtimeController;
 use App\Http\Controllers\Api\ApiStatistikController;
-
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
-// Route::get('/subzona/{id}/detail', [ApiRealtimeController::class, 'getSubzonaDetails']);
-// Route::get('/get-camera-id/{subzonaId}', [ApiRealtimeController::class, 'getCameraIdBySubzona']);
-
-
-
-
-
 
 // ini di pake di resources\views\user\statistik.blade.php dan kepake juga di resources\views\admin\manageAnalysis.blade.php
 Route::get('/statistik-zona', [ApiStatistikController::class,'getStatistik']);
