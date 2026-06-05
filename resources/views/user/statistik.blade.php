@@ -95,7 +95,7 @@
 
         {{-- ============================================================
              ANALISIS JAM SIBUK PARKIR
-             - Data dari controller: $hariTersibuk, $jamTersibuk, dll.
+             - Data diambil dari API: /api/statistik-zona?zona_id=...
              - Menampilkan jam sibuk per hari dengan warna sesuai kepadatan
              ============================================================ --}}
         <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-xl">
@@ -126,13 +126,9 @@
                                     <h3 class="font-semibold text-gray-800">Hari Terpadat</h3>
                                 </div>
                                 <div>
-                                    <p class="text-2xl font-bold text-gray-800">
-                                        {{ implode(' & ', $hariTersibuk) }}
-                                    </p>
-                                    <p class="text-sm text-gray-500">
-                                        Jumlah penggunaan lahan parkir pada hari {{ implode(' & ', $hariTersibuk) }}
-                                        adalah sebanyak {{ $totalParkirHariTersibuk }} kendaraan.
-                                    </p>
+                                    {{-- Diisi via JS dari API --}}
+                                    <p class="text-2xl font-bold text-gray-800" id="hariTerpadatText">-</p>
+                                    <p class="text-sm text-gray-500" id="hariTerpadatDesc">Memuat data...</p>
                                 </div>
                             </div>
                             <div class="flex items-center pl-4">
@@ -154,10 +150,9 @@
                                     <h3 class="font-semibold text-gray-800">Jam Puncak</h3>
                                 </div>
                                 <div>
-                                    <p class="text-2xl font-bold text-gray-800">{{ $jamTersibuk }}</p>
-                                    <p class="text-sm text-gray-500">
-                                        Rata-rata waktu kendaraan terparkir adalah selama {{ $durasiFormat }}.
-                                    </p>
+                                    {{-- Diisi via JS dari API --}}
+                                    <p class="text-2xl font-bold text-gray-800" id="jamPuncakText">-</p>
+                                    <p class="text-sm text-gray-500" id="durasiText">Memuat data...</p>
                                 </div>
                             </div>
                             <div class="flex items-center pl-4">
@@ -179,27 +174,11 @@
                         </h3>
                     </div>
 
-                    {{-- Loop setiap hari beserta jam sibuknya --}}
-                    <div class="space-y-3">
-                        @foreach ($jamSibuk as $hari => $jamList)
-                            <div class="group flex items-center p-2 hover:bg-white rounded-lg transition-colors duration-200">
-                                <span class="font-medium w-24 text-gray-700 flex-shrink-0">{{ __($hari) }}</span>
-                                <div class="flex flex-wrap gap-2">
-                                    @foreach ($jamList as $slot => $jumlah)
-                                        {{-- Warna badge berdasarkan tingkat kepadatan --}}
-                                        @php
-                                            if ($jumlah >= 10)      $warna = 'red-100 text-red-600';
-                                            elseif ($jumlah >= 7)   $warna = 'orange-100 text-orange-600';
-                                            elseif ($jumlah >= 4)   $warna = 'yellow-100 text-yellow-600';
-                                            else                    $warna = 'blue-100 text-blue-600';
-                                        @endphp
-                                        <span class="px-2 py-1 bg-{{ $warna }} rounded-full text-xs font-medium">
-                                            {{ $slot }} ({{ $jumlah }} kendaraan)
-                                        </span>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endforeach
+                    {{-- Diisi via JS dari API --}}
+                    <div id="jam-sibuk-container" class="space-y-3">
+                        <div class="flex justify-center py-4">
+                            <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+                        </div>
                     </div>
 
                     {{-- Legenda Warna --}}
@@ -251,6 +230,8 @@
        3. Update angka ringkasan (total, avg, peak)
        4. Render ulang Chart.js dengan data baru
        5. Highlight bar hari puncak dengan warna merah
+       6. Update card hari terpadat & jam puncak
+       7. Render detail jam sibuk per hari
      ============================================================ --}}
 <script>
     document.getElementById('zoneSelect').addEventListener('change', function () {
@@ -263,21 +244,37 @@
                 <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
             </div>`;
 
+        // --- Tampilkan loading spinner di jam sibuk ---
+        document.getElementById('jam-sibuk-container').innerHTML = `
+            <div class="flex justify-center py-4">
+                <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+            </div>`;
+
         // --- Fetch data statistik zona dari API ---
         fetch(`/api/statistik-zona?zona_id=${zonaId}`)
             .then(res => res.json())
             .then(data => {
 
-                // Update ringkasan angka
+                // --- Update ringkasan angka chart ---
                 document.getElementById('totalVehicles').innerText = data.total;
                 document.getElementById('avgVehicles').innerText   = data.avg_per_day;
                 document.getElementById('peakDay').innerText       = data.hari_terpadat;
 
-                // Kembalikan canvas untuk chart baru
+                // --- Update Card Hari Terpadat ---
+                document.getElementById('hariTerpadatText').innerText = data.hari_terpadat ?? '-';
+                document.getElementById('hariTerpadatDesc').innerText =
+                    `Jumlah parkir pada hari ${data.hari_terpadat} adalah ${data.total_hari_terpadat ?? 0} kendaraan.`;
+
+                // --- Update Card Jam Puncak ---
+                document.getElementById('jamPuncakText').innerText = data.jam_tersibuk ?? '-';
+                document.getElementById('durasiText').innerText    =
+                    `Rata-rata durasi parkir adalah ${data.durasi_format ?? '-'}.`;
+
+                // --- Kembalikan canvas untuk chart baru ---
                 chartContainer.innerHTML = '<canvas id="vehicleChart"></canvas>';
                 const ctx = document.getElementById('vehicleChart').getContext('2d');
 
-                // Hancurkan chart lama agar tidak tumpang tindih
+                // --- Hancurkan chart lama agar tidak tumpang tindih ---
                 if (window.vehicleChartInstance) {
                     window.vehicleChartInstance.destroy();
                 }
@@ -370,6 +367,42 @@
                     }
                 });
 
+                // --- Render Detail Jam Sibuk per Hari ---
+                const jamSibukContainer = document.getElementById('jam-sibuk-container');
+                jamSibukContainer.innerHTML = '';
+
+                if (data.jam_sibuk && Object.keys(data.jam_sibuk).length > 0) {
+                    for (const [hari, slots] of Object.entries(data.jam_sibuk)) {
+                        let badgesHtml = '';
+
+                        // Loop tiap slot jam beserta jumlah kendaraan
+                        for (const [slot, jumlah] of Object.entries(slots)) {
+                            // Tentukan warna badge berdasarkan tingkat kepadatan
+                            let warna;
+                            if (jumlah >= 10)     warna = 'bg-red-100 text-red-600';
+                            else if (jumlah >= 7) warna = 'bg-orange-100 text-orange-600';
+                            else if (jumlah >= 4) warna = 'bg-yellow-100 text-yellow-600';
+                            else                  warna = 'bg-blue-100 text-blue-600';
+
+                            badgesHtml += `
+                                <span class="px-2 py-1 ${warna} rounded-full text-xs font-medium">
+                                    ${slot} (${jumlah} kendaraan)
+                                </span>`;
+                        }
+
+                        // Tambahkan baris hari + badge ke container
+                        jamSibukContainer.innerHTML += `
+                            <div class="group flex items-center p-2 hover:bg-white rounded-lg transition-colors duration-200">
+                                <span class="font-medium w-24 text-gray-700 flex-shrink-0">${hari}</span>
+                                <div class="flex flex-wrap gap-2">${badgesHtml}</div>
+                            </div>`;
+                    }
+                } else {
+                    // Tampilkan pesan jika tidak ada data jam sibuk
+                    jamSibukContainer.innerHTML =
+                        '<p class="text-gray-400 italic text-sm">Tidak ada data jam sibuk minggu ini.</p>';
+                }
+
             })
             .catch(error => {
                 // --- Tampilkan pesan error jika fetch gagal ---
@@ -378,6 +411,8 @@
                     <div class="chart-error text-center py-8 text-red-500 bg-red-100 rounded-lg">
                         Gagal memuat data grafik. Silakan coba lagi.
                     </div>`;
+                document.getElementById('jam-sibuk-container').innerHTML =
+                    '<p class="text-red-400 italic text-sm">Gagal memuat data. Silakan coba lagi.</p>';
             });
     });
 

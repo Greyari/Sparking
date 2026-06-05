@@ -166,10 +166,26 @@
                     if (data.jam_sibuk && Object.keys(data.jam_sibuk).length > 0) {
                         jamSibukList.innerHTML = '';
                         for (const [hari, jamList] of Object.entries(data.jam_sibuk)) {
-                            const slots = Object.keys(jamList).join(', ');
-                            const li = document.createElement('li');
-                            li.textContent = `${hari} : ${slots}`;
-                            jamSibukList.appendChild(li);
+                            // Header hari
+                            const hariEl = document.createElement('li');
+                            hariEl.innerHTML = `<span class="font-semibold text-gray-700">${hari}</span>`;
+                            jamSibukList.appendChild(hariEl);
+
+                            // Loop tiap slot jam + jumlah kendaraan
+                            for (const [slot, jumlah] of Object.entries(jamList)) {
+                                let warna;
+                                if (jumlah >= 10)     warna = 'bg-red-100 text-red-600';
+                                else if (jumlah >= 7) warna = 'bg-orange-100 text-orange-600';
+                                else if (jumlah >= 4) warna = 'bg-yellow-100 text-yellow-600';
+                                else                  warna = 'bg-blue-100 text-blue-600';
+
+                                const slotEl = document.createElement('li');
+                                slotEl.innerHTML = `
+                                    <span class="ml-3 px-2 py-1 rounded-full text-xs font-medium ${warna}">
+                                        ${slot} (${jumlah} kendaraan)
+                                    </span>`;
+                                jamSibukList.appendChild(slotEl);
+                            }
                         }
                     } else {
                         jamSibukList.innerHTML = '<li class="text-gray-400 italic">Tidak ada data jam sibuk.</li>';
