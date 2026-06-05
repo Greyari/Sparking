@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('nama_zona')->unique();
             $table->string('keterangan');
-            $table->string('fotozona');
             $table->timestamps();
         });
     }

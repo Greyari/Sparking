@@ -101,21 +101,6 @@
                                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Informasi yang berkaitan dengan zona" required>{{ old('keterangan') }}</textarea>
                         </div>
-                        <div class="col-span-2">
-                            <div id="image-preview" class="hidden mb-2">
-                                <img src="" alt="Preview Foto" class="object-cover w-full h-32 rounded-lg">
-                            </div>
-                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="fotozona">
-                                Foto Area Zona
-                            </label>
-                            <input
-                                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                aria-describedby="file_input_help" id="fotozona" type="file" name="fotozona"
-                                accept="image/*" required>
-                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">
-                                SVG, PNG, JPG or GIF (MAX. 800x400px).
-                            </p>
-                        </div>
                     </div>
                     <button type="submit" id="submit"
                         class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -179,24 +164,6 @@
                                 <textarea id="keterangan" name="keterangan" rows="4"
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Masukkan Keterangan Zona">{{ $zona->keterangan }}</textarea>
-                            </div>
-                            <div class="col-span-2">
-                                @if ($zona->fotozona)
-                                    <div class="mb-2">
-                                        <img src="{{ $zona->fotozona }}" alt="Foto Zona" class="object-cover w-full h-32 rounded-lg">
-                                    </div>
-                                @endif
-                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                    for="fotozona">
-                                    Foto Area Zona
-                                </label>
-                                <input
-                                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                    aria-describedby="file_input_help" type="file" name="fotozona" id="fotozona"
-                                    accept="image/*">
-                                <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">
-                                    SVG, PNG, JPG or GIF (MAX. 800x400px).
-                                </p>
                             </div>
                         </div>
                         <button type="submit"

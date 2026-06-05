@@ -68,7 +68,7 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('admin')->group(function () {
             // dashboard
             Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin-dashboard');
-            
+
             // user
             Route::get('/users', [AdminUserController::class, 'index'])->name('admin-users');
             Route::delete('/users/{id}', [AdminUserController::class, 'delete'])->name('users.delete');

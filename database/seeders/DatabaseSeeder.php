@@ -43,12 +43,12 @@ class DatabaseSeeder extends Seeder
         // Ambil ID zona secara dinamis, jangan hardcode
         $zona1 = Zona::updateOrCreate(
             ['nama_zona' => 'Zona 1'],
-            ['keterangan' => 'test', 'fotozona' => 'test']
+            ['keterangan' => 'test']
         );
 
         $zona2 = Zona::updateOrCreate(
             ['nama_zona' => 'Zona 2'],
-            ['keterangan' => 'test', 'fotozona' => 'test']
+            ['keterangan' => 'test']
         );
 
         $subzona1 = SubZona::updateOrCreate(

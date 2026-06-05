@@ -15,6 +15,11 @@ Route::get('/zona-slot', [ApiRealtimeController::class, 'getZonaslot']);
 // ini kepake semua di app.py
 Route::get('/real-time/subzona/{subzonaId}', [ApiRealtimeController::class, 'getSubzonaDetails'])->name('realTime.subzonaDetails'); //ini di pake juga di resources\views\user\realTime.blade.php
 Route::post('/update-status-slot', [ApiRealtimeController::class, 'updateSlotStatus']);
+
+
 Route::post('/log-parkir/masuk', [ApiLogParkirController::class, 'masuk']);
 Route::post('/log-parkir/keluar', [ApiLogParkirController::class, 'keluar']);
+
+
+
 Route::get('/list-subzona', [ApiRealtimeController::class, 'getAllSubzonas']);
