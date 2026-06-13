@@ -1,0 +1,16 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+.card {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+.btn-primary {
+    background-image: linear-gradient(to right, #667eea, #764ba2);
+    transition: all 0.3s ease;
+}
+.btn-primary:hover {
+    background-image: linear-gradient(to right, #5a67d8, #6B46C1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
