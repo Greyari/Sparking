@@ -134,7 +134,7 @@ class SettingsController extends Controller
 
         Auth::login($user);
 
-        return view('user.component.pengaturan.form_ubah_kata_sandi', [
+        return view('user.component.form_ubah_kata_sandi', [
             'token' => $token,
             'email' => $user->email,
             'title' => 'Ubah Kata Sandi'
